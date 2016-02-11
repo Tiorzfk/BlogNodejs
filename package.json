@@ -21,7 +21,15 @@
   },
   "homepage": "https://github.com/Hitman666/MEAN_MVC_2ndTutorial",
   "dependencies": {
+    "body-parser": "^1.14.2",
+    "connect-flash": "^0.1.1",
     "ejs": "^2.0.6",
-    "express": "^4.10.7"
+    "express": "^4.10.7",
+    "express-session": "^1.13.0",
+    "mongoose": "^4.4.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "striptags": "^2.1.1",
+    "multer": "1.1.0"
   }
 }

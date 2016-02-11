@@ -1,0 +1,48 @@
+<% include ../partials/header %>
+<% include ../partials/banner %>	
+	<main id="home-1">
+		<div class="container">
+			<div class="wrapper">
+				<div class="row">
+					<!-- Item 1 -->
+					<% articles.forEach(function(data) { %>
+					<div class="col-sm-4">
+						<article>
+							<a href="blog-post.html">
+								<div class="image">
+									<img src="/uploads/img/<%= data.foto %>" alt="Article Picture">
+									<div class="overlay">
+										<i class="fa fa-eye"></i>
+									</div>
+								</div>
+							</a>
+							<div class="content">
+								<div class="text">
+									<p class="time">23 May, 2014</p>
+									<h5><a href="blog-post.html"><%= data.judul %></a></h5>
+									<p><%- data.showmore %>.</p>
+									<span class="line"></span>
+									<ul class="list-unstyled list-inline bottom">
+										<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>17 comments</a></h2></li>
+										<li class="pull-right">
+											<ul class="list-unstyled list-inline share-like">
+												<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+												<li><a class="tooltips like" href="#"><i class="fa fa-heart"></i><span>12</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>
+					</div>
+					<% }); %>
+					
+				</div> <!-- row -->
+			</div> <!-- wrapper -->
+			<div class="row">
+				<a class="big-button" href="blog-2.html"><span>read more entries</span><i class="fa fa-arrow-right"></i></a>
+			</div> <!-- row -->
+		</div> <!-- container -->
+		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
+	</main>
+<% include ../partials/footer %>

@@ -1,0 +1,45 @@
+ <div id="wrapper">
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> <span>
+                            <center><img alt="image" class="img-circle" src="/backend/img/profile_small.jpg" /></center>
+                             </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><center><%=email%></center></strong>
+                            </span> <span class="text-muted text-xs block"><center>???? <b class="caret"></b></span> </center></span> </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="profile.html">Profile</a></li>
+                                <li><a href="contacts.html">Contacts</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/logout">Logout</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/manage"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-flask"></i> <span class="nav-label">Artikel</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/manage/artikel/new">Tambah Artikel</a></li>
+                            <li><a href="/manage/artikel">Lihat Artikel</a></li>
+                            <li><a href="/manage/my-artikel">Artikel Saya</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-picture-o"></i> <span class="nav-label">Event</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="basic_gallery.html">Posting Event</a></li>
+                            <li><a href="carousel.html">Lihat Event</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/manage/sahabat-odha"><i class="fa fa-users"></i> <span class="nav-label">Sahabat Odha</span></a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
