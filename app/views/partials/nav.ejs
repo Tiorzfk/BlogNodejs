@@ -1,0 +1,89 @@
+ 					<div class="col-md-3">
+						<div class="sidebar">
+							<ul class="list-unstyled">
+								<!-- Search -->
+								<li class="input-group">
+									<p><input type="text" class="search" placeholder="Search"></p>
+									<span class="input-group-btn">
+										<button class="button" type="button"><i class="fa fa-search"></i></button>
+									</span>
+								</li>
+								<!-- Categories -->
+								<li class="element categories">
+									<h1>Kategori</h1>
+									<div class="body">
+										<div class="content">
+											<ul class="list-unstyled">
+											<% kategori.forEach(function(data){ %>
+												<li><p><a href="/<%=data.nama%>"><%=data.nama%><span>
+												<% if(data.nama==="Berita"){%>
+													<%=berita.length%>
+												<%}else{%>
+													<%=artikel.length%>
+												<% } %></span></a></p></li>
+											<% }); %>
+												<li><p><a href="/event">Event<span><%=event.length%></span></a></p></li>
+											</ul>
+										</div> <!-- content -->
+									</div> <!-- body -->
+								</li>
+								<!-- Event Terbaru -->
+								<li class="element">
+									<h1>Event Terbaru</h1>
+									<div class="body">
+										<div class="content">
+											<ul class="list-unstyled">
+											<% event.forEach(function(data){%>
+											<% var date = moment(data.tgl_post),
+       					   						formatted = date.format('YYYY[/]'+data.id_event+'[/]');
+   					   							var url = formatted + slug(data.nama);%>
+												<li>
+													<p><a href="/event/<%=url%>"><%=data.nama%>.</a></p>
+													<p class="time"><%= moment(data.tgl_posting).format('DD MMM YYYY') %></p>
+												</li>
+											<% }); %>
+											</ul>
+										</div> <!-- content -->
+									</div> <!-- body -->
+								</li>
+								<!-- Berita Terbaru -->
+								<li class="element">
+									<h1>Berita Terbaru</h1>
+									<div class="body">
+										<div class="content">
+											<ul class="list-unstyled">
+											<% berita.forEach(function(data){ %>
+											<% var date = moment(data.tgl_post),
+       					   						formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
+   					   							var url = formatted + slug(data.judul);%>
+												<li>
+													<p><a href="/post/<%=url%>"><%=data.judul%>.</a></p>
+													<p class="time"><%= moment(data.tgl_posting).format('DD MMM YYYY') %></p>
+												</li>
+											<% }); %>
+											</ul>
+										</div> <!-- content -->
+									</div> <!-- body -->
+								</li>
+								<!-- Artikel Terbaru -->
+								<li class="element">
+									<h1>Artikel Terbaru</h1>
+									<div class="body">
+										<div class="content">
+											<ul class="list-unstyled">
+											<% artikel.forEach(function(data){ %>
+											<% var date = moment(data.tgl_post),
+       					   						formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
+   					   							var url = formatted + slug(data.judul);%>
+												<li>
+													<p><a href="/post/<%=url%>"><%=data.judul%>.</a></p>
+													<p class="time"><%= moment(data.tgl_posting).format('DD MMM YYYY') %></p>
+												</li>
+											<% }); %>
+											</ul>
+										</div> <!-- content -->
+									</div> <!-- body -->
+								</li>
+							</ul>
+						</div> <!-- sidebar -->
+					</div>

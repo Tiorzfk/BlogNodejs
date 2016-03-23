@@ -1,0 +1,45 @@
+{
+  "name": "comrades-blog",
+  "version": "1.0.0",
+  "description": "Comrades Blog",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tiorzfk/blog_mysql_nodejs.git"
+  },
+  "keywords": [
+    "Blog"
+  ],
+  "author": "Tioreza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tiorzfk/blog_mysql_nodejs/issues"
+  },
+  "homepage": "https://github.com/Tiorzfk/blog_mysql_nodejs#readme",
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.14.2",
+    "connect-flash": "^0.1.1",
+    "easynexmo": "^0.7.0",
+    "ejs": "^2.0.6",
+    "express": "^4.10.7",
+    "express-session": "^1.13.0",
+    "googlemaps": "^1.2.0",
+    "moment": "^2.11.2",
+    "multer": "1.1.0",
+    "mysql": "^2.10.2",
+    "node-geocoder": "^3.7.0",
+    "nodemailer": "^2.2.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "sinch-auth": "0.0.1",
+    "sinch-messaging": "0.0.1",
+    "sinch-sms": "0.0.8",
+    "slug": "^0.9.1",
+    "striptags": "^2.1.1",
+    "swig-email-templates": "^2.0.0"
+  }
+}

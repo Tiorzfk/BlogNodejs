@@ -1,0 +1,100 @@
+<% include ../partials/header %>
+<% include ../partials/banner %>
+<%
+var params = {
+  center: results[0].formattedAddress,
+  zoom: 15,
+  size: '500x400',
+  maptype: 'roadmap',
+  markers: [
+    {
+      location: results[0].formattedAddress,
+      label   : 'E',
+      color   : 'green',
+      shadow  : true
+    },
+  ],
+  style: [
+    {
+      feature: 'road',
+      element: 'all',
+      rules: {
+        hue: '0x00ff00'
+      }
+    }
+  ],
+  path: [
+    {
+      color: '0x0000ff',
+      weight: '5',
+      points: [
+        '41.139817,-77.454439',
+        '41.138621,-77.451596'
+      ]
+    }
+  ]
+};
+%>
+	<main id="blog-post">
+		<div class="container">
+			<div class="wrapper">
+				<div class="row">
+					<div class="col-md-7">
+					<div class="side" style="margin-bottom:0px;background:#5098D3">
+						<h1>Detail Event (<%=events.nama%>)</h1>
+				  	</div>
+						<article>
+							<img class="head" src="/uploads/img/event/<%=events.foto%>" alt="Article Picture" style="width:652.5px;height:400px">
+							<div class="content">
+								<div class="text">
+									<p class="time"><%= moment(events.tgl_posting).format('DD MMM YYYY')%></p>
+									<h5><%=events.nama %></h5>
+									<%-events.isi%>
+									<span class="line"></span>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>					
+					</div>
+					<div class="col-md-5">
+						<div class="sidebar">
+							<ul class="list-unstyled">
+								<li class="element">
+									<h1>Information</h1>
+									<div class="body">
+										<div class="content">
+											<ul class="list-unstyled">
+												<li>
+													<p><strong>Nama Event : </strong></p>
+													<p class="time" style="color:#6E7179"><%=events.nama%></p>
+												</li>
+												<li>
+													<p><strong>Tanggal Event : </strong></p>
+													<p class="time" style="color:#6E7179"><%=events.tgl_event%></p>
+												</li>
+												<li>
+													<p><strong>Pengirim : </strong></p>
+													<p class="time" style="color:#6E7179"><%=events.pengirim%></p>
+												</li>
+												<li>
+													<p><strong>Alamat Event : </strong></p>
+													<p class="time" style="color:#6E7179"><%=results[0].formattedAddress%></p>
+												</li>
+												<li>
+													<p><strong>Lokasi Event : </strong></p>
+													<p class="time"><img src="<%= gmAPI.staticMap(params)%>" style="width:400px"></p>
+												</li>
+											</ul>
+										</div> <!-- content -->
+									</div> <!-- body -->
+								</li>
+							</ul>
+						</div> <!-- sidebar -->
+					</div>
+				</div> <!-- row -->
+			</div> <!-- wrapper -->
+		</div> <!-- container -->
+		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
+	</main>
+<% include ../partials/footer %>
+					
+					

@@ -1,0 +1,578 @@
+/*
+
+  [Table of contents]
+    01. General
+    02. Buttons & Tooltips
+    03. Navigation
+    04. Overlay
+    05. Header
+    06. Article
+    07. Highlight
+    08. Home-2
+    09. About
+    10. Blog-1
+    11. Blog-2
+    12. Blog-Post
+    13. Gallery
+    14. Contacts
+    15. 404
+    16. Archives
+    17. Pagination
+    18. Sidebar
+    19. Footer
+
+--------------------------------------------------------*/
+
+/*------------------------
+  1. General
+------------------------*/
+
+::selection {
+  background: #50c1e9;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: #50c1e9;
+  color: #fff;
+}
+
+h1 {
+  font: 16px 'Fjalla One', sans-serif;
+  color: #434a54;
+  padding: 0;
+  margin: 0;
+}
+
+h2 {
+  font: 12px 'Fjalla One', sans-serif;
+  color: #ccd0d9;
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+h3 {
+  font: 10px 'Roboto Slab', sans-serif;
+  color: #949ba6;
+  padding: 0;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+h4 {
+  font: 14px 'Fjalla One', sans-serif;
+  color: #434a54;
+  padding: 0;
+  margin: 0;
+}
+
+h5 {
+  font: 16px 'Fjalla One', sans-serif;
+  color: #434a54;
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  font: 12px/22px 'Roboto Slab', sans-serif;
+  color: #656d78;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: #434a54;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+
+a:hover,
+a:active,
+a:focus {
+  text-decoration: none;
+  color: #50c1e9;
+  outline: none;
+}
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 9999;
+}
+
+
+.scrolltop {
+  display: none;
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  background: #50c1e9;
+  border: 1px solid #50c1e9;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  line-height: 2.3em;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.scrolltop:hover {
+  background: transparent;
+  color: #50c1e9;
+}
+
+.scrolltop:focus {
+  background: #50c1e9;
+  color: #fff;
+}
+
+/*------------------------
+  2. Buttons & Tooltips
+------------------------*/
+
+.big-button {
+  display: block;
+  margin: auto;
+  margin-bottom: 100px;
+  width: 240px;
+  height: 40px;
+  border: 1px solid #50c1e9;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  font: 14px/3em 'Fjalla One', sans-serif;
+  color: #50c1e9;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+
+.big-button:hover {
+  background: #50c1e9;
+  color: #fff;
+  text-decoration: none;
+}
+
+.big-button:hover span,
+.big-button:hover i {
+  -webkit-transform: translateX(0px);
+  -moz-transform: translateX(0px);
+  -o-transform: translateX(0px);
+  transform: translateX(0px);
+  opacity: 1;
+  visibility: visible;
+  color: #fff;
+}
+
+.big-button span {
+  display: inline-block;
+  -webkit-transform: translateX(7px);
+  -moz-transform: translateX(7px);
+  -o-transform: translateX(7px);
+  transform: translateX(7px);
+  -webkit-transition: -webkit-transform .25s ease;
+  -moz-transition: -moz-transform .25s ease;
+  -o-transition: -o-transform .25s ease;
+  transition: transform .25s ease;
+}
+
+.big-button i {
+  color: transparent;
+  visibility: hidden;
+  font-size: 11px;
+  vertical-align: middle;
+  padding: 0 0 3px 5px;
+  -webkit-transform: translateX(-5px);
+  -moz-transform: translateX(-5px);
+  -o-transform: translateX(-5px);
+  transform: translateX(-5px);
+  -webkit-transition: -webkit-transform .25s ease;
+  -moz-transition: -moz-transform .25s ease;
+  -o-transition: -o-transform .25s ease;
+  transition: transform .25s ease;
+}
+
+.mini-button {
+  display: block;
+  margin-top: 20px;
+  width: 100px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid #50c1e9;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  font: 12px/2.5em 'Fjalla One', sans-serif;
+  color: #50c1e9;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+
+.mini-button:hover {
+  background: #50c1e9;
+  color: #fff;
+  text-decoration: none;
+}
+
+a.tooltips {
+  position: relative;
+  display: inline;
+}
+
+a.tooltips span {
+  position: absolute;
+  color: #fff;
+  background: #fb6e52;
+  text-align: center;
+  visibility: hidden;
+  border-radius: 3px;
+  font: 12px 'Fjalla One', sans-serif;
+  text-transform: uppercase;
+  padding: 4px;
+  right: 0;
+}
+
+a.tooltips span:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  width: 0;
+  height: 0;
+  border-top: 3px solid #fb6e52;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+
+a:hover.tooltips span {
+  visibility: visible;
+  opacity: 1;
+  bottom: 25px;
+  margin-left: 2px;
+  margin-right: 2px;
+  z-index: 999;
+}
+
+/*------------------------
+  3. Navigation
+------------------------*/
+
+nav {
+  font: 13px 'Fjalla One', sans-serif;
+  z-index: 2;
+}
+
+.navbar {
+  min-height: 70px;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
+
+.navbar .navbar-brand {
+  margin: 10px 0px;
+}
+
+.navbar li a {
+  color: #fff;
+  text-transform: uppercase;
+  padding: 25px;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+
+.navbar li a.current {
+  color: #fff;
+}
+
+.navbar li a:hover,
+.navbar li a:active,
+.navbar li a:focus,
+.navbar li a.current:hover {
+  background: #60AAE6;
+  color: #fff;
+  outline: none;
+}
+
+.navbar li.dropdown a:after {
+  content: "\f0d7";
+  font-family: FontAwesome;
+  font-size: 10px;
+  color: #656d78;
+  padding-left: 5px;
+}
+
+.navbar li.dropdown a.current:after {
+  color: #fff;
+}
+
+.navbar li.dropdown:hover a:after {
+  color: #fff;
+}
+
+.navbar li.dropdown ul {
+  display: block;
+  position: absolute;
+  z-index: 99;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+  padding: 0;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity .25s ease;
+  -moz-transition: opacity .25s ease;
+  -o-transition: opacity .25s ease;
+  transition: opacity .25s ease;
+}
+
+.navbar li.dropdown:hover ul {
+  display: block;
+  background: #fff;
+  border-top: 2px solid #50c1e9;
+  min-width: 150px;
+  visibility: visible;
+  opacity: 1;
+}
+
+.navbar .dropdown li {
+  list-style-type: none;
+  float: none;
+  border-bottom: 1px solid rgba(67, 74, 84, .1);
+}
+
+.navbar .dropdown li:last-child {
+  border: none;
+}
+
+.navbar li.dropdown ul li a {
+  display: block;
+  color: #656d78;
+  text-align: left;
+  padding: 10px 25px;
+}
+
+.navbar li.dropdown ul li a:after {
+  display: none;
+}
+
+.navbar li.dropdown ul li a:hover,
+.navbar li.dropdown ul li a:active,
+.navbar li.dropdown ul li a:focus {
+  text-decoration: none;
+  outline: none;
+  color: #50c1e9;
+  background: #fff;
+}
+
+.navbar-toggle {
+  background: #fff;
+  margin: 13px;
+}
+
+.navbar-toggle i {
+  font-size: 21px;
+  color: #434a54;
+}
+
+/*------------------------
+  4. Overlay
+------------------------*/
+
+.image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.image {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-top-right-radius: 3px;
+  -o-border-top-right-radius: 3px;
+  border-top-right-radius: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-top-left-radius: 3px;
+  -o-border-top-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.image .overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background: rgba(80, 193, 233, .9);
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.image .overlay i {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  margin: 28% auto -28%;
+  -webkit-transform: translateY(10px);
+  -moz-transform: translateY(10px);
+  -o-transform: translateY(10px);
+  transform: translateY(10px);
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.image:hover .overlay {
+  opacity: 1;
+}
+
+.image:hover .overlay i {
+  -webkit-transform: translateY(0px);
+  -moz-transform: translateY(0px);
+  -o-transform: translateY(0px);
+  transform: translateY(0px);
+}
+
+/*------------------------
+  14. Contacts
+------------------------*/
+
+#contacts .wrapper {
+  padding: 70px 0;
+}
+
+#contacts .main .map {
+  display: block;
+  width: 100%;
+  height: 350px;
+  margin-bottom: -5px;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-top-left-radius: 3px;
+  -o-border-top-left-radius: 3px;
+  border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-top-right-radius: 3px;
+  -o-border-top-right-radius: 3px;
+  border-top-right-radius: 3px;
+  overflow: hidden;
+
+}
+
+#contacts .map iframe {
+  display: block;
+  width: 100%;
+  height: 350px;
+  border: none;
+  overflow: hidden;
+  margin: 0;
+}
+
+#contacts .main .content-block {
+  margin-bottom: 50px;
+}
+
+#contacts .main .content-block .text h5 {
+  text-transform: uppercase;
+  padding-bottom: 20px;
+}
+
+#contacts .main .content-block .text p {
+  padding-bottom: 45px;
+}
+
+#contacts .main .content-block .text {
+  display: block;
+  border-top: 23px solid transparent;
+  border-right: 50px solid transparent;
+  border-left: 50px solid transparent;
+  border-bottom: 23px solid transparent;
+}
+
+#contacts .main .content-block .text .forms p {
+  padding: 0;
+}
+
+#contacts .main .content-block .text .forms input {
+  display: block;
+  width: 100%;
+  height: 30px;
+  background: #f6f7fb;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  padding: 0 20px;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+  margin-bottom: 20px;
+}
+
+#contacts .main .content-block .text .forms textarea {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 200px;
+  background: #f6f7fb;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  padding: 10px 20px;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+#contacts .main .content-block .text .forms input:focus,
+#contacts .main .content-block .text .forms textarea:focus {
+  background: transparent;
+  border-color: #e6e9ee;
+}
+
+#contacts .main .content-block .text .forms button {
+  display: inline-block;
+}
+
+#contacts .result {
+  padding-left: 20px;
+  font: 13px/22px 'Roboto Slab', sans-serif;
+}

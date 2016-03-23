@@ -1,0 +1,249 @@
+<% include ./partials/headeradmin %>
+<% include ./partials/menuadmin %>
+ <!-- Toastr style -->
+<link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+<div id="page-wrapper" class="gray-bg">
+    <div class="row border-bottom">
+        </div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-4">
+                    <h2><%=title%></h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">This is</a>
+                        </li>
+                        <li class="active">
+                            <strong><%=title%></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">Monthly</span>
+                            <h5>Artikel</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"><%=total_artikel[0].artikel%></h1>
+                            <div class="stat-percent font-bold text-info">20 <i class="fa fa-level-up"></i></div>
+                            <small>Total Artikel</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">Monthly</span>
+                            <h5>Event</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"><%=total_event[0].event%></h1>
+                            <div class="stat-percent font-bold text-info">20 <i class="fa fa-level-up"></i></div>
+                            <small>Total Event</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Today</span>
+                            <h5>Odha</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"><%-total_odha[0].odha%></h1>
+                            <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                            <small>New user Odha</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Today</span>
+                            <h5>Sahabat Odha</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"><%-sh_odha[0].sh_odha%></h1>
+                            <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+                            <small>New user Odha</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>User Odha list (Terbaru)</h5>
+                                <div class="ibox-tools">
+                                    <a href="/admin-aplikasi/user1"><font color="blue">Selengkapnya</font></a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <table class="table table-hover no-margins">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Nama</th>
+                                            <th>Email</th>
+                                            <th>Telepon</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% data_odha.forEach(function(data) { %>
+                                        <tr>
+                                            <% if(data.status === "0"){ %>
+                                                <td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>
+                                            <% } else { %>
+                                                <td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>
+                                            <% } %>
+                                            <td><i class="fa fa-user"></i> <%=data.nama%></td>
+                                            <td><%=data.email%></td>
+                                            <td class="text-navy"><i class="fa fa-mobile-phone"></i> <%=data.telp%></td>
+                                            <% if(data.status === "0"){ %>
+                                                <td><a href="/admin-aplikasi/verifikasi/<%=data.jenis_user%>/<%=data.id_user%>" class="btn btn-info btn-xs">Verifikasi</a></td>
+                                            <% } else { %>
+                                                <td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>
+                                            <% } %>
+                                        </tr>  
+                                    <% }); %>              
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>Sahabat Odha list (Terbaru)</h5>
+                                <div class="ibox-tools">
+                                    <a href="/admin-aplikasi/user2"><font color="blue">Selengkapnya</font></a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <table class="table table-hover no-margins">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Nama</th>
+                                            <th>Email</th>
+                                            <th>Telepon</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% data_so.forEach(function(data) { %>
+                                        <tr>
+                                            <% if(data.status === "0"){ %>
+                                            <td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>
+                                            <% } else { %>
+                                            <td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>
+                                            <% } %>
+                                            <td><i class="fa fa-user"></i> <%=data.nama%></td>
+                                            <td><%=data.email%></td>
+                                            <td class="text-navy"><i class="fa fa-mobile-phone"></i> <%=data.telp%></td>
+                                            <% if(data.status === "0"){ %>
+                                                <td><a href="/admin-aplikasi/verifikasi/<%=data.jenis_user%>/<%=data.id_user%>" class="btn btn-info btn-xs">Verifikasi</a></td>
+                                            <% } else { %>
+                                                <td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>
+                                            <% } %>
+                                        </tr>  
+                                    <% }); %>                   
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Posting list (Terbaru)</h5>
+                            <div class="ibox-tools">
+                                <a href="#"><font color="blue">Selengkapnya</font></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="table table-hover no-margins">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Judul</th>
+                                        <th>Pengirim</th>
+                                        <th>Kategori</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <% articles.forEach(function(data) { %>
+                                    <tr>
+                                        <% if(data.status === "0"){ %>
+                                        <td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>
+                                        <% } else { %>
+                                        <td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>
+                                        <% } %>
+                                        <td><i class="fa fa-book"></i> <%=data.judul%></td>
+                                        <td><i class="fa fa-user-md"></i> <%=data.pengirim%></td>
+                                        <td><i class="fa fa-book"></i> <%=data.kategori%></td>
+                                        <% if(data.status === "0"){ %>
+                                            <td><a href="/admin-aplikasi/verifikasi_posting/<%=data.kategori%>/<%=data.id_artikel%>" class="btn btn-info btn-xs">Verifikasi</a></td>
+                                        <% } else { %>
+                                            <td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>
+                                        <% } %>
+                                    </tr>  
+                                <% }); %>                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Event list (Terbaru)</h5>
+                            <div class="ibox-tools">
+                                <a href="/admin-aplikasi/event"><font color="blue">Selengkapnya</font></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="table table-hover no-margins">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Event</th>
+                                        <th>Pengirim</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <% event.forEach(function(data) { %>
+                                    <tr>
+                                        <% if(data.status === "0"){ %>
+                                            <td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>
+                                        <% } else { %>
+                                            <td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>
+                                        <% } %>
+                                        <td><i class="fa fa-picture-o"></i> <%=data.nama%></td>
+                                        <td><i class="fa fa-clock-o"> </i> <%=data.tgl_event%></td>
+                                        <td class="text-navy"><i class="fa fa-user-md"></i> <%=data.pengirim%></td>
+                                        <% if(data.status === "0"){ %>
+                                            <td><a href="/admin-aplikasi/verifikasi_event/<%=data.id_event%>" class="btn btn-info btn-xs">Verifikasi</a></td>
+                                        <% } else { %>
+                                            <td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>
+                                        <% } %>
+                                    </tr>  
+                                <% }); %>                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+<% include ./partials/footeradmin %>
+<!-- Toastr script -->
+<script src="/backend/js/plugins/toastr/toastr.min.js"></script>

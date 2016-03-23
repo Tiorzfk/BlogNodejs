@@ -1,0 +1,11 @@
+1. email konfirmasi register
+2. sms gateway
+4. pagging
+
+
+sms api :
+	1. Twilio(tidak bisa verify account di indonesia)
+	2. Sinch(terbatas)
+	3. smsified
+	3. clockworksms(terbatas)
+	4. nexmo(terbatas)

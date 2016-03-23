@@ -1,0 +1,64 @@
+<% include ../partials/header %>
+<% include ../partials/banner %>	
+	<main id="blog-1">
+		<div class="container">
+			<div class="wrapper">
+				<div class="row">
+					<div class="col-md-9">
+						<div class="row">
+							<!-- Item 1 -->
+							<% articles.forEach(function(data) { %>
+							<% var date = moment(data.tgl_post),
+       							   formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
+
+   							   var url = formatted + slug(data.judul);
+							%>
+							<div class="col-sm-4">
+								<article>
+									<a href="/post/<%=url%>">
+										<div class="image">
+											<img src="/uploads/img/<%=data.foto%>" alt="Article Picture">
+											<div class="overlay">
+												<i class="fa fa-eye"></i>
+											</div>
+										</div>
+									</a>
+									<div class="content">
+										<div class="text">
+											<p class="time"><%=data.tgl_posting%></p>
+											<h5><a href="/post/<%=url%>"><%=data.judul%></a></h5>
+											<p><%=data.deskripsi%></p>
+											<span class="line"></span>
+											<ul class="list-unstyled list-inline bottom">
+												<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>10 comments</a></h2></li>
+												<li class="pull-right">
+													<ul class="list-unstyled list-inline share-like">
+														<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+														<li><a class="tooltips like" href="#"><i class="fa fa-heart"></i><span>10</span></a></li>
+													</ul>
+												</li>
+											</ul>
+										</div> <!-- text -->
+									</div> <!-- content -->
+								</article>
+							</div>
+							<% }); %>
+						</div> <!-- row -->
+						<div class="pagination">
+							<ul class="list-unstyled list-inline">
+								<li><a href="#"><h2>&laquo;</h2></a></li>
+								<li><a class="current" href="#"><h2>1</h2></a></li>
+								<li><a href="#"><h2>2</h2></a></li>
+								<li><a href="#"><h2>3</h2></a></li>
+								<li><a href="#"><h2>...</h2></a></li>
+								<li><a href="#"><h2>&raquo;</h2></a></li>
+							</ul>
+						</div>
+					</div>
+				<% include ../partials/nav %>
+				</div> <!-- row -->
+			</div> <!-- wrapper -->
+		</div> <!-- container -->
+		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
+	</main>
+<% include ../partials/footer %>

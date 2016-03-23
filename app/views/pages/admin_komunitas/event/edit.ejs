@@ -1,0 +1,217 @@
+<% include ../partials/headeradmin %>
+<% include ../partials/menuadmin %>
+<link href="/backend/css/plugins/summernote/summernote.css" rel="stylesheet">
+<link href="/backend/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+ <!-- Toastr style -->
+<link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!-- FileUpload -->
+<link rel="stylesheet" type="text/css" href="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+<!-- autocomplite address maps css -->
+<link rel="stylesheet" type="text/css" href="/backend/css/addressmaps.css">
+
+<div id="page-wrapper" class="gray-bg">
+    <div class="row border-bottom">
+        </div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-4">
+                    <h2><%=title%></h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">This is</a>
+                        </li>
+                        <li class="active">
+                            <strong><%=title%></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                       <h5>Halaman Edit Form<small>Menampilkan Form untuk mengedit data. </small></h5>                                 
+                    </div>
+                    <div class="ibox-content">
+                        <% messages_errors.forEach(function(data) { %>
+                            <div class="alert alert-danger alert-dismissable">
+                              <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                  <% for(var i in data) { %>
+                                    <li><%= data[i]["message"] %></li>
+                                  <% } %>
+                            </div>
+                        <% }); %>
+                        <form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+                            <div class="form-group"><label class="col-sm-2 control-label">Nama</label>
+                                <div class="col-sm-9"><input type="text" name="nama" class="form-control" placeholder="Nama Event" value="<%=event.nama%>"></div>
+                                <input type="hidden" name="img_old" value="<%=event.foto%>">
+                            </div>
+                            <div class="form-group" id="data_1"><label class="col-sm-2 control-label">Tanggal</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_event" class="form-control" value="<%=event.tgl_event%>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Deskripsi</label>
+                                <div class="col-sm-9">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-content no-padding">
+                                            <textarea name="isi" class="summernote"><%=event.isi%></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Foto</label>
+                                <div class="col-sm-9">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="/uploads/img/event/<%=event.foto%>" alt="<%=event.nama%>" />
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                        </div>*Required, only jpg,png, and gif files allowed.
+                                        <input type="file" name="foto">                         
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Lokasi Event</label>
+                                <div class="col-sm-9">
+                                    <input name="posisi" id="pac-input" class="controls" type="text" placeholder="Masukan Alamat Lengkap" value="<%- results[0].formattedAddress %>">
+                                    <div class="google-map" id="map"></div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-white" type="submit">Cancel</button>
+                                    <button class="btn btn-primary" type="submit" id="save">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% include ../partials/footeradmin %>
+<!-- FileUpload -->
+<script type="text/javascript" src="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<!-- Toastr script -->
+<script src="/backend/js/plugins/toastr/toastr.min.js"></script>
+<script src="/backend/js/plugins/summernote/summernote.min.js"></script>
+<!-- Button disabled when click -->
+<script type="text/javascript" src="/backend/js/buttondisabled.js"></script>
+<!-- Toastr script -->
+<script src="/backend/js/plugins/toastr/toastr.min.js"></script>
+<!-- Jquery Validate -->
+<script src="/backend/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+<% for(var i in messages_success) { %>
+    <script type="text/javascript">
+        toastr.success('<%= messages_success[i] %>');
+    </script>
+<% } %>
+<script>
+    $(document).ready(function(){
+        $('.summernote').summernote({
+            height : '300px'
+        });
+    });
+    $(document).ready(function(){
+        $("#form").validate({
+            rules: {
+                nama: {
+                    required: true
+                },
+                isi: {
+                    required: true,
+                    minlength: 20
+                },
+                address: {
+                    required: true
+                },
+                tgl_event: {
+                    required: true
+                },
+                posisi: {
+                    required: true
+                },
+                foto: {
+                    required: true,
+                    extension: "jpg|png|gif"
+                }
+            }
+        });
+    }); 
+</script>
+<script type="text/javascript">
+function initAutocomplete() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: <%-event.latitude%>, lng: <%-event.longitude%>},
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  var marker = new google.maps.Marker({
+    map: map,
+    position: {lat: <%-event.latitude%>, lng: <%-event.longitude%>},
+    title: 'Event Here !'
+  });
+
+  // Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+
+  var markers = [];
+  // [START region_getplaces]
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+  // [END region_getplaces]
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjE5MTfUt5RYaEdA_I_PVvaQJlkro5e80&libraries=places&callback=initAutocomplete" async defer></script>

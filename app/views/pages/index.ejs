@@ -1,0 +1,148 @@
+<% include ../partials/header %>
+<% include ../partials/banner %>	
+	<main id="home-1">
+		<div class="container">
+			<div class="wrapper">
+				<!-- Artikel -->
+				<div class="row">
+				  	<div class="side">
+						<h1>Artikel Terbaru</h1>
+				  	</div>
+					<% articles.forEach(function(data) { %>
+					<% var date = moment(data.tgl_post),
+       					   formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
+
+   					   var url = formatted + slug(data.judul);
+					%>
+					<div class="col-sm-4">
+						<article>
+							<a href="post/<%=url%>">
+								<div class="image">
+									<img src="/uploads/img/<%= data.foto %>" alt="Article Picture" style="width:360px;height:221px">
+									<div class="overlay">
+										<i class="fa fa-eye"></i>
+									</div>
+								</div>
+							</a>
+							<div class="content">
+								<div class="text">
+									<p class="time"><%= data.tgl_posting %></p>
+									<h5><a href="post/<%=url%>"><%= data.judul %></a></h5>
+									<p><%- data.deskripsi %>.</p>
+									<span class="line"></span>
+									<ul class="list-unstyled list-inline bottom">
+										<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>17 comments</a></h2></li>
+										<li class="pull-right">
+											<ul class="list-unstyled list-inline share-like">
+												<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+												<li><a class="tooltips like" href="#"><i class="fa fa-heart"></i><span>12</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>
+					</div>
+					<% }); %>
+				</div> <!-- row -->
+				<div class="row">
+					<a class="big-button" href="/artikel"><span>read more Artikel</span><i class="fa fa-arrow-right"></i></a>
+				</div> <!-- row -->
+				<!-- Berita -->
+				<div class="row">
+				  	<div class="side">
+						<h1>Berita Terbaru</h1>
+				  	</div>
+					<% berita.forEach(function(data) { %>
+					<% var date = moment(data.tgl_post),
+       					   formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
+
+   					   var url = formatted + slug(data.judul);
+					%>
+					<div class="col-sm-4">
+						<article>
+							<a href="post/<%=url%>">
+								<div class="image">
+									<img src="/uploads/img/<%= data.foto %>" alt="Article Picture" style="width:360px;height:221px">
+									<div class="overlay">
+										<i class="fa fa-eye"></i>
+									</div>
+								</div>
+							</a>
+							<div class="content">
+								<div class="text">
+									<p class="time"><%= data.tgl_posing %></p>
+									<h5><a href="artikel/<%=data.url%>"><%= data.judul %></a></h5>
+									<p><%- data.deskripsi %>.</p>
+									<span class="line"></span>
+									<ul class="list-unstyled list-inline bottom">
+										<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>17 comments</a></h2></li>
+										<li class="pull-right">
+											<ul class="list-unstyled list-inline share-like">
+												<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+												<li><a class="tooltips like" href="#"><i class="fa fa-heart"></i><span>12</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>
+					</div>
+					<% }); %>
+				</div> <!-- row -->
+				<div class="row">
+					<a class="big-button" href="/berita"><span>read more Berita</span><i class="fa fa-arrow-right"></i></a>
+				</div> <!-- row -->
+				<!-- Event -->
+				<div class="row">
+				  	<div class="side">
+						<h1>Event Terbaru</h1>
+				  	</div>
+					<!-- Item 1 -->
+					<% event.forEach(function(data) { %>
+					<% var date = moment(data.tgl_post),
+       					   formatted = date.format('YYYY[/]'+data.id_event+'[/]');
+
+   					   var url = formatted + slug(data.nama);
+					%>
+					<div class="col-sm-4">
+						<article>
+							<a href="event/<%=url%>">
+								<div class="image">
+									<img src="/uploads/img/event/<%= data.foto %>" alt="Article Picture" style="width:360px;height:221px">
+									<div class="overlay">
+										<i class="fa fa-eye"></i>
+									</div>
+								</div>
+							</a>
+							<div class="content">
+								<div class="text">
+									<p class="time"><%= data.tgl_posing %></p>
+									<h5><a href="event/<%=url%>"><%= data.nama %></a></h5>
+									<% 	var arrayisi = striptags(data.deskripsi).split(' ');
+        								var sliceisi = arrayisi.slice(0,17); %>
+									<p><%- sliceisi.join(' ') %>.</p>
+									<span class="line"></span>
+									<ul class="list-unstyled list-inline bottom">
+										<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>17 comments</a></h2></li>
+										<li class="pull-right">
+											<ul class="list-unstyled list-inline share-like">
+												<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+												<li><a class="tooltips like" href="#"><i class="fa fa-heart"></i><span>12</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>
+					</div>
+					<% }); %>
+				</div> <!-- row -->
+			</div> <!-- wrapper -->
+			<div class="row">
+				<a class="big-button" href="/event"><span>read more Event</span><i class="fa fa-arrow-right"></i></a>
+			</div> <!-- row -->
+		</div> <!-- container -->
+		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
+	</main>
+<% include ../partials/footer %>

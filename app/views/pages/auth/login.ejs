@@ -1,0 +1,48 @@
+<% include ../../partials/header %>
+
+	</header>
+	<main id="contacts">
+		<div class="container">
+			<div class="wrapper">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<section class="main">
+							<div class="content-block">
+								<div class="text">
+								<% for(var i in messages_errors) { %>
+    								<div class="alert alert-danger alert-dismissable">
+                                		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                		<li><%= messages_errors[i] %></li>
+                            		</div>
+                            	<% } %>
+                            	<% for(var i in messages_success) { %>
+    								<div class="alert alert-success alert-dismissable">
+                                		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                		<li><%= messages_success[i] %></li>
+                            		</div>
+                            	<% } %>
+									<h5>some information</h5>
+									<p>Sed mollis, nisl sit amet euismod feugiat, ante felis dapibus ligula, eget facilisis mi nibh at ligula. Nunc egestas ullamcorper sem vel iaculis. Nullam fringilla metus venenatis varius gravida. Vivamus mi eros, rhoncus quis tristique non, tincidunt ut odio. Suspendisse potenti.</p>
+									<h5>Login</h5>
+									<form action="/login" class="forms" method="post">
+										<div class="row">
+											<div class="col-md-12 col-sm-12">
+												<p><input type="text" name="email" placeholder="Email"></p>
+											</div>
+											<div class="col-md-12 col-sm-12">
+												<p><input type="password" name="password" placeholder="Password"></p>
+											</div>
+										</div>
+										<button type="submit" class="mini-button">send</button> or <a href="/register">Register</a>
+										<span class="result"></span>
+									</form>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</section>
+					</div>
+				</div> <!-- row -->
+			</div> <!-- wrapper -->
+		</div> <!-- container -->
+		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
+	</main>
+<% include ../../partials/footer %>

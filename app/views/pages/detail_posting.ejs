@@ -1,0 +1,50 @@
+<% include ../partials/header %>
+<% include ../partials/banner %>	
+	<main id="blog-post">
+		<div class="container">
+			<div class="wrapper">
+				<div class="row">
+					<div class="col-md-9">
+					<div class="side" style="margin-bottom:0px;background:#5098D3">
+						<h1>Detail <%=articles.kategori%> (<%=articles.judul%>)</h1>
+				  	</div>
+						<article>
+							<img class="head" src="/uploads/img/<%=articles.foto%>" alt="Article Picture" style="width:847.5px;height:400px">
+							<div class="content">
+								<div class="text">
+									<p class="time"><%= moment(articles.tgl_posting).format('DD MMM, YYYY')%></p>
+									<h5><%=articles.judul %></h5>
+									<%-articles.isi%>
+									<span class="line"></span>
+									<ul class="list-unstyled list-inline bottom">
+										<li class="tags">
+											<h3>
+												<i class="fa fa-tags"></i>
+												<a href="#">#nature</a>
+												<a href="#">#landscape</a>
+												<a href="#">#flowers</a>
+												<a href="#">#travel</a>
+												<a href="#">#photography</a>
+												<a href="#">#forest</a>
+											</h3>
+										</li>
+										<li class="pull-right">
+											<ul class="list-unstyled list-inline share-like">
+												<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+												<li><a class="tooltips like" href="#"><i class="fa fa-heart"></i><span>12</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>					
+					</div>
+				<% include ../partials/nav %>
+				</div> <!-- row -->
+			</div> <!-- wrapper -->
+		</div> <!-- container -->
+		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
+	</main>
+<% include ../partials/footer %>
+					
+					
