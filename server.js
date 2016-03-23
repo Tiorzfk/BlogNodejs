@@ -4,9 +4,10 @@ var config = require('./config/config'),
 	express = require('./config/express'),
 	passport = require('./config/passport'),
 	passportadmin = require('./config/passportadmin');
+	mongoose = require('./config/mongoose'),
 
-var	app = express(),
-	passportadmin = passportadmin(),
+var db = mongoose(),
+	app = express(),
 	passport = passport();
 
 app.listen(config.port);

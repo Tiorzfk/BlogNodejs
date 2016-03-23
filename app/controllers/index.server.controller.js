@@ -225,4 +225,3 @@ exports.event = function(req, res, next) {
         });
     });
 };
-
