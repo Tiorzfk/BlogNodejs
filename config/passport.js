@@ -17,6 +17,6 @@ module.exports = function() {
             done(err, user[0]);
         });*/
     });
-    //require('./strategies/localadmin.js')();
+    //require('./strategies/localadmin.js');
     require('./strategies/local.js')();
 };
