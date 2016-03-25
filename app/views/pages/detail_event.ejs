@@ -44,7 +44,7 @@ var params = {
 						<h1>Detail Event (<%=events.nama%>)</h1>
 				  	</div>
 						<article>
-							<img class="head" src="/uploads/img/event/<%=events.foto%>" alt="Article Picture" style="width:652.5px;height:400px">
+							<img class="head" src="/uploads/img/event/<%=events.foto%>" alt="<%=events.nama%>" style="width:652.5px;height:400px">
 							<div class="content">
 								<div class="text">
 									<p class="time"><%= moment(events.tgl_posting).format('DD MMM YYYY')%></p>

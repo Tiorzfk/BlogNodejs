@@ -1,5 +1,4 @@
-
-var port = 1337;
+var port = process.env.port;
 
 var konek = {
    host     : 'ap-cdbr-azure-southeast-b.cloudapp.net',
