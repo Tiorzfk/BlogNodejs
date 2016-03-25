@@ -91,7 +91,7 @@ exports.detailposting = function(req, res, next) {
 exports.detailevent = function(req, res, next) {
     var id = req.params.id;
         DB.query('SELECT * FROM tb_banner',function(error, banner){
-            DB.query('SELECT event.nama,tgl_posting,tgl_event,foto,isi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin ON admin.id_admin=event.id_admin WHERE id_event='+id,function(err, events){
+            DB.query('SELECT event.nama,tgl_posting,tgl_event,foto,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin ON admin.id_admin=event.id_admin WHERE id_event='+id,function(err, events){
                 if (err) {
                     return next(err);
                 } else {
@@ -213,6 +213,7 @@ exports.event = function(req, res, next) {
                                         event: event,
                                         berita: berita,
                                         banner: banner,
+                                        striptags: striptags,
                                         email: req.user ? req.user.email : '',
                                         jenis_user: req.user ? req.user.jenis_user : ''
                                     });

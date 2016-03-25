@@ -27,7 +27,9 @@
 										<div class="text">
 											<p class="time"><%=data.tgl_posting%></p>
 											<h5><a href="event/<%=url%>"><%=data.nama%></a></h5>
-											<p><%=data.deskripsi%></p>
+											<% 	var arrayisi = striptags(data.deskripsi).split(' ');
+        										var sliceisi = arrayisi.slice(0,17); %>
+												<p><%- sliceisi.join(' ') %>.</p>
 											<span class="line"></span>
 											<ul class="list-unstyled list-inline bottom">
 												<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>10 comments</a></h2></li>

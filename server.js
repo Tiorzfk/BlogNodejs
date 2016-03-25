@@ -11,7 +11,7 @@ var app = express(),
 	passport = passport();
 
 var server = http.createServer(app);
-server.listen(process.env.port);
+server.listen(config.port);
 
 module.exports = app;
 console.log(process.env.NODE_ENV + ' server running at http://localhost:' + config.port);
