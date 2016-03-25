@@ -314,11 +314,7 @@ nav {
 }
 
 .navbar {
-
 	background: #3475A9;
-
-	background: #fff;
-
 	min-height: 70px;
 	box-shadow: none;
 	border: none;
@@ -331,11 +327,7 @@ nav {
 }
 
 .navbar li a {
-
 	color: #fff;
-
-	color: #656d78;
-
 	text-transform: uppercase;
 	padding: 25px;
 	-webkit-transition: all .25s ease;
@@ -345,24 +337,15 @@ nav {
 }
 
 .navbar li a.current {
-
 	color: #fff;
-
-	color: #50c1e9;
-
 }
 
 .navbar li a:hover,
 .navbar li a:active,
 .navbar li a:focus,
 .navbar li a.current:hover {
-
 	background: #60AAE6;
 	color: #fff;
-
-	background: #fff;
-	color: #50c1e9;
-
 	outline: none;
 }
 
@@ -370,27 +353,20 @@ nav {
 	content: "\f0d7";
 	font-family: FontAwesome;
 	font-size: 10px;
-
 	color: #fff;
-
-	color: #656d78;
-
 	padding-left: 5px;
 }
 
 .navbar li.dropdown a.current:after {
-
 	color: #fff;
 }
 
 .navbar li.dropdown:hover a:after {
 	color: #fff;
-
-	color: #50c1e9;
 }
 
 .navbar li.dropdown:hover a:after {
-	color: #50c1e9;
+	color: #fff;
 
 }
 
@@ -430,7 +406,6 @@ nav {
 .navbar li.dropdown ul li a {
 	display: block;
 	color: #fff;
-	color: #656d78;
 	text-align: left;
 	padding: 10px 25px;
 }
@@ -449,13 +424,13 @@ nav {
 }
 
 .navbar-toggle {
-	background: #fff;
+	background: #136AAF;
 	margin: 13px;
 }
 
 .navbar-toggle i {
 	font-size: 21px;
-	color: #434a54;
+	color: #fff;
 }
 
 /*------------------------
@@ -2061,11 +2036,7 @@ article#text .content {
 ------------------------*/
 
 footer {
-
 	background: #246090;
-
-	background: #434a54;
-
 	min-height: 80px;
 }
 

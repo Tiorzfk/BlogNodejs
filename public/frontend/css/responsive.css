@@ -112,7 +112,7 @@
 	}
 
 	.navbar li a {
-		color: #656d78;
+		color: #fff;
 		padding: 10px;
 		text-align: center;
 	}
@@ -120,8 +120,8 @@
 	.navbar li a:hover,
 	.navbar li a:active,
 	.navbar li a:focus {
-		background: #fff;
-		color: #50c1e9;
+		background: #60AAE6;
+		color: #fff;
 	}
 
 	.navbar li.dropdown:hover ul {
