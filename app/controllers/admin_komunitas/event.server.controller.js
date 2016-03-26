@@ -188,7 +188,7 @@ exports.delete = function(req, res, next) {
                         fs.unlink('public/uploads/img/event/'+data.foto);
                     }
                 });
-                req.flash('success', message);
+                req.flash('success', 'Berhasil Dihapus.');
                 return res.redirect('/admin-komunitas/event');
             }
         });
