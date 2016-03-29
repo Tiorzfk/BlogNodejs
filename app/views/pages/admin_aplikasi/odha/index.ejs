@@ -61,9 +61,9 @@
                                     <td><%= data.email %></td>
                                     <td><%= data.jk%></td>
                                     <td><%= data.tgl_lahir%></td>        
-                                    <td><center><a href="/admin-aplikasi/odha/delete/<%=data.id_user%>" class="btn btn-info btn-xs">Delete</a>
+                                    <td><center><a href="/admin-aplikasi/odha/delete/<%=data.id_user%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus user <%=data.nama%> ?')">Delete</a>
                                     <% if(data.status === "0"){ %>
-                                        <a href="/admin-aplikasi/verifikasi/<%=data.jenis_user%>/<%=data.id_user%>" class="btn btn-info btn-xs">Verifikasi</a>
+                                        <a href="/admin-aplikasi/verifikasi/<%=data.jenis_user%>/<%=data.id_user%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menmverifikasi user <%=data.nama%> ?')">Verifikasi</a>
                                     <% } else { %>
                                         <a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a>
                                     <% } %></center></td>

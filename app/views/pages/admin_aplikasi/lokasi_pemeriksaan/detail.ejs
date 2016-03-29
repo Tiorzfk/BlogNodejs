@@ -10,7 +10,7 @@ var params = {
   markers: [
     {
       location: results[0].formattedAddress,
-      label   : 'E',
+      label   : 'L',
       color   : 'green',
       shadow  : true
     },
@@ -58,12 +58,12 @@ var params = {
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                       <h5>Halaman Detail Event <small>Menampilkan detail Event. </small></h5>                
+                       <h5>Halaman Detail Lokasi Pemeriksaan <small>Menampilkan detail lokasi pemeriksaan. </small></h5>                
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="ibox-title">
-                                <h5>Lokasi Event</h5>                  
+                                <h5>Lokasi Pemeriksaan</h5>                  
                             </div>
                             <div class="ibox-content">
                                 <p class="title">Alamat : </p><%- results[0].formattedAddress %><p><br>
@@ -71,15 +71,9 @@ var params = {
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="ibox-title">
-                                <h5>Event <%=event.nama%></h5><small><%=event.tgl_posting%></small>                
-                            </div>
                             <div class="ibox-content">
-                                <p class="title"><strong>Foto : </strong></p><center><img src="/uploads/img/event/<%=event.foto%>" style="width:400px;height:150px"></center><p><br>
-                                <p class="title"><strong>Pengirim : </strong><%= event.pengirim %></p><br>
-                                <p class="title"><strong>Nama Event : </strong></p><%= event.nama %><p><br>
-                                <p class="title"><strong>Tanggal Event : </strong></p><%= event.tgl_event %><p><br>
-                                <p class="title"><strong>Deskripsi : </strong></p><%- event.deskripsi %><p><br>
+                                <p class="title"><strong>Pengirim : </strong><%= lp.pengirim %></p><br>
+                                <p class="title"><strong>Nama Lokasi Pemeriksaan : </strong></p><%= lp.nama %><p><br>
                             </div>
                         </div>
                     </div>

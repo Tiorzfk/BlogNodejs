@@ -55,7 +55,7 @@
                                     <td><%= data.email %></td>
                                     <td><%= data.jk%></td>
                                     <td><%= data.tgl_lahir%></td>        
-                                    <td><center><a href="/admin-aplikasi/sahabat_odha/delete/<%=data.id_user%>" class="btn btn-info btn-xs">Delete</a>
+                                    <td><center><a href="/admin-aplikasi/sahabat_odha/delete/<%=data.id_user%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus user <%=data.nama%> ?')">Delete</a>
                                 </tr>
                             <% }); %>
                             </tbody>

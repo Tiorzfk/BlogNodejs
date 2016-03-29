@@ -51,10 +51,10 @@
                                     <td><%= data.nama %></td>                                         
                                     <td><%= data.tgl_event %></td>
                                     <td><%= data.tgl_posting %></td>
-                                    <td><center><a href="/admin-aplikasi/event/delete/<%=data.id_event%>" class="btn btn-info btn-xs">Delete</a>
+                                    <td><center><a href="/admin-aplikasi/event/delete/<%=data.id_event%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus event <%=data.nama%> ?')">Delete</a>
                                     <a href="/admin-aplikasi/event/detail/<%=data.id_event%>" class="btn btn-info btn-xs">Detail</a>
                                     <% if(data.status === "0"){ %>
-                                        <a href="/admin-aplikasi/verifikasi_event/<%=data.id_event%>" class="btn btn-info btn-xs">Verifikasi</a>
+                                        <a href="/admin-aplikasi/verifikasi_event/<%=data.id_event%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menmverifikasi event <%=data.nama%> ?')">Verifikasi</a>
                                     <% } else { %>
                                         <a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a>
                                     <% } %>

@@ -16,6 +16,6 @@ function simpleLoad(btn, state) {
         setTimeout(function () {
             btn.attr('disabled',false);
             btn.contents().last().replaceWith(" Save");
-        }, 3000);
+        }, 5000);
     }
 }

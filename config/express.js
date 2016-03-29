@@ -41,7 +41,8 @@ module.exports = function() {
     require('../app/routes/admin_aplikasi/user.server.routes.js')(app);
     require('../app/routes/admin_aplikasi/posting.server.routes.js')(app);
     require('../app/routes/admin_aplikasi/event.server.routes.js')(app);
-     require('../app/routes/admin_aplikasi/pemeriksaan.server.routes.js')(app);
+    require('../app/routes/admin_aplikasi/pemeriksaan.server.routes.js')(app);
+    require('../app/routes/admin_aplikasi/obat.server.routes.js')(app);
 
     app.use(express.static('./public'));
 

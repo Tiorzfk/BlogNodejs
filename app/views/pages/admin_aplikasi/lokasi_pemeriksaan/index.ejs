@@ -44,7 +44,7 @@
                                 <tr>
                                     <th width="30%">Nama Lokasi</th>
                                     <th width="30%">Pengirim</th>
-                                    <th width="15%">Option</th>
+                                    <th width="20%">Option</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,8 +52,9 @@
                                 <tr>
                                     <td><%= data.nama %></td>
                                     <td><%= data.pengirim %></td>  
-                                    <td><center><a href="/admin-aplikasi/lokasi-pemeriksaan/edit/<%=data.id_artikel%>" class="btn btn-info btn-xs">Edit</a>
-                                    <a href="/admin-aplikasi/lokasi-pemeriksaan/delete/<%=data.id_artikel%>" class="btn btn-info btn-xs">Delete</a></center></td>
+                                    <td><center><a href="/admin-aplikasi/lokasi-pemeriksaan/edit/<%=data.id_lokasi%>" class="btn btn-info btn-xs">Edit</a>
+                                    <a href="/admin-aplikasi/lokasi-pemeriksaan/detail/<%=data.id_lokasi%>" class="btn btn-info btn-xs">Lihat Lokasi</a>
+                                    <a href="/admin-aplikasi/lokasi-pemeriksaan/hapus/<%=data.id_lokasi%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus lokasi <%=data.nama%> ?')">Delete</a></center></td>
                                 </tr>
                             <% }); %>
                             </tbody>

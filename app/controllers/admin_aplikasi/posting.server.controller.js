@@ -16,11 +16,11 @@ exports.VerifikasiPosting = function(req, res, next) {
                     DB.query('SELECT * FROM posting WHERE id_posting=?',req.params.id,function(err,data){
                         data.forEach(function(data) {
                             if(req.params.kategori === "Artikel"){
-                                var message = 'Artikel '+data.judul+' Berhasil di Verifikasi';
+                                var message = 'Artikel dengan judul '+data.judul+' Berhasil di Verifikasi';
                                 req.flash('success', message);
                                 return res.redirect('/admin-aplikasi/artikel');
                             }else{
-                                var message = 'Berita '+data.judul+' Berhasil di Verifikasi';
+                                var message = 'Berita dengan judul '+data.judul+' Berhasil di Verifikasi';
                                 req.flash('success', message);
                                 return res.redirect('/admin-aplikasi/berita');
                             }
