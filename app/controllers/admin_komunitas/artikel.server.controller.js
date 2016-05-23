@@ -238,7 +238,7 @@ exports.delete = function(req, res, next) {
 exports.list = function(req, res, next) {
     if (req.user) {
         if (req.user.jenis_admin === 'admin komunitas') { 
-            DB.query('SELECT * FROM posting',function(err,articles){
+            DB.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting',function(err,articles){
                 if (err) {
                     return next(err);
                 } else {

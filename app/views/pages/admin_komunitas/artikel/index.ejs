@@ -35,6 +35,7 @@
                                 <tr>
                                     <th width="30%">Judul</th>
                                     <th>Isi</th>
+                                    <th width="8%">Kategori</th>
                                     <th width="10%">Status</th>
                                     <th width="15%">Option</th>
                                 </tr>
@@ -44,6 +45,7 @@
                                 <tr>
                                     <td><%= data.judul %></td>
                                     <td><%= data.deskripsi %>.</td>
+                                    <td><%= data.nama %></td>
                                     <% if(data.status==="0"){%>
                                         <td><center><small class="btn btn-danger btn-xs" disabled>Pending...</small></center></td>
                                     <% } else { %>   

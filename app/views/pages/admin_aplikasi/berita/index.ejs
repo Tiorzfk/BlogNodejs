@@ -61,7 +61,7 @@
                                     <td><%= data.tgl_posting%></td>      
                                     <td><center><a href="/admin-aplikasi/artikel/delete/<%=data.id_posting%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus berita <%=data.judul%> ?')">Delete</a>
                                     <% if(data.status === "0"){ %>
-                                        <a href="/admin-aplikasi/verifikasi_posting/<%=data.kategori%>/<%=data.id_posting%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menmverifikasi berita <%=data.judul%> ?')">Verifikasi</a>
+                                        <a href="/admin-aplikasi/verifikasi_posting/Berita/<%=data.id_posting%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menmverifikasi berita <%=data.judul%> ?')">Verifikasi</a>
                                     <% } else { %>
                                         <a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a>
                                     <% } %></center></td>

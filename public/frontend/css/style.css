@@ -1,5 +1,5 @@
 /*
-
+#297FD4
 /*--------------------------------------------------------
 
 	Main Stylesheet
@@ -314,7 +314,7 @@ nav {
 }
 
 .navbar {
-	background: #3475A9;
+	background: #297FD4;
 	min-height: 70px;
 	box-shadow: none;
 	border: none;
@@ -617,7 +617,7 @@ nav {
 .side {
 	width: 100%;
 	height: 50px;
-	background: #60AAE6;
+	background: #297FD4;
 	color: #fff;
 	padding: 0 30px;
 	margin-bottom: 40px;
@@ -2032,7 +2032,7 @@ article#text .content {
 ------------------------*/
 
 footer {
-	background: #345F82;
+	background: #297FD4;
 	min-height: 80px;
 }
 

@@ -1,18 +1,22 @@
 	<!-- Head -->
 		<section id="head">
 			<div class="carousel-inner">
-				<div class="flexslider">
-					<ul class="slides">
-					<% banner.forEach(function(data) { %>
-						<li>
-							<div class="carousel-caption">
-								<h5><%=data.nama_banner%></h5>
-							</div>
-							<img src="/uploads/banner/<%=data.banner_img%>" class="head-image">
-						</li>
-					<% }); %>
-					</ul>
-				</div>
+			<!--<div class="row">
+				<div class="col-md-8"-->
+					<div class="flexslider">
+						<ul class="slides">
+							<% banner.forEach(function(data) { %>
+								<li>
+								<div class="carousel-caption">
+									<h5><%=data.nama_banner%></h5>
+								</div>
+								<img src="/uploads/banner/<%=data.banner_img%>" class="head-image">
+							</li>
+						<% }); %>
+						</ul>
+					</div>
+			<!--	</div>
+			</div>-->
 			</div>
 		</section>
 	</header>

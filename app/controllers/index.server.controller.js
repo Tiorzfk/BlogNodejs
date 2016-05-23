@@ -19,9 +19,9 @@ exports.testsms = function(req, res, next){
 }
 
 exports.render = function(req, res, next) {
-	DB.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(err, articles){
-        DB.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(err, berita){  
-            DB.query('SELECT id_event,foto,tgl_posting,nama,deskripsi FROM event ORDER BY tgl_posting DESC LIMIT 3',function(err, event){      
+	DB.query('SELECT * FROM posting WHERE id_kategori=2 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(err, articles){
+        DB.query('SELECT * FROM posting WHERE id_kategori=1 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(err, berita){  
+            DB.query('SELECT id_event,foto,tgl_posting,nama,deskripsi FROM event WHERE status="1" ORDER BY tgl_posting DESC LIMIT 3',function(err, event){      
             	if (err) {
                 	return next(err);
                 } else {
