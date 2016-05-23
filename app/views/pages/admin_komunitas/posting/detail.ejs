@@ -6,13 +6,13 @@
         </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-12">
-                    <h2><%=title%> <font size="3px"><%=email%></font></h2>
+                    <h2><%=title%> <%=artikel.kategori%> <font size="3px"><%=email%></font></h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.html">This is</a>
                         </li>
                         <li class="active">
-                            <strong><%=title%></strong>
+                            <strong><%=title%> <%=artikel.kategori%></strong>
                         </li>
                     </ol>
                 </div>
@@ -21,7 +21,7 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                       <h5>Halaman Detail Artikel <small>Menampilkan detail artikel. </small></h5>                
+                       <h5>Halaman Detail <%=artikel.kategori%> <small>Menampilkan detail <%=artikel.kategori%>. </small></h5>                
                     </div>
                     <div class="ibox-content">
                         <div class="row">
@@ -29,7 +29,7 @@
                                 <div class="widget-head-color-box navy-bg p-sm text-center">
                                     <div>
                                         <h2 class="font-bold no-margins">
-                                            Detail <%=artikel.judul%>
+                                            [<%=artikel.kategori%>] <%=artikel.judul%>
                                         </h2>
                                             <small>Pengirim: <%=artikel.pengirim%></small><br><small><%= artikel.tgl_posting %></small>
                                     </div>

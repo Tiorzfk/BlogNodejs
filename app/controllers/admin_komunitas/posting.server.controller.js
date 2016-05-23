@@ -57,8 +57,8 @@ exports.renderNew = function(req, res, next) {
     if (req.user) {
         if (req.user.jenis_admin === 'admin komunitas') { 
             DB.query('SELECT * FROM kategori ',function(err, kategori){
-                res.render('pages/admin_komunitas/artikel/new', {
-                    title: 'Tambah Artikel',
+                res.render('pages/admin_komunitas/posting/new', {
+                    title: 'Tambah Posting',
                     messages_errors: req.flash('error'),
                     messages_success: req.flash('success'),
                     email: req.user ? req.user.email : '',
@@ -89,7 +89,7 @@ exports.new = function(req, res, next) {
     upload(req,res,function(errupload) {
         if(req.body.isi.length<30){
             req.flash('error', 'Maaf, Deskripsi yang anda masukan tidak boleh kurang dari 30.');
-            return res.redirect('/admin-komunitas/artikel/new');
+            return res.redirect('/admin-komunitas/posting/new');
         }
         //error upload foto
         if(errupload) {
@@ -120,11 +120,11 @@ exports.new = function(req, res, next) {
                 //res.json(err);
                 fs.unlink('public/uploads/img/'+data.foto);
                 req.flash('error', err.errors);
-                return res.redirect('/admin-komunitas/artikel/new');
+                return res.redirect('/admin-komunitas/posting/new');
             }
             var message = 'Berhasil';
             req.flash('success', message);
-            return res.redirect('/admin-komunitas/artikel/new');
+            return res.redirect('/admin-komunitas/posting/new');
         });
     });
 };
@@ -132,13 +132,13 @@ exports.new = function(req, res, next) {
 exports.renderEdit = function(req, res, next) {
     if (req.user) {
         if (req.user.jenis_admin === 'admin komunitas') { 
-            DB.query('SELECT * FROM posting WHERE id_posting=?',req.params.id,function(err,articles){
+            DB.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE id_posting=?',req.params.id,function(err,articles){
                 if (err) {
                     return next(err);
                 } else {
                     articles.forEach(function(data){
-                        res.render('pages/admin_komunitas/artikel/edit', {
-                            title: 'Edit Artikel',
+                        res.render('pages/admin_komunitas/posting/edit', {
+                            title: 'Edit',
                             artikel: data,
                             messages_errors: req.flash('error'),
                             messages_success: req.flash('success'),
@@ -207,7 +207,7 @@ exports.edit = function(req, res, next) {
                 }
                 var message = 'Berhasil Diubah';
                 req.flash('success', message);
-                return res.redirect('/admin-komunitas/artikel');
+                return res.redirect('/admin-komunitas/posting');
             }
         });
     });
@@ -220,7 +220,7 @@ exports.delete = function(req, res, next) {
             if(err){
                 var message = err;
                 req.flash('error', message);
-                return res.redirect('/admin-komunitas/artikel');
+                return res.redirect('/admin-komunitas/posting');
             }else{
                 data.forEach(function(data){
                     if(data.foto){
@@ -229,7 +229,7 @@ exports.delete = function(req, res, next) {
                 });
                 var message = "Data Berhasil Dihapus.";
                 req.flash('success', message);
-                return res.redirect('/admin-komunitas/artikel');
+                return res.redirect('/admin-komunitas/posting');
             }
         });
     });
@@ -242,8 +242,8 @@ exports.list = function(req, res, next) {
                 if (err) {
                     return next(err);
                 } else {
-                    res.render('pages/admin_komunitas/artikel/index', {
-                        title: 'Data Artikel',
+                    res.render('pages/admin_komunitas/posting/index', {
+                        title: 'Data Posting',
                         articles: articles,
                         striptags: striptags,
                         messages_success: req.flash('success'),
@@ -260,40 +260,16 @@ exports.list = function(req, res, next) {
     }
 };
 
-exports.mylist = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
-            DB.query('SELECT * FROM posting WHERE id_admin=?',req.user.id_admin,function(err,articles){
-                if (err) {
-                    return next(err);
-                } else {
-                    res.render('pages/admin_komunitas/artikel/mylist', {
-                        title: 'Data Artikel',
-                        articles: articles,
-                        striptags: striptags,
-                        email: req.user ? req.user.email : '',
-                        jenis: req.user ? req.user.jenis_admin : ''
-                    });
-                }
-            });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
-};
-
 exports.detail = function(req, res, next) {
     if (req.user) {
         if (req.user.jenis_admin === 'admin komunitas') { 
-            DB.query('SELECT judul,isi,tgl_posting,foto,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin WHERE id_posting = ?',req.params.id,function(err,articles){
+            DB.query('SELECT kategori.nama as kategori,judul,isi,tgl_posting,foto,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE id_posting = ?',req.params.id,function(err,articles){
                 if (err) {
                     console.log(err);
                 } else {
                     articles.forEach(function(data){
-                        res.render('pages/admin_komunitas/artikel/detail', {
-                            title: 'Detail Artikel',
+                        res.render('pages/admin_komunitas/posting/detail', {
+                            title: 'Detail',
                             artikel: data,
                             striptags: striptags,
                             email: req.user ? req.user.email : '',

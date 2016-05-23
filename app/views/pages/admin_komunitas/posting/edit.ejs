@@ -12,13 +12,13 @@
         </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-4">
-                    <h2><%=title%></h2>
+                    <h2><%=title%> <%=artikel.nama%></h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.html">This is</a>
                         </li>
                         <li class="active">
-                            <strong><%=title%></strong>
+                            <strong><%=title%> <%=artikel.nama%></strong>
                         </li>
                     </ol>
                 </div>
@@ -27,7 +27,7 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                       <h5>Halaman Edit Form<small>Menampilkan Form untuk mengedit data. </small></h5>                                    
+                       <h5>Halaman Edit Form<small> Menampilkan Form untuk mengedit data. </small></h5>                                    
                     </div>
                     <div class="ibox-content">
                         <% messages_errors.forEach(function(data) { %>

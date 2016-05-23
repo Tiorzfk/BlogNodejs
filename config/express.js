@@ -33,7 +33,7 @@ module.exports = function() {
     require('../app/routes/auth_admin.server.routes.js')(app);
     
     //admin komunitas
-    require('../app/routes/admin_komunitas/artikel.server.routes.js')(app);
+    require('../app/routes/admin_komunitas/posting.server.routes.js')(app);
     require('../app/routes/admin_komunitas/event.server.routes.js')(app);
     //require('../app/routes/admin_komunitas/banner.server.routes.js')(app);
 

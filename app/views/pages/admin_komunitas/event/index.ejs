@@ -45,7 +45,7 @@
                                     <td><%= data.nama %></td>                                         
                                     <td><%= data.tgl_event %></td>
                                     <td><%= data.tgl_posting %></td>
-                                    <td><center><a href="/admin-komunitas/event/detail/<%=data.id_event%>" class="btn btn-info btn-xs">Detail</a><a href="/admin-komunitas/event/edit/<%=data.id_event%>" class="btn btn-info btn-xs">Edit</a><a href="/admin-komunitas/event/delete/<%=data.id_event%>" class="btn btn-info btn-xs">Delete</a></center></td>
+                                    <td><center><a href="/admin-komunitas/event/detail/<%=data.id_event%>" class="btn btn-info btn-xs">Detail</a><a href="/admin-komunitas/event/edit/<%=data.id_event%>" class="btn btn-info btn-xs">Edit</a><a href="/admin-komunitas/event/delete/<%=data.id_event%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus event <%=data.nama%> ?')">Delete</a></center></td>
                                 </tr>       
                             <% }); %>
                             </tbody>
