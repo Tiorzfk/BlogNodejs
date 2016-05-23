@@ -344,7 +344,7 @@ nav {
 .navbar li a:active,
 .navbar li a:focus,
 .navbar li a.current:hover {
-	background: #60AAE6;
+	background: #308FEC;
 	color: #fff;
 	outline: none;
 }

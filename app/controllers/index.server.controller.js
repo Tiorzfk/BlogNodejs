@@ -192,10 +192,10 @@ exports.berita = function(req, res, next) {
 
 exports.event = function(req, res, next) {
     DB.query('SELECT * FROM kategori',function(error, kategori){
-        DB.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            DB.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                DB.query('SELECT * FROM event ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    DB.query('SELECT * FROM event ORDER BY tgl_posting DESC',function(err, events){
+        DB.query('SELECT * FROM posting WHERE id_kategori=1 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
+            DB.query('SELECT * FROM posting WHERE id_kategori=2 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
+                DB.query('SELECT * FROM event WHERE status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
+                    DB.query('SELECT * FROM event WHERE status="1" ORDER BY tgl_posting DESC',function(err, events){
                         if (err) {
                             return next(err);
                         } else {
