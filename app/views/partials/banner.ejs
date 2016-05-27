@@ -5,14 +5,14 @@
 				<div class="col-md-8"-->
 					<div class="flexslider">
 						<ul class="slides">
-							<% banner.forEach(function(data) { %>
+							<% for(var i=0; i<banner.length; i++) { %>
 								<li>
 								<div class="carousel-caption">
-									<h5><%=data.nama_banner%></h5>
+									<h5><%=banner[i].nama_banner%></h5>
 								</div>
-								<img src="/uploads/banner/<%=data.banner_img%>" class="head-image">
+								<img src="/uploads/banner/<%=banner[i].banner_img%>" class="head-image">
 							</li>
-						<% }); %>
+							<% }; %>
 						</ul>
 					</div>
 			<!--	</div>

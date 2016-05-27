@@ -14,14 +14,14 @@
 									<div class="body">
 										<div class="content">
 											<ul class="list-unstyled">
-											<% kategori.forEach(function(data){ %>
-												<li><p><a href="/<%=data.nama%>"><%=data.nama%><span>
-												<% if(data.nama==="Berita"){%>
+											<% for(var i=0; i<kategori.length; i++) {%>
+												<li><p><a href="/<%=kategori[i].nama%>"><%=kategori[i].nama%><span>
+												<% if(kategori[i].nama==="Berita"){%>
 													<%=berita.length%>
 												<%}else{%>
 													<%=artikel.length%>
 												<% } %></span></a></p></li>
-											<% }); %>
+											<% }; %>
 												<li><p><a href="/event">Event<span><%=event.length%></span></a></p></li>
 											</ul>
 										</div> <!-- content -->
@@ -33,15 +33,15 @@
 									<div class="body">
 										<div class="content">
 											<ul class="list-unstyled">
-											<% event.forEach(function(data){%>
-											<% var date = moment(data.tgl_post),
-       					   						formatted = date.format('YYYY[/]'+data.id_event+'[/]');
-   					   							var url = formatted + slug(data.nama);%>
+											<% for(var i=0; i<event.length; i++) {%>
+											<% var date = moment(event[i].tgl_post),
+       					   						formatted = date.format('YYYY[/]'+event[i].id_event+'[/]');
+   					   							var url = formatted + slug(event[i].nama);%>
 												<li>
-													<p><a href="/event/<%=url%>"><%=data.nama%>.</a></p>
-													<p class="time"><%= moment(data.tgl_posting).format('DD MMM YYYY') %></p>
+													<p><a href="/event/<%=url%>"><%=event[i].nama%>.</a></p>
+													<p class="time"><%= moment(event[i].tgl_posting).format('DD MMM YYYY') %></p>
 												</li>
-											<% }); %>
+											<% }; %>
 											</ul>
 										</div> <!-- content -->
 									</div> <!-- body -->
@@ -52,15 +52,15 @@
 									<div class="body">
 										<div class="content">
 											<ul class="list-unstyled">
-											<% berita.forEach(function(data){ %>
-											<% var date = moment(data.tgl_post),
-       					   						formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
-   					   							var url = formatted + slug(data.judul);%>
+											<% for(var i=0; i<berita.length; i++) {%>
+											<% var date = moment(berita[i].tgl_post),
+       					   						formatted = date.format('YYYY[/]'+berita[i].id_posting+'[/]');
+   					   							var url = formatted + slug(berita[i].judul);%>
 												<li>
-													<p><a href="/post/<%=url%>"><%=data.judul%>.</a></p>
-													<p class="time"><%= moment(data.tgl_posting).format('DD MMM YYYY') %></p>
+													<p><a href="/post/<%=url%>"><%=berita[i].judul%>.</a></p>
+													<p class="time"><%= moment(berita[i].tgl_posting).format('DD MMM YYYY') %></p>
 												</li>
-											<% }); %>
+											<% }; %>
 											</ul>
 										</div> <!-- content -->
 									</div> <!-- body -->
@@ -71,15 +71,15 @@
 									<div class="body">
 										<div class="content">
 											<ul class="list-unstyled">
-											<% artikel.forEach(function(data){ %>
-											<% var date = moment(data.tgl_post),
-       					   						formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
-   					   							var url = formatted + slug(data.judul);%>
+											<% for(var i=0; i<artikel.length; i++) {%>
+											<% var date = moment(artikel[i].tgl_post),
+       					   						formatted = date.format('YYYY[/]'+artikel[i].id_posting+'[/]');
+   					   							var url = formatted + slug(artikel[i].judul);%>
 												<li>
-													<p><a href="/post/<%=url%>"><%=data.judul%>.</a></p>
-													<p class="time"><%= moment(data.tgl_posting).format('DD MMM YYYY') %></p>
+													<p><a href="/post/<%=url%>"><%=artikel[i].judul%>.</a></p>
+													<p class="time"><%= moment(artikel[i].tgl_posting).format('DD MMM YYYY') %></p>
 												</li>
-											<% }); %>
+											<% }; %>
 											</ul>
 										</div> <!-- content -->
 									</div> <!-- body -->

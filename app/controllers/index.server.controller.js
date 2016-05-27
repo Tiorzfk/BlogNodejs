@@ -4,7 +4,8 @@ var DB = require('../../config/db').DB,
     slug = require("slug"),
     moment = require("moment"),
     geocoder = require('../../config/geocoder').geocoder,
-    nexmo = require('easynexmo');
+    nexmo = require('easynexmo'),
+    request = require("request");
 
     nexmo.initialize('e44219fb', '35339240f1dc297e', true);
 
@@ -19,73 +20,58 @@ exports.testsms = function(req, res, next){
 }
 
 exports.render = function(req, res, next) {
-	DB.query('SELECT * FROM posting WHERE id_kategori=2 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(err, articles){
-        DB.query('SELECT * FROM posting WHERE id_kategori=1 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(err, berita){  
-            DB.query('SELECT id_event,foto,tgl_posting,nama,deskripsi FROM event WHERE status="1" ORDER BY tgl_posting DESC LIMIT 3',function(err, event){      
-            	if (err) {
-                	return next(err);
-                } else {
-                    DB.query('SELECT * FROM tb_banner',function(error, banner){
-                        if (err) {
-                            return next(err);
-                        } else {
-                            res.render('pages/index', {
-                                title: 'Halaman Utama',
-                                articles: articles,
-                                moment: moment,
-                                berita: berita,
-                                event: event,
-                                striptags: striptags,
-                                slug: slug,
-                                banner: banner,
-                                email: req.user ? req.user.email : '',
-                                jenis_user: req.user ? req.user.jenis_user : ''
-                            });
-                        }
-                    });
-            	}
+    request({url: "http://localhost:3000/posting/kategori/1",json: true}, function (error, response, berita) {
+        request({url: "http://localhost:3000/posting/kategori/2",json: true}, function (error, response, artikel) {
+            request({url: "http://localhost:3000/event",json: true}, function (error, response, event) {
+                request({url: "http://localhost:3000/banner",json: true}, function (error, response, banner) {
+                    if (!error && response.statusCode === 200) {
+                        res.render('pages/index', {
+                            title: 'Halaman Utama',
+                            artikel: artikel,
+                            moment: moment,
+                            banner: banner,
+                            berita: berita,
+                            event: event,
+                            striptags: striptags,
+                            slug: slug,
+                            email: req.user ? req.user.email : '',
+                            jenis_user: req.user ? req.user.jenis_user : ''
+                        });
+                    }
+                });
             });
         });
     });
+
 };
 
 exports.detailposting = function(req, res, next) {
-    var id = req.params.id;
-    DB.query('SELECT * FROM kategori',function(error, kategori){
-        DB.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            DB.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                DB.query('SELECT * FROM event ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    DB.query('SELECT * FROM tb_banner',function(error, banner){
-                        DB.query('SELECT * FROM posting WHERE id_posting='+id,function(err, articles){
-                            if (err) {
-                                return next(err);
-                            } else {
-                                if(articles){
-                                    articles.forEach(function(data){
-                                        res.render('pages/detail_posting', {
-                                            title: 'Detail Posting',
-                                            articles: data,
-                                            kategori: kategori,
-                                            artikel: artikel,
-                                            moment: moment,
-                                            slug: slug,
-                                            event: event,
-                                            berita: berita,
-                                            banner: banner,
-                                            email: req.user ? req.user.email : ''
-                                        });
-                                    });
-                                } else {
-                                    res.redirect('/GAGAGAGA');
-                                    
-                                }
+    request({url: "http://localhost:3000/kategori",json: true}, function (error, response, kategori) {
+        request({url: "http://localhost:3000/posting/kategori/1",json: true}, function (error, response, berita) {
+            request({url: "http://localhost:3000/posting/kategori/2",json: true}, function (error, response, artikel) {
+                request({url: "http://localhost:3000/event",json: true}, function (error, response, event) {
+                    request({url: "http://localhost:3000/banner",json: true}, function (error, response, banner) {
+                        request({url: "http://localhost:3000/posting/"+req.params.id,json: true}, function (error, response, data) {
+                            if (!error && response.statusCode === 200) {
+                                res.render('pages/detail_posting', {
+                                    title: 'Detail Posting',
+                                    data: data,
+                                    kategori: kategori,
+                                    artikel: artikel,
+                                    moment: moment,
+                                    slug: slug,
+                                    event: event,
+                                    berita: berita,
+                                    banner: banner,
+                                    email: req.user ? req.user.email : ''
+                                });
                             }
                         });
                     });
                 });
             });
         });
-    });     
+    });
 };  
 
 exports.detailevent = function(req, res, next) {

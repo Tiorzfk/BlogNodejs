@@ -1,5 +1,5 @@
 <% include ../partials/header %>
-<% include ../partials/banner %>	
+<% include ../partials/banner %>
 	<main id="home-1">
 		<div class="container">
 			<div class="wrapper">
@@ -8,17 +8,17 @@
 				  	<div class="side">
 						<h1>Artikel Terbaru</h1>
 				  	</div>
-					<% articles.forEach(function(data) { %>
-					<% var date = moment(data.tgl_post),
-       					   formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
+					<% for(var i=0; i<artikel.length; i++) {%>
+					<% var date = moment(artikel[i].tgl_post),
+       					   formatted = date.format('YYYY[/]'+artikel[i].id_posting+'[/]');
 
-   					   var url = formatted + slug(data.judul);
+   					   var url = formatted + slug(artikel[i].judul);
 					%>
 					<div class="col-sm-4">
 						<article>
 							<a href="post/<%=url%>">
 								<div class="image">
-									<img src="/uploads/img/<%= data.foto %>" alt="<%= data.judul%>" style="width:360px;height:221px">
+									<img src="/uploads/img/<%= artikel[i].foto %>" alt="<%= artikel[i].judul%>" style="width:360px;height:221px">
 									<div class="overlay">
 										<i class="fa fa-eye"></i>
 									</div>
@@ -26,9 +26,9 @@
 							</a>
 							<div class="content">
 								<div class="text">
-									<p class="time"><%= data.tgl_posting %></p>
-									<h5><a href="post/<%=url%>"><%= data.judul %></a></h5>
-									<p><%- data.deskripsi %>.</p>
+									<p class="time"><%= artikel[i].tgl_posting %></p>
+									<h5><a href="post/<%=url%>"><%= artikel[i].judul %></a></h5>
+									<p><%- artikel[i].deskripsi %>.</p>
 									<span class="line"></span>
 									<ul class="list-unstyled list-inline bottom">
 										<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>17 comments</a></h2></li>
@@ -43,7 +43,7 @@
 							</div> <!-- content -->
 						</article>
 					</div>
-					<% }); %>
+					<% }; %>
 				</div> <!-- row -->
 				<div class="row">
 					<a class="big-button" href="/artikel"><span>read more Artikel</span><i class="fa fa-arrow-right"></i></a>
@@ -53,17 +53,17 @@
 				  	<div class="side">
 						<h1>Berita Terbaru</h1>
 				  	</div>
-					<% berita.forEach(function(data) { %>
-					<% var date = moment(data.tgl_post),
-       					   formatted = date.format('YYYY[/]'+data.id_posting+'[/]');
+					<% for(var i=0; i<berita.length; i++) { %>
+					<% var date = moment(berita[i].tgl_post),
+       					   formatted = date.format('YYYY[/]'+berita[i].id_posting+'[/]');
 
-   					   var url = formatted + slug(data.judul);
+   					   var url = formatted + slug(berita[i].judul);
 					%>
 					<div class="col-sm-4">
 						<article>
 							<a href="post/<%=url%>">
 								<div class="image">
-									<img src="/uploads/img/<%= data.foto %>" alt="<%=data.judul%>" style="width:360px;height:221px">
+									<img src="/uploads/img/<%= berita[i].foto %>" alt="<%=berita[i].judul%>" style="width:360px;height:221px">
 									<div class="overlay">
 										<i class="fa fa-eye"></i>
 									</div>
@@ -71,9 +71,9 @@
 							</a>
 							<div class="content">
 								<div class="text">
-									<p class="time"><%= data.tgl_posing %></p>
-									<h5><a href="artikel/<%=data.url%>"><%= data.judul %></a></h5>
-									<p><%- data.deskripsi %>.</p>
+									<p class="time"><%= berita[i].tgl_posing %></p>
+									<h5><a href="post/<%=url%>"><%= berita[i].judul %></a></h5>
+									<p><%- berita[i].deskripsi %>.</p>
 									<span class="line"></span>
 									<ul class="list-unstyled list-inline bottom">
 										<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>17 comments</a></h2></li>
@@ -88,7 +88,7 @@
 							</div> <!-- content -->
 						</article>
 					</div>
-					<% }); %>
+					<% }; %>
 				</div> <!-- row -->
 				<div class="row">
 					<a class="big-button" href="/berita"><span>read more Berita</span><i class="fa fa-arrow-right"></i></a>
@@ -99,17 +99,17 @@
 						<h1>Event Terbaru</h1>
 				  	</div>
 					<!-- Item 1 -->
-					<% event.forEach(function(data) { %>
-					<% var date = moment(data.tgl_post),
-       					   formatted = date.format('YYYY[/]'+data.id_event+'[/]');
+					<% for(var i=0; i<event.length; i++) { %>
+					<% var date = moment(event[i].tgl_post),
+       					   formatted = date.format('YYYY[/]'+event[i].id_event+'[/]');
 
-   					   var url = formatted + slug(data.nama);
+   					   var url = formatted + slug(event[i].nama);
 					%>
 					<div class="col-sm-4">
 						<article>
 							<a href="event/<%=url%>">
 								<div class="image">
-									<img src="/uploads/img/event/<%= data.foto %>" alt="<%=data.nama%>" style="width:360px;height:221px">
+									<img src="/uploads/img/event/<%= event[i].foto %>" alt="<%=event[i].nama%>" style="width:360px;height:221px">
 									<div class="overlay">
 										<i class="fa fa-eye"></i>
 									</div>
@@ -117,9 +117,9 @@
 							</a>
 							<div class="content">
 								<div class="text">
-									<p class="time"><%= data.tgl_posing %></p>
-									<h5><a href="event/<%=url%>"><%= data.nama %></a></h5>
-									<% 	var arrayisi = striptags(data.deskripsi).split(' ');
+									<p class="time"><%= event[i].tgl_posing %></p>
+									<h5><a href="event/<%=url%>"><%= event[i].nama %></a></h5>
+									<% 	var arrayisi = striptags(event[i].deskripsi).split(' ');
         								var sliceisi = arrayisi.slice(0,17); %>
 									<p><%- sliceisi.join(' ') %>.</p>
 									<span class="line"></span>
@@ -136,7 +136,7 @@
 							</div> <!-- content -->
 						</article>
 					</div>
-					<% }); %>
+					<% }; %>
 				</div> <!-- row -->
 			</div> <!-- wrapper -->
 			<div class="row">
