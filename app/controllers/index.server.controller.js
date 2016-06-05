@@ -20,10 +20,10 @@ exports.testsms = function(req, res, next){
 }
 
 exports.render = function(req, res, next) {
-    request({url: "http://localhost:3000/posting/kategori/1",json: true}, function (error, response, berita) {
-        request({url: "http://localhost:3000/posting/kategori/2",json: true}, function (error, response, artikel) {
-            request({url: "http://localhost:3000/event",json: true}, function (error, response, event) {
-                request({url: "http://localhost:3000/banner",json: true}, function (error, response, banner) {
+    request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
+        request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
+            request({url: "http://apicomrade.azurewebsites.net/event/",json: true}, function (error, response, event) {
+                request({url: "http://localhost:3000/banner/",json: true}, function (error, response, banner) {
                     if (!error && response.statusCode === 200) {
                         res.render('pages/index', {
                             title: 'Halaman Utama',
@@ -37,6 +37,8 @@ exports.render = function(req, res, next) {
                             email: req.user ? req.user.email : '',
                             jenis_user: req.user ? req.user.jenis_user : ''
                         });
+                    } else {
+                        res.json(error);
                     }
                 });
             });
@@ -46,12 +48,12 @@ exports.render = function(req, res, next) {
 };
 
 exports.detailposting = function(req, res, next) {
-    request({url: "http://localhost:3000/kategori",json: true}, function (error, response, kategori) {
-        request({url: "http://localhost:3000/posting/kategori/1",json: true}, function (error, response, berita) {
-            request({url: "http://localhost:3000/posting/kategori/2",json: true}, function (error, response, artikel) {
-                request({url: "http://localhost:3000/event",json: true}, function (error, response, event) {
+    request({url: "http://apicomrade.azurewebsites.net/kategori",json: true}, function (error, response, kategori) {
+        request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
+            request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
+                request({url: "http://apicomrade.azurewebsites.net/event",json: true}, function (error, response, event) {
                     request({url: "http://localhost:3000/banner",json: true}, function (error, response, banner) {
-                        request({url: "http://localhost:3000/posting/"+req.params.id,json: true}, function (error, response, data) {
+                        request({url: "http://apicomrade.azurewebsites.net/posting/"+req.params.id,json: true}, function (error, response, data) {
                             if (!error && response.statusCode === 200) {
                                 res.render('pages/detail_posting', {
                                     title: 'Detail Posting',
@@ -76,61 +78,43 @@ exports.detailposting = function(req, res, next) {
 
 exports.detailevent = function(req, res, next) {
     var id = req.params.id;
-        DB.query('SELECT * FROM tb_banner',function(error, banner){
-            DB.query('SELECT event.nama,tgl_posting,tgl_event,foto,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin ON admin.id_admin=event.id_admin WHERE id_event='+id,function(err, events){
-                if (err) {
-                    return next(err);
-                } else {
-                    if(events){
-                        events.forEach(function(data){
-                            geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {
-                                res.render('pages/detail_event', {
-                                    title: 'Detail Posting',
-                                    events: data,                                       
-                                    moment: moment,
-                                    banner: banner,
-                                    gmAPI: gmAPI,
-                                    results: result,
-                                    email: req.user ? req.user.email : ''
-                                });
-                            });
-                        });
-                    } else {
-                        res.redirect('/GAGAGAGA');
-                        
-                    }
-                }
-            });
-        });               
+    request({url: "http://apicomrade.azurewebsites.net/event/"+req.params.id,json: true}, function (error, response, data) {
+        request({url: "http://localhost:3000/banner",json: true}, function (error, response, banner) {
+            if (!error && response.statusCode === 200) {
+                geocoder.reverse({lat:data[0].latitude, lon:data[0].longitude}, function(err, result) {
+                    res.render('pages/detail_event', {
+                        title: 'Detail Event',
+                        events: data,                                       
+                        moment: moment,
+                        banner: banner,
+                        gmAPI: gmAPI,
+                        results: result,
+                        email: req.user ? req.user.email : ''
+                    });
+                });
+            }
+        });
+    });           
 };
 
 exports.artikel = function(req, res, next) {
-    DB.query('SELECT * FROM kategori',function(error, kategori){
-        DB.query('SELECT * FROM posting WHERE id_kategori=1 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            DB.query('SELECT * FROM posting WHERE id_kategori=2 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                DB.query('SELECT * FROM event WHERE status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    DB.query('SELECT * FROM posting WHERE id_kategori=2 AND status="1" ORDER BY tgl_posting DESC',function(err, articles){
-                        if (err) {
-                            return next(err);
-                        } else {
-                            DB.query('SELECT * FROM tb_banner',function(error, banner){
-                                if (err) {
-                                    return next(err);
-                                } else {
-                                    res.render('pages/artikel', {
-                                        title: 'Halaman Artikel',
-                                        articles: articles,
-                                        kategori: kategori,
-                                        artikel: artikel,
-                                        moment: moment,
-                                        slug: slug,
-                                        event: event,
-                                        berita: berita,
-                                        banner: banner,
-                                        email: req.user ? req.user.email : '',
-                                        jenis_user: req.user ? req.user.jenis_user : ''
-                                    });
-                                }
+    request({url: "http://apicomrade.azurewebsites.net/kategori",json: true}, function (error, response, kategori) {
+        request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
+            request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
+                request({url: "http://apicomrade.azurewebsites.net/event",json: true}, function (error, response, event) {
+                    request({url: "http://localhost:3000/banner/",json: true}, function (error, response, banner) {
+                        if (!error && response.statusCode === 200) {
+                            res.render('pages/artikel', {
+                                title: 'Halaman Artikel',
+                                kategori: kategori,
+                                artikel: artikel,
+                                moment: moment,
+                                slug: slug,
+                                event: event,
+                                berita: berita,
+                                banner: banner,
+                                email: req.user ? req.user.email : '',
+                                jenis_user: req.user ? req.user.jenis_user : ''
                             });
                         }
                     });
@@ -141,32 +125,23 @@ exports.artikel = function(req, res, next) {
 };
 
 exports.berita = function(req, res, next) {
-    DB.query('SELECT * FROM kategori',function(error, kategori){
-        DB.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            DB.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                DB.query('SELECT * FROM event ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    DB.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC',function(err, news){
-                        if (err) {
-                            return next(err);
-                        } else {
-                            DB.query('SELECT * FROM tb_banner',function(error, banner){
-                                if (err) {
-                                    return next(err);
-                                } else {
-                                    res.render('pages/berita', {
-                                        title: 'Halaman Artikel',
-                                        news: news,
-                                        kategori: kategori,
-                                        artikel: artikel,
-                                        moment: moment,
-                                        slug: slug,
-                                        event: event,
-                                        berita: berita,
-                                        banner: banner,
-                                        email: req.user ? req.user.email : '',
-                                        jenis_user: req.user ? req.user.jenis_user : ''
-                                    });
-                                }
+    request({url: "http://apicomrade.azurewebsites.net/kategori",json: true}, function (error, response, kategori) {
+        request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
+            request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
+                request({url: "http://apicomrade.azurewebsites.net/event",json: true}, function (error, response, event) {
+                    request({url: "http://localhost:3000/banner/",json: true}, function (error, response, banner) {
+                        if (!error && response.statusCode === 200) {
+                            res.render('pages/berita', {
+                                title: 'Halaman Artikel',
+                                kategori: kategori,
+                                artikel: artikel,
+                                moment: moment,
+                                slug: slug,
+                                event: event,
+                                berita: berita,
+                                banner: banner,
+                                email: req.user ? req.user.email : '',
+                                jenis_user: req.user ? req.user.jenis_user : ''
                             });
                         }
                     });
@@ -177,33 +152,24 @@ exports.berita = function(req, res, next) {
 };
 
 exports.event = function(req, res, next) {
-    DB.query('SELECT * FROM kategori',function(error, kategori){
-        DB.query('SELECT * FROM posting WHERE id_kategori=1 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            DB.query('SELECT * FROM posting WHERE id_kategori=2 AND status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                DB.query('SELECT * FROM event WHERE status="1" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    DB.query('SELECT * FROM event WHERE status="1" ORDER BY tgl_posting DESC',function(err, events){
-                        if (err) {
-                            return next(err);
-                        } else {
-                            DB.query('SELECT * FROM tb_banner',function(error, banner){
-                                if (err) {
-                                    return next(err);
-                                } else {
-                                    res.render('pages/event', {
-                                        title: 'Halaman Artikel',
-                                        events: events,
-                                        kategori: kategori,
-                                        artikel: artikel,
-                                        moment: moment,
-                                        slug: slug,
-                                        event: event,
-                                        berita: berita,
-                                        banner: banner,
-                                        striptags: striptags,
-                                        email: req.user ? req.user.email : '',
-                                        jenis_user: req.user ? req.user.jenis_user : ''
-                                    });
-                                }
+    request({url: "http://apicomrade.azurewebsites.net/kategori",json: true}, function (error, response, kategori) {
+        request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
+            request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
+                request({url: "http://apicomrade.azurewebsites.net/event",json: true}, function (error, response, event) {
+                    request({url: "http://localhost:3000/banner/",json: true}, function (error, response, banner) {
+                        if (!error && response.statusCode === 200) {                       
+                            res.render('pages/event', {
+                                title: 'Halaman Event',
+                                kategori: kategori,
+                                artikel: artikel,
+                                moment: moment,
+                                slug: slug,
+                                event: event,
+                                berita: berita,
+                                banner: banner,
+                                striptags: striptags,
+                                email: req.user ? req.user.email : '',
+                                jenis_user: req.user ? req.user.jenis_user : ''
                             });
                         }
                     });

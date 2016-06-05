@@ -87,10 +87,10 @@ exports.new = function(req, res, next) {
     });
     var upload = multer({ storage : storage }).single('foto');
     upload(req,res,function(errupload) {
-        if(req.body.isi.length<30){
+        /*if(req.body.isi.length<30){
             req.flash('error', 'Maaf, Deskripsi yang anda masukan tidak boleh kurang dari 30.');
             return res.redirect('/admin-komunitas/posting/new');
-        }
+        }*/
         //error upload foto
         if(errupload) {
             return res.end("Error uploading file."+errupload);

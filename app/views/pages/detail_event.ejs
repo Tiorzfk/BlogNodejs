@@ -41,15 +41,15 @@ var params = {
 				<div class="row">
 					<div class="col-md-7">
 					<div class="side" style="margin-bottom:0px;background:#5098D3">
-						<h1>Detail Event (<%=events.nama%>)</h1>
+						<h1>Detail Event (<%=events[0].nama%>)</h1>
 				  	</div>
 						<article>
-							<img class="head" src="/uploads/img/event/<%=events.foto%>" alt="<%=events.nama%>" style="width:652.5px;height:400px">
+							<img class="head" src="/uploads/img/event/<%=events[0].foto%>" alt="<%=events[0].nama%>" style="width:652.5px;height:400px">
 							<div class="content">
 								<div class="text">
-									<p class="time"><%= moment(events.tgl_posting).format('DD MMM YYYY')%></p>
-									<h5><%=events.nama %></h5>
-									<p><%-events.deskripsi%></p>
+									<p class="time"><%= moment(events[0].tgl_posting).format('DD MMM YYYY')%></p>
+									<h5><%=events[0].nama %></h5>
+									<p><%-events[0].deskripsi%></p>
 									<span class="line"></span>
 								</div> <!-- text -->
 							</div> <!-- content -->
@@ -65,15 +65,15 @@ var params = {
 											<ul class="list-unstyled">
 												<li>
 													<p><strong>Nama Event : </strong></p>
-													<p class="time" style="color:#6E7179"><%=events.nama%></p>
+													<p class="time" style="color:#6E7179"><%=events[0].nama%></p>
 												</li>
 												<li>
 													<p><strong>Tanggal Event : </strong></p>
-													<p class="time" style="color:#6E7179"><%=events.tgl_event%></p>
+													<p class="time" style="color:#6E7179"><%=events[0].tgl_event%></p>
 												</li>
 												<li>
 													<p><strong>Pengirim : </strong></p>
-													<p class="time" style="color:#6E7179"><%=events.pengirim%></p>
+													<p class="time" style="color:#6E7179"><%=events[0].pengirim%></p>
 												</li>
 												<li>
 													<p><strong>Alamat Event : </strong></p>
