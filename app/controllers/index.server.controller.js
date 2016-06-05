@@ -23,7 +23,7 @@ exports.render = function(req, res, next) {
     request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
         request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
             request({url: "http://apicomrade.azurewebsites.net/event/",json: true}, function (error, response, event) {
-                request({url: "http://localhost:3000/banner/",json: true}, function (error, response, banner) {
+                request({url: "http://apicomrade.azurewebsites.net/banner/",json: true}, function (error, response, banner) {
                     if (!error && response.statusCode === 200) {
                         res.render('pages/index', {
                             title: 'Halaman Utama',
@@ -52,7 +52,7 @@ exports.detailposting = function(req, res, next) {
         request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
             request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
                 request({url: "http://apicomrade.azurewebsites.net/event",json: true}, function (error, response, event) {
-                    request({url: "http://localhost:3000/banner",json: true}, function (error, response, banner) {
+                    request({url: "http://apicomrade.azurewebsites.net/banner",json: true}, function (error, response, banner) {
                         request({url: "http://apicomrade.azurewebsites.net/posting/"+req.params.id,json: true}, function (error, response, data) {
                             if (!error && response.statusCode === 200) {
                                 res.render('pages/detail_posting', {
@@ -79,7 +79,7 @@ exports.detailposting = function(req, res, next) {
 exports.detailevent = function(req, res, next) {
     var id = req.params.id;
     request({url: "http://apicomrade.azurewebsites.net/event/"+req.params.id,json: true}, function (error, response, data) {
-        request({url: "http://localhost:3000/banner",json: true}, function (error, response, banner) {
+        request({url: "http://apicomrade.azurewebsites.net/banner",json: true}, function (error, response, banner) {
             if (!error && response.statusCode === 200) {
                 geocoder.reverse({lat:data[0].latitude, lon:data[0].longitude}, function(err, result) {
                     res.render('pages/detail_event', {
@@ -102,7 +102,7 @@ exports.artikel = function(req, res, next) {
         request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
             request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
                 request({url: "http://apicomrade.azurewebsites.net/event",json: true}, function (error, response, event) {
-                    request({url: "http://localhost:3000/banner/",json: true}, function (error, response, banner) {
+                    request({url: "http://apicomrade.azurewebsites.net/banner/",json: true}, function (error, response, banner) {
                         if (!error && response.statusCode === 200) {
                             res.render('pages/artikel', {
                                 title: 'Halaman Artikel',
@@ -129,7 +129,7 @@ exports.berita = function(req, res, next) {
         request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
             request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
                 request({url: "http://apicomrade.azurewebsites.net/event",json: true}, function (error, response, event) {
-                    request({url: "http://localhost:3000/banner/",json: true}, function (error, response, banner) {
+                    request({url: "http://apicomrade.azurewebsites.net/",json: true}, function (error, response, banner) {
                         if (!error && response.statusCode === 200) {
                             res.render('pages/berita', {
                                 title: 'Halaman Artikel',
@@ -156,7 +156,7 @@ exports.event = function(req, res, next) {
         request({url: "http://apicomrade.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
             request({url: "http://apicomrade.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
                 request({url: "http://apicomrade.azurewebsites.net/event",json: true}, function (error, response, event) {
-                    request({url: "http://localhost:3000/banner/",json: true}, function (error, response, banner) {
+                    request({url: "http://apicomrade.azurewebsites.net/banner/",json: true}, function (error, response, banner) {
                         if (!error && response.statusCode === 200) {                       
                             res.render('pages/event', {
                                 title: 'Halaman Event',
