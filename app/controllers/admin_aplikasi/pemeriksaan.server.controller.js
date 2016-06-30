@@ -5,8 +5,7 @@ var geocoder = require('../../../config/geocoder').geocoder;
 var gmAPI = require('../../../config/maps').gmAPI; //menghasilkan google maps dalam bentuk png
 
 exports.renderNew = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+    
             res.render('pages/admin_aplikasi/lokasi_pemeriksaan/new', {
                 title: 'Halaman Tambah Lokasi Pemeriksaan',
                 email: req.user ? req.user.email : '',
@@ -14,13 +13,7 @@ exports.renderNew = function(req, res, next) {
                 messages_errors: req.flash('error'),
                 messages_success: req.flash('success')
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    }
-    else {
-       return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.new = function(req, res, next) {
@@ -48,8 +41,7 @@ exports.new = function(req, res, next) {
 };
 
 exports.listpemeriksaan = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+    
             DB.query('SELECT id_lokasi,lokasi_pemeriksaan.nama,admin.nama as pengirim FROM lokasi_pemeriksaan INNER JOIN admin on admin.id_admin=lokasi_pemeriksaan.id_admin',function(err,pemeriksaan){
                 if (err) {
                     return next(err);
@@ -64,17 +56,11 @@ exports.listpemeriksaan = function(req, res, next) {
                     });
                 }
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+      
 };
 
 exports.detail = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+    
             DB.query('SELECT lokasi_pemeriksaan.nama,latitude,longitude,admin.nama as pengirim FROM lokasi_pemeriksaan INNER JOIN admin on admin.id_admin=lokasi_pemeriksaan.id_admin WHERE lokasi_pemeriksaan.id_lokasi = ?',req.params.id,function(err,lp){
                 if (err) {
                     console.log(err);
@@ -93,17 +79,11 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+     
 };
 
 exports.delete = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+    
             var id_lokasi = req.params.id;
             DB.query('SELECT * FROM lokasi_pemeriksaan WHERE id_lokasi='+id_lokasi,function(errselect,data){
                 DB.query('DELETE FROM lokasi_pemeriksaan WHERE id_lokasi=?',id_lokasi,function(err){
@@ -120,18 +100,11 @@ exports.delete = function(req, res, next) {
                     }
                 });
             });
-        } else {
-           res.redirect('/admin-komunitas');
-        }
-    }
-    else {
-        return res.redirect('/admin/login');
-    }
+      
 };
 
 exports.renderEdit = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+    
             DB.query('SELECT * FROM lokasi_pemeriksaan WHERE id_lokasi=?',req.params.id,function(err,lokasi){
                 lokasi.forEach(function(data){
                     geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {    
@@ -147,13 +120,7 @@ exports.renderEdit = function(req, res, next) {
                     });
                 });
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    }
-    else {
-       return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.edit = function(req, res, next) {

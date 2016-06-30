@@ -1,15 +1,33 @@
 var event = require('../../controllers/admin_komunitas/event.server.controller');
 
+function isAuthenticated(req, res, next) {
+
+    // do any checks you want to in here
+
+    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
+    // you can do this however you want with whatever variables you set up
+    if (req.user) {
+        if (req.user.jenis_admin === 'admin komunitas'){
+            return next();
+        }else{
+            res.redirect('/admin-aplikasi');
+        }
+    }else{
+        // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+        res.redirect('/admin/login');
+    }
+}
+
 module.exports = function(app) {
 
-    app.route('/admin-komunitas/event/new').get(event.renderNew).post(event.new);
+    app.route('/admin-komunitas/event/new').all(isAuthenticated).get(event.renderNew).post(event.new);
 
-    app.route('/admin-komunitas/event').get(event.list);
+    app.route('/admin-komunitas/event').all(isAuthenticated).get(event.list);
 
-    app.route('/admin-komunitas/event/detail/:id').get(event.detail);
+    app.route('/admin-komunitas/event/detail/:id').all(isAuthenticated).get(event.detail);
 
-    app.route('/admin-komunitas/event/edit/:id').get(event.renderEdit).post(event.edit);
+    app.route('/admin-komunitas/event/edit/:id').all(isAuthenticated).get(event.renderEdit).post(event.edit);
 
-    app.route('/admin-komunitas/event/delete/:id').get(event.delete);
+    app.route('/admin-komunitas/event/delete/:id').all(isAuthenticated).get(event.delete);
 
 };

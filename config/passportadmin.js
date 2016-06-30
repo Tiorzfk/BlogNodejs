@@ -9,9 +9,11 @@ module.exports = function() {
     });
 
     passport.deserializeUser(function(id, done) {
-        DB.query('SELECT * FROM admin where id_admin= ?',[id],function(err,admin){
-            done(err, admin[0]);
-        });
+        //DB.getConnection(function(err,koneksi){
+            DB.query('SELECT * FROM admin where id_admin= ?',[id],function(err,admin){
+                done(err, admin[0]);
+            });
+        //});
     });
 
     require('./strategies/localadmin.js')();

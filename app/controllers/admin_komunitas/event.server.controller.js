@@ -18,8 +18,7 @@ var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra); /
 //CRUD
 
 exports.renderNew = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT * FROM kategori ',function(err, kategori){
                 res.render('pages/admin_komunitas/event/new', {
                     title: 'Tambah Event',
@@ -30,13 +29,7 @@ exports.renderNew = function(req, res, next) {
                     kategori: kategori,
                 });
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    }
-    else {
-        return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.new = function(req, res, next) {
@@ -89,8 +82,7 @@ exports.new = function(req, res, next) {
 };
 
 exports.renderEdit = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT * FROM event WHERE id_event=?',req.params.id,function(err,event){
                 if (err) {
                     return next(err);
@@ -110,13 +102,7 @@ exports.renderEdit = function(req, res, next) {
                     });
                 }
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    }
-    else {
-        return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.edit = function(req, res, next) {
@@ -182,8 +168,7 @@ exports.edit = function(req, res, next) {
 };
 
 exports.delete = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             var id_event = req.params.id;
             DB.query('SELECT * FROM event WHERE id_event='+id_event,function(errselect,data){
                 DB.query('DELETE FROM event WHERE id_event=?',id_event,function(err){
@@ -202,18 +187,11 @@ exports.delete = function(req, res, next) {
                     }
                 });
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    }
-    else {
-        return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.list = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT * FROM event ORDER BY tgl_posting',function(err,event){
                 if (err) {
                     return next(err);
@@ -234,17 +212,10 @@ exports.list = function(req, res, next) {
                     });
                 }
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
 };
 
 exports.mylist = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT * FROM event WHERE id_admin = ?',req.user.id_admin,function(err,event){
                 if (err) {
                     return next(err);
@@ -258,17 +229,11 @@ exports.mylist = function(req, res, next) {
                     });
                 }
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+
 };
 
 exports.detail = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT foto,event.nama,tgl_event,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
                 if (err) {
                     console.log(err);
@@ -287,10 +252,5 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+
 };

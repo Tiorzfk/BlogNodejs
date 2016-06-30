@@ -16,8 +16,7 @@ var extra = {
 var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
 
 exports.VerifikasiEvent = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+    
             DB.query('UPDATE event SET status="1" WHERE id_event=?',req.params.id,function(err){
                 if (err) {
                     req.flash('error', err.errors);
@@ -33,17 +32,10 @@ exports.VerifikasiEvent = function(req, res, next) {
                 });
                 }
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    }
-    else {
-        return res.redirect('/');
-    }
+       
 };
 exports.listevent = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+    
             DB.query('SELECT * FROM event ORDER BY tgl_posting DESC',function(err,event){
                 if (err) {
                     return next(err);
@@ -59,16 +51,10 @@ exports.listevent = function(req, res, next) {
                     });
                 }
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+        
 };
 exports.detail = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+    
             DB.query('SELECT foto,event.nama,tgl_event,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
                 if (err) {
                     console.log(err);
@@ -88,12 +74,7 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.delete = function(req, res, next) {

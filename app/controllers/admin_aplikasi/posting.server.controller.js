@@ -5,8 +5,7 @@ const fs = require('fs');
 var DB = require('../../../config/db').DB;
 
 exports.VerifikasiPosting = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+
             DB.query('UPDATE posting SET status="1" WHERE id_posting=?',req.params.id,function(err){
                 if (err) {
                     req.flash('error', err.errors);
@@ -28,17 +27,9 @@ exports.VerifikasiPosting = function(req, res, next) {
                     });
                 }
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    }
-    else {
-        return res.redirect('/admin/login');
-    }
 };
 exports.listberita = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+
             DB.query('SELECT id_posting,kategori.nama as kategori,judul,deskripsi,status,tgl_posting FROM posting INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE kategori.nama="Berita"',function(err,berita){
                 if (err) {
                     return next(err);
@@ -53,16 +44,10 @@ exports.listberita = function(req, res, next) {
                     });
                 }
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+
 };
 exports.listartikel = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi') { 
+
             DB.query('SELECT id_posting,kategori.nama as kategori,judul,deskripsi,status,tgl_posting FROM posting INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE kategori.nama="Artikel"',function(err,artikel){
                 if (err) {
                     return next(err);
@@ -77,10 +62,5 @@ exports.listartikel = function(req, res, next) {
                     });
                 }
             });
-        } else {
-            res.redirect('/admin-komunitas');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+
 };

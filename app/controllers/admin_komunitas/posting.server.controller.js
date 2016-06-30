@@ -29,8 +29,7 @@ exports.tes = function(req, res, next) {
 };
 
 exports.renderIndex = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('select count(*) as artikel FROM posting',function(err,total_posting){
                 DB.query('select count(*) as event FROM event',function(err,total_event){
                     res.render('pages/admin_komunitas/index', {
@@ -42,20 +41,13 @@ exports.renderIndex = function(req, res, next) {
                     });
                 });
             });
-        } else {
-            res.redirect('/admin-aplikasi');
-        }
-    }
-    else {
-       return res.redirect('/admin/login');
-    }
+        
 };
 
 //CRUD
 
 exports.renderNew = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT * FROM kategori ',function(err, kategori){
                 res.render('pages/admin_komunitas/posting/new', {
                     title: 'Tambah Posting',
@@ -66,13 +58,7 @@ exports.renderNew = function(req, res, next) {
                     kategori: kategori
                 });
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    }
-    else {
-        return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.new = function(req, res, next) {
@@ -130,8 +116,7 @@ exports.new = function(req, res, next) {
 };
 
 exports.renderEdit = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE id_posting=?',req.params.id,function(err,articles){
                 if (err) {
                     return next(err);
@@ -148,13 +133,7 @@ exports.renderEdit = function(req, res, next) {
                     });
                 }
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    }
-    else {
-        return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.edit = function(req, res, next) {
@@ -236,8 +215,7 @@ exports.delete = function(req, res, next) {
 };
 
 exports.list = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting',function(err,articles){
                 if (err) {
                     return next(err);
@@ -252,17 +230,11 @@ exports.list = function(req, res, next) {
                     });
                 }
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+        
 };
 
 exports.detail = function(req, res, next) {
-    if (req.user) {
-        if (req.user.jenis_admin === 'admin komunitas') { 
+    
             DB.query('SELECT kategori.nama as kategori,judul,isi,tgl_posting,foto,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE id_posting = ?',req.params.id,function(err,articles){
                 if (err) {
                     console.log(err);
@@ -278,10 +250,5 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-        } else {
-           res.redirect('/admin-aplikasi');
-        }
-    } else {
-        return res.redirect('/admin/login');
-    }
+        
 };

@@ -3,7 +3,7 @@ var multer  = require('multer');
 const fs = require('fs');
 
 exports.renderNew = function(req, res, next) {
-    if (req.user) {
+
         res.render('pages/manage/banner/new', {
             title: 'Tambah Banner',
             messages_errors: req.flash('error'),
@@ -11,9 +11,7 @@ exports.renderNew = function(req, res, next) {
             email: req.user ? req.user.email : ''
         });
     }
-    else {
-        return res.redirect('/');
-    }
+   
 };
 
 exports.new = function(req, res, next) {
@@ -55,7 +53,7 @@ exports.new = function(req, res, next) {
 };
 
 exports.list = function(req, res, next) {
-    if (req.user) {
+
         Banner.find({}, function(err, banner) {
             if (err) {
                 return next(err);
@@ -68,13 +66,11 @@ exports.list = function(req, res, next) {
                 });
             }
         });
-    } else {
-        return res.redirect('/');
-    }
+
 };
 
 exports.renderEdit = function(req, res, next) {
-    if (req.user) {
+
         Banner.findOne({_id: req.params.id}, function(err, banner) {
             if (err) {
                 return next(err);
@@ -89,10 +85,7 @@ exports.renderEdit = function(req, res, next) {
                 });
             }
         });
-    }
-    else {
-        return res.redirect('/');
-    }
+   
 };
 
 exports.edit = function(req, res, next) {
