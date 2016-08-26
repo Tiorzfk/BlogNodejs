@@ -23,7 +23,7 @@ exports.render = function(req, res, next) {
     request({url: "http://comrade-api.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
         request({url: "http://comrade-api.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
             request({url: "http://comrade-api.azurewebsites.net/event/",json: true}, function (error, response, event) {
-                request({url: "http://comrade-api.azurewebsites.net/banner/",json: true}, function (error, response, banner) {
+                request({url: "http://comrade-api.azurewebsites.net/listbanner/",json: true}, function (error, response, banner) {
                     if (!error && response.statusCode === 200) {
                         res.render('pages/index', {
                             title: 'Halaman Utama',
@@ -102,7 +102,7 @@ exports.artikel = function(req, res, next) {
         request({url: "http://comrade-api.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
             request({url: "http://comrade-api.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
                 request({url: "http://comrade-api.azurewebsites.net/event",json: true}, function (error, response, event) {
-                    request({url: "http://comrade-api.azurewebsites.net/banner/",json: true}, function (error, response, banner) {
+                    request({url: "http://comrade-api.azurewebsites.net/listbanner/",json: true}, function (error, response, banner) {
                         if (!error && response.statusCode === 200) {
                             res.render('pages/artikel', {
                                 title: 'Halaman Artikel',
@@ -156,7 +156,7 @@ exports.event = function(req, res, next) {
         request({url: "http://comrade-api.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
             request({url: "http://comrade-api.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
                 request({url: "http://comrade-api.azurewebsites.net/event",json: true}, function (error, response, event) {
-                    request({url: "http://comrade-api.azurewebsites.net/banner/",json: true}, function (error, response, banner) {
+                    request({url: "http://comrade-api.azurewebsites.net/listbanner/",json: true}, function (error, response, banner) {
                         if (!error && response.statusCode === 200) {                       
                             res.render('pages/event', {
                                 title: 'Halaman Event',
