@@ -1,6 +1,6 @@
 var config = require('./config'),
 	mysql = require("mysql");
 
-var DB = mysql.createConnection(config.koneksi);
+var DB = mysql.createPool(config.koneksi);
 
 module.exports.DB = DB;

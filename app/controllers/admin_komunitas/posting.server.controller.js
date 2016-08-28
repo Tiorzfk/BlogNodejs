@@ -4,51 +4,21 @@ var moment = require('moment');
 const fs = require('fs');
 var DB = require('../../../config/db').DB;
 
-exports.tes = function(req, res, next) {
-    if (!req.user) {
-        var tes = [];
-        DB.query('SELECT admin.id_admin,id_posting,admin.nama,deskripsi,foto,posting.status,tgl_posting FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin',function(err,articles){
-            articles.forEach(function(data){
-                for(var i=0; i<articles.length; i++) {
-                articles[i].pengirim = {'id': data.id_admin,'Nama': data.nama};
-                };
-            })
-            /*articles.forEach(function(data){
-                data['h']= 'waaaa';
-            })*/
-            if(err){
-                res.json(err);
-            }
-            res.json(articles);
-        });
-
-    }
-    else {
-       return res.redirect('/admin/login');
-    }
-};
-
 exports.renderIndex = function(req, res, next) {
-    
-            DB.query('select count(*) as artikel FROM posting',function(err,total_posting){
-                DB.query('select count(*) as event FROM event',function(err,total_event){
+
                     res.render('pages/admin_komunitas/index', {
                         title: 'Halaman Admin Komunitas',
-                        total_posting: total_posting,
-                        total_event: total_event,
                         email: req.user ? req.user.email : '',
                         jenis: req.user ? req.user.jenis_admin : ''
                     });
-                });
-            });
-        
+
 };
 
 //CRUD
 
 exports.renderNew = function(req, res, next) {
-    
-            DB.query('SELECT * FROM kategori ',function(err, kategori){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT * FROM kategori ',function(err, kategori){
                 res.render('pages/admin_komunitas/posting/new', {
                     title: 'Tambah Posting',
                     messages_errors: req.flash('error'),
@@ -57,8 +27,9 @@ exports.renderNew = function(req, res, next) {
                     jenis: req.user ? req.user.jenis_admin : '',
                     kategori: kategori
                 });
+            koneksi.release();
             });
-        
+    });    
 };
 
 exports.new = function(req, res, next) {
@@ -100,7 +71,8 @@ exports.new = function(req, res, next) {
             tgl_posting: now,
             id_kategori: req.body.kategori
         }
-        DB.query('INSERT INTO posting SET ? ',data,function(err){
+        DB.getConnection(function(err,koneksi){
+        koneksi.query('INSERT INTO posting SET ? ',data,function(err){
             //error simpan ke database
             if (err) {
                 //res.json(err);
@@ -112,12 +84,14 @@ exports.new = function(req, res, next) {
             req.flash('success', message);
             return res.redirect('/admin-komunitas/posting/new');
         });
+        koneksi.release();
+        });
     });
 };
 
 exports.renderEdit = function(req, res, next) {
-    
-            DB.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE id_posting=?',req.params.id,function(err,articles){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE id_posting=?',req.params.id,function(err,articles){
                 if (err) {
                     return next(err);
                 } else {
@@ -133,7 +107,8 @@ exports.renderEdit = function(req, res, next) {
                     });
                 }
             });
-        
+            koneksi.release();
+    });
 };
 
 exports.edit = function(req, res, next) {
@@ -173,7 +148,8 @@ exports.edit = function(req, res, next) {
                 foto: req.file.filename
             }
         }
-        DB.query('UPDATE posting SET ? WHERE id_posting='+req.params.id,data,function(err){
+        DB.getConnection(function(err,koneksi){
+        koneksi.query('UPDATE posting SET ? WHERE id_posting='+req.params.id,data,function(err){
             if (err) {
                 if(req.file != null){
                     fs.unlink('public/uploads/img/'+data.foto);
@@ -189,13 +165,16 @@ exports.edit = function(req, res, next) {
                 return res.redirect('/admin-komunitas/posting');
             }
         });
+        koneksi.release();
+        });
     });
 };
 
 exports.delete = function(req, res, next) {
     var id_posting = req.params.id;
-    DB.query('SELECT * FROM posting WHERE id_posting='+id_posting,function(errselect,data){
-        DB.query('DELETE FROM posting WHERE id_posting=?',id_posting,function(err){
+    DB.getConnection(function(err,koneksi){
+    koneksi.query('SELECT * FROM posting WHERE id_posting='+id_posting,function(errselect,data){
+        koneksi.query('DELETE FROM posting WHERE id_posting=?',id_posting,function(err){
             if(err){
                 var message = err;
                 req.flash('error', message);
@@ -212,11 +191,13 @@ exports.delete = function(req, res, next) {
             }
         });
     });
+    koneksi.release();
+    });
 };
 
 exports.list = function(req, res, next) {
-    
-            DB.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting',function(err,articles){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting',function(err,articles){
                 if (err) {
                     return next(err);
                 } else {
@@ -230,12 +211,13 @@ exports.list = function(req, res, next) {
                     });
                 }
             });
-        
+            koneksi.release();
+    });
 };
 
 exports.detail = function(req, res, next) {
-    
-            DB.query('SELECT kategori.nama as kategori,judul,isi,tgl_posting,foto,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE id_posting = ?',req.params.id,function(err,articles){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT kategori.nama as kategori,judul,isi,tgl_posting,foto,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE id_posting = ?',req.params.id,function(err,articles){
                 if (err) {
                     console.log(err);
                 } else {
@@ -250,5 +232,6 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-        
+            koneksi.release();
+    });
 };

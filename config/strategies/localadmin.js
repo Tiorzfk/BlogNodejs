@@ -7,8 +7,8 @@ module.exports = function() {
     	passwordField: 'password'
 	},
 	function(email, password, done) {
-		//DB.getConnection(function(err,koneksi){
-			DB.query('SELECT * FROM admin where email = ? ',[email],
+		DB.getConnection(function(err,koneksi){
+			koneksi.query('SELECT * FROM admin where email = ? ',[email],
 				function(err,admin){   
         	    	if (err) {
 						return done(err);
@@ -22,6 +22,7 @@ module.exports = function() {
 					
 					return done(null, admin[0]);     
         	});
-        //}); 
+        	koneksi.release();
+        }); 
 	}));
 };

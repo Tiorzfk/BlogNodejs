@@ -20,8 +20,6 @@ function isAuthenticated(req, res, next) {
 
 module.exports = function(app) {
 
-	app.route('/tes').all(isAuthenticated).get(posting.tes);
-
     app.route('/admin-komunitas').all(isAuthenticated).get(posting.renderIndex);
 
     app.route('/admin-komunitas/posting/new').all(isAuthenticated).get(posting.renderNew).post(posting.new);

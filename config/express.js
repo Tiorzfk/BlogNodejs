@@ -2,12 +2,15 @@ var config = require('./config'),
     mysql = require('mysql'),
 	express = require('express'),
  	bodyParser = require('body-parser'),
-    passport = require('passport'),
     flash = require('connect-flash'),
-    session = require('express-session')
+    passport = require('passport'),
+    session = require('express-session'),
+    path = require('path');
 
 module.exports = function() {
     var app = express();
+
+    require('./passportadmin')(passport);
 
     app.use(bodyParser.urlencoded({
         extended: true
@@ -23,6 +26,7 @@ module.exports = function() {
 
     app.set('views', './app/views');
 	app.set('view engine', 'ejs');
+    app.use(express.static('./public'));
 
     app.use(flash());
     app.use(passport.initialize());
@@ -30,7 +34,7 @@ module.exports = function() {
 
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/auth_users.server.routes.js')(app);
-    require('../app/routes/auth_admin.server.routes.js')(app);
+    require('../app/routes/auth_admin.server.routes.js')(app,passport);
     
     //admin komunitas
     require('../app/routes/admin_komunitas/posting.server.routes.js')(app);
@@ -43,8 +47,6 @@ module.exports = function() {
     require('../app/routes/admin_aplikasi/event.server.routes.js')(app);
     require('../app/routes/admin_aplikasi/pemeriksaan.server.routes.js')(app);
     require('../app/routes/admin_aplikasi/obat.server.routes.js')(app);
-
-    app.use(express.static('./public'));
 
     return app;
 };

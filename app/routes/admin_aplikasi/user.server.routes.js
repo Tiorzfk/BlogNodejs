@@ -7,7 +7,7 @@ function isAuthenticated(req, res, next) {
     // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
     // you can do this however you want with whatever variables you set up
     if (req.user) {
-        if (req.user.jenis_admin === 'admin aplikasi'){
+        if (req.user[0].jenis_admin === 'admin aplikasi'){
             return next();
         }else{
             res.redirect('/admin-komunitas');

@@ -9,11 +9,12 @@ module.exports = function() {
     });
 
     passport.deserializeUser(function(id, done) {
-        //DB.getConnection(function(err,koneksi){
-            DB.query('SELECT * FROM user where id_user= ?',[id],function(err,user){
-                done(err, user[0]);
+        DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT * FROM user where id_user= ?',[id],function(err,user){
+                done(err, user);
             });
-        //});
+            koneksi.release();
+        });
 
         /*DB.query('SELECT * FROM tb_admin where id_admin= ?',[id],function(err,user){
             done(err, user[0]);

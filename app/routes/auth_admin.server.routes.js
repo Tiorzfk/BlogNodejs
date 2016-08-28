@@ -1,7 +1,6 @@
 var admin = require('../../app/controllers/auth_admin.server.controller');
-    passport = require('passport');
 
-module.exports = function(app) {
+module.exports = function(app,passport) {
 
     app.route('/admin/register')
         .get(admin.renderRegister)

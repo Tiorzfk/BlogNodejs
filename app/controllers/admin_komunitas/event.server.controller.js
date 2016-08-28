@@ -18,8 +18,8 @@ var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra); /
 //CRUD
 
 exports.renderNew = function(req, res, next) {
-    
-            DB.query('SELECT * FROM kategori ',function(err, kategori){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT * FROM kategori ',function(err, kategori){
                 res.render('pages/admin_komunitas/event/new', {
                     title: 'Tambah Event',
                     messages_errors: req.flash('error'),
@@ -29,7 +29,8 @@ exports.renderNew = function(req, res, next) {
                     kategori: kategori,
                 });
             });
-        
+            koneksi.release();
+    });
 };
 
 exports.new = function(req, res, next) {
@@ -61,11 +62,12 @@ exports.new = function(req, res, next) {
                 foto: req.file.filename,
                 tgl_posting: now,
                 tgl_event: req.body.tgl_event,
+                lokasi: req.body.posisi,
                 latitude: result[0].latitude,
                 longitude: result[0].longitude
             }
-
-            DB.query('INSERT INTO event SET ? ',data,function(err){
+            DB.getConnection(function(err,koneksi){
+            koneksi.query('INSERT INTO event SET ? ',data,function(err){
                 //error simpan ke database
                 if (err) {
                     fs.unlink('public/uploads/img/event'+data.foto);
@@ -77,13 +79,15 @@ exports.new = function(req, res, next) {
                 req.flash('success', message);
                 return res.redirect('/admin-komunitas/event/new');
             });
+            koneksi.release();
+            });
         });
     });
 };
 
 exports.renderEdit = function(req, res, next) {
-    
-            DB.query('SELECT * FROM event WHERE id_event=?',req.params.id,function(err,event){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT * FROM event WHERE id_event=?',req.params.id,function(err,event){
                 if (err) {
                     return next(err);
                 } else {
@@ -102,7 +106,8 @@ exports.renderEdit = function(req, res, next) {
                     });
                 }
             });
-        
+            koneksi.release();
+    });
 };
 
 exports.edit = function(req, res, next) {
@@ -147,7 +152,8 @@ exports.edit = function(req, res, next) {
             if(req.file) {
                 data.foto = req.file.filename;
             };
-            DB.query('UPDATE event SET ? WHERE id_event='+req.params.id,data,function(err){
+            DB.getConnection(function(err,koneksi){
+            koneksi.query('UPDATE event SET ? WHERE id_event='+req.params.id,data,function(err){
                 if (err) {
                     if(req.file != null){
                         fs.unlink('public/uploads/img/event/'+data.foto);
@@ -163,15 +169,17 @@ exports.edit = function(req, res, next) {
                     return res.redirect('/admin-komunitas/event');
                 }
             });
+            koneksi.release();
+            });
         });
     });
 };
 
 exports.delete = function(req, res, next) {
-    
+    DB.getConnection(function(err,koneksi){
             var id_event = req.params.id;
-            DB.query('SELECT * FROM event WHERE id_event='+id_event,function(errselect,data){
-                DB.query('DELETE FROM event WHERE id_event=?',id_event,function(err){
+            koneksi.query('SELECT * FROM event WHERE id_event='+id_event,function(errselect,data){
+                koneksi.query('DELETE FROM event WHERE id_event=?',id_event,function(err){
                     if(err){
                         var message = err;
                         req.flash('error', message);
@@ -187,12 +195,13 @@ exports.delete = function(req, res, next) {
                     }
                 });
             });
-        
+            koneksi.release();
+    });
 };
 
 exports.list = function(req, res, next) {
-    
-            DB.query('SELECT * FROM event ORDER BY tgl_posting',function(err,event){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT * FROM event ORDER BY tgl_posting',function(err,event){
                 if (err) {
                     return next(err);
                 } else {
@@ -212,11 +221,13 @@ exports.list = function(req, res, next) {
                     });
                 }
             });
+            koneksi.release();
+    });
 };
 
 exports.mylist = function(req, res, next) {
-    
-            DB.query('SELECT * FROM event WHERE id_admin = ?',req.user.id_admin,function(err,event){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT * FROM event WHERE id_admin = ?',req.user.id_admin,function(err,event){
                 if (err) {
                     return next(err);
                 } else {
@@ -229,12 +240,13 @@ exports.mylist = function(req, res, next) {
                     });
                 }
             });
-
+            koneksi.release();
+    });
 };
 
 exports.detail = function(req, res, next) {
-    
-            DB.query('SELECT foto,event.nama,tgl_event,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
+    DB.getConnection(function(err,koneksi){
+            koneksi.query('SELECT foto,event.nama,tgl_event,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
                 if (err) {
                     console.log(err);
                 } else {
@@ -252,5 +264,6 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-
+            koneksi.release();
+    });
 };
