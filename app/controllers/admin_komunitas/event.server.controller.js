@@ -185,11 +185,9 @@ exports.delete = function(req, res, next) {
                         req.flash('error', message);
                         return res.redirect('/admin-komunitas/event');
                     }else{
-                        data.forEach(function(data){
-                            if(data.foto){
-                                fs.unlink('public/uploads/img/event/'+data.foto);
-                            }
-                        });
+                        if(data[0].foto){
+                            fs.unlink('public/uploads/img/event/'+data.foto);
+                        }
                         req.flash('success', 'Berhasil Dihapus.');
                         return res.redirect('/admin-komunitas/event');
                     }
