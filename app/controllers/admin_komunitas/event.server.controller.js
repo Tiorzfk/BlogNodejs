@@ -133,8 +133,11 @@ exports.edit = function(req, res, next) {
         var slicedesc = arrayisi.slice(0,25);
 
         if(req.body.isi.length<30){
-        req.flash('error', 'Maaf, Deskripsi yang anda masukan tidak boleh kurang dari 30.');
-        return res.redirect('/admin-komunitas/event/new');
+            if(req.file != null){
+               fs.unlink('public/uploads/img/event/'+data.foto);
+            }
+            req.flash('error', 'Maaf, Deskripsi yang anda masukan tidak boleh kurang dari 30.');
+            return res.redirect('/admin-komunitas/event/new');
         }
 
         geocoder.geocode(req.body.posisi, function(err, result) {
@@ -155,8 +158,8 @@ exports.edit = function(req, res, next) {
             DB.getConnection(function(err,koneksi){
             koneksi.query('UPDATE event SET ? WHERE id_event='+req.params.id,data,function(err){
                 if (err) {
-                    if(req.file != null){
-                        fs.unlink('public/uploads/img/event/'+data.foto);
+                    if(req.file){
+                        fs.unlink('public/uploads/img/event/'+req.file.filename);
                     }
                     res.json(err);
                 }
@@ -181,8 +184,7 @@ exports.delete = function(req, res, next) {
             koneksi.query('SELECT * FROM event WHERE id_event='+id_event,function(errselect,data){
                 koneksi.query('DELETE FROM event WHERE id_event=?',id_event,function(err){
                     if(err){
-                        var message = err;
-                        req.flash('error', message);
+                        req.flash('error', err);
                         return res.redirect('/admin-komunitas/event');
                     }else{
                         if(data[0].foto){
