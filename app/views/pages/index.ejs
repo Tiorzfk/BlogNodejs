@@ -1,19 +1,96 @@
-	
+<% include ../partials/header %>
+<% include ../partials/banner %>
 	<main id="home-1">
-		<div class="container" ng-app="myApp">
-			<div class="wrapper" ng-controller="artikelController">
-				<ul class="list-group" ng-repeat="update in updates">
-				  <li class="list-group-item">
-					<h3><a href="{{update.status}}">{{update.status}}</a></h3>
-				  </li>
-				</ul> 
+		<div class="container">
+			<div class="wrapper">
+				<!-- Artikel -->
+				<div class="row" ng-controller="artikelController">
+				  	<div class="side">
+						<h1>Artikel Terbaru</h1>
+				  	</div>
+
+					<div class="col-sm-4" ng-repeat="artikel in dataartikel">
+						<article>
+							<a href="post/">
+								<div class="image">
+									<img src="/uploads/img/{{artikel.foto}}" alt="{{artikel.foto}}" style="width:360px;height:221px">
+									<div class="overlay">
+										<i class="fa fa-eye"></i>
+									</div>
+								</div>
+							</a>
+							<div class="content">
+								<div class="text">
+									<p class="time">{{artikel.tgl_posting}}</p>
+									<h5><a href="post/">{{artikel.judul}}</a></h5>
+									<p>{{artikel.deskripsi}}.</p>
+									<span class="line"></span>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>
+					</div>
+				</div> <!-- row -->
+				
 			</div> <!-- wrapper -->
 			<div class="row">
 				<a class="big-button" href="/event"><span>read more Event</span><i class="fa fa-arrow-right"></i></a>
 			</div> <!-- row -->
+			<!-- Berita -->
+				<div class="row" ng-controller="beritaController">
+				  	<div class="side">
+						<h1>Berita Terbaru</h1>
+				  	</div>
+					<div class="col-sm-4" ng-repeat="berita in databerita">
+						<article>
+							<a href="post/">
+								<div class="image">
+									<img src="/uploads/img/{{berita.foto}}" alt="{{berita.judul}}" style="width:360px;height:221px">
+									<div class="overlay">
+										<i class="fa fa-eye"></i>
+									</div>
+								</div>
+							</a>
+							<div class="content">
+								<div class="text">
+									<p class="time">{{berita.tgl_posting}}</p>
+									<h5><a href="post/">{{berita.judul}}</a></h5>
+									<p>{{berita.deskripsi}}.</p>
+									<span class="line"></span>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>
+					</div>
+				</div> <!-- row -->
+				<div class="row">
+					<a class="big-button" href="/berita"><span>read more Berita</span><i class="fa fa-arrow-right"></i></a>
+				</div> <!-- row -->
+				<!-- Event -->
+				<div class="row" ng-controller="eventController">
+				  	<div class="side">
+						<h1>Event Terbaru</h1>
+				  	</div>
+					<div class="col-sm-4" ng-repeat="event in dataevent">
+						<article>
+							<a href="event/">
+								<div class="image">
+									<img src="/uploads/img/event/{{event.foto}}" alt="{{event.nama}}" style="width:360px;height:221px">
+									<div class="overlay">
+										<i class="fa fa-eye"></i>
+									</div>
+								</div>
+							</a>
+							<div class="content">
+								<div class="text">
+									<p class="time">{{event.tgl_posting}}</p>
+									<h5><a href="event/">{{event.nama}}</a></h5>
+									<p>{{event.deskripsi}}.</p>
+									<span class="line"></span>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</article>
+					</div>
+				</div> <!-- row -->
 		</div> <!-- container -->
 		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
 	</main>
-<script src="/frontend/js/jquery-2.1.1.min.js"></script>
-	<script src="/frontend/js/angular.min.js"></script>
-	<script src="/frontend/js/app.js"></script>
+<% include ../partials/footer %>

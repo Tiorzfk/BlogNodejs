@@ -3,16 +3,14 @@
 			<div class="carousel-inner">
 			<!--<div class="row">
 				<div class="col-md-8"-->
-					<div class="flexslider">
-						<ul class="slides">
-							<% for(var i=0; i<banner.length; i++) { %>
-								<li>
+					<div class="flexslider" ng-controller="bannerController">
+						<ul class="slides" ng-repeat="banner in databanner">
+							<li>
 								<div class="carousel-caption">
-									<h5><%=banner[i].nama_banner%></h5>
+									<h5>{{banner.nama_banner}}</h5>
 								</div>
-								<img src="/uploads/banner/<%=banner[i].banner_img%>" class="head-image">
+								<img src="/uploads/banner/{{banner.banner_img}}" class="head-image">
 							</li>
-							<% }; %>
 						</ul>
 					</div>
 			<!--	</div>
