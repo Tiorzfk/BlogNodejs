@@ -14,9 +14,9 @@ module.exports = function(app,passport) {
         }),
             function(req, res, next) { 
                 if (req.user.jenis_admin === 'admin komunitas') {
-                    res.redirect('/admin-komunitas');
+                    return res.redirect('/admin-komunitas');
                 } else {
-                    res.redirect('/admin-aplikasi');
+                    return res.redirect('/admin-aplikasi');
                 }
             }
         );

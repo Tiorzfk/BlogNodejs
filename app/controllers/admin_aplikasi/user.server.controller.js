@@ -5,15 +5,15 @@ const fs = require('fs');
 var DB = require('../../../config/db').DB;
 
 exports.renderIndex = function(req, res, next) {    
-    //DB.getConnection(function(err,DB){
-        DB.query('SELECT * FROM user WHERE jenis_user="Odha" ORDER BY id_user DESC LIMIT 3',function(err,data_odha){
-            DB.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha" ORDER BY id_user DESC LIMIT 3',function(err,data_so){
-                DB.query('SELECT id_posting,posting.status,judul,tgl_posting,kategori.nama as kategori,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin INNER JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting DESC LIMIT 3',function(err,articles){
-                    DB.query('SELECT id_event,event.status,event.nama,tgl_event,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin = event.id_admin ORDER BY tgl_posting DESC LIMIT 3',function(err,event){
-                        DB.query('select count(*) as odha from user where jenis_user="Odha"',function(err,total_odha){
-                            DB.query('select count(*) as sh_odha from user where jenis_user="Sahabat Odha"',function(err,sh_odha){
-                                DB.query('select count(*) as artikel FROM posting',function(err,total_artikel){
-                                    DB.query('select count(*) as event FROM event',function(err,total_event){
+     DB.getConnection(function(err,koneksi){
+        koneksi.query('SELECT * FROM user WHERE jenis_user="Odha" ORDER BY id_user DESC LIMIT 3',function(err,data_odha){
+            koneksi.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha" ORDER BY id_user DESC LIMIT 3',function(err,data_so){
+                koneksi.query('SELECT id_posting,posting.status,judul,tgl_posting,kategori.nama as kategori,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin INNER JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting DESC LIMIT 3',function(err,articles){
+                    koneksi.query('SELECT id_event,event.status,event.nama,tgl_event,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin = event.id_admin ORDER BY tgl_posting DESC LIMIT 3',function(err,event){
+                        koneksi.query('select count(*) as odha from user where jenis_user="Odha"',function(err,total_odha){
+                            koneksi.query('select count(*) as sh_odha from user where jenis_user="Sahabat Odha"',function(err,sh_odha){
+                                koneksi.query('select count(*) as artikel FROM posting',function(err,total_artikel){
+                                    koneksi.query('select count(*) as event FROM event',function(err,total_event){
                                         res.render('pages/admin_aplikasi/index', {
                                             title: 'Halaman Admin Aplikasi',
                                             data_odha: data_odha,
@@ -36,17 +36,19 @@ exports.renderIndex = function(req, res, next) {
                 });
             });
         });
-    //});
+        koneksi.release();
+    });
 };
 
 exports.VerifikasiUser = function(req, res, next) {      
-            DB.query('UPDATE user SET status="1" WHERE id_user=?',req.params.id,function(err){
+     DB.getConnection(function(err,koneksi){
+            koneksi.query('UPDATE user SET status="1" WHERE id_user=?',req.params.id,function(err){
                 if (err) {
                     req.flash('error', err.errors);
                     return res.redirect('/admin-aplikasi');
                 }
                 else {
-                    DB.query('SELECT * FROM user WHERE id_user=?',req.params.id,function(err,data){
+                    koneksi.query('SELECT * FROM user WHERE id_user=?',req.params.id,function(err,data){
                         data.forEach(function(data) {
                             var message = 'User '+data.nama+' Berhasil di Verifikasi';
                             req.flash('success', message);
@@ -59,13 +61,15 @@ exports.VerifikasiUser = function(req, res, next) {
                     });
                 }
             }); 
+            koneksi.release();
+        });
 };
 
 exports.delete = function(req, res, next) {
-    //DB.getConnection(function(err,DB){
+     DB.getConnection(function(err,koneksi){
         var id_user = req.params.id;
-        DB.query('SELECT * FROM user WHERE id_user='+id_user,function(errselect,data){
-            DB.query('DELETE FROM user WHERE id_user=?',id_user,function(err){
+        koneksi.query('SELECT * FROM user WHERE id_user='+id_user,function(errselect,data){
+            koneksi.query('DELETE FROM user WHERE id_user=?',id_user,function(err){
                 if(err){
                     var message = err;
                     req.flash('error', message);
@@ -87,12 +91,13 @@ exports.delete = function(req, res, next) {
                 }
             });
         });
-    //});
+        koneksi.release();
+    });
 };  
 
 exports.listodha = function(req, res, next) {
-    //DB.getConnection(function(err,DB){
-        DB.query('SELECT * FROM user WHERE jenis_user="Odha"',function(err,odha){
+     DB.getConnection(function(err,koneksi){
+        koneksi.query('SELECT * FROM user WHERE jenis_user="Odha"',function(err,odha){
             if (err) {
                 return next(err);
             } else {
@@ -106,12 +111,13 @@ exports.listodha = function(req, res, next) {
                 });
             }
         });
-    //});
+        koneksi.release();
+    });
 };
 
 exports.listsaodha = function(req, res, next) {
-    //DB.getConnection(function(err,DB){
-        DB.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha"',function(err,saodha){
+     DB.getConnection(function(err,koneksi){
+        koneksi.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha"',function(err,saodha){
             if (err) {
                 return next(err);
             } else {
@@ -125,5 +131,6 @@ exports.listsaodha = function(req, res, next) {
                 });
             }
         }); 
-    //});  
+        koneksi.release();
+    });  
 };
