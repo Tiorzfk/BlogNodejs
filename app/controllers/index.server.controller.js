@@ -20,30 +20,16 @@ exports.testsms = function(req, res, next){
 }
 
 exports.render = function(req, res, next) {
-    request({url: "http://comrade-api.azurewebsites.net/posting/kategori/1",json: true}, function (error, response, berita) {
-        request({url: "http://comrade-api.azurewebsites.net/posting/kategori/2",json: true}, function (error, response, artikel) {
-            request({url: "http://comrade-api.azurewebsites.net/event/public",json: true}, function (error, response, event) {
-                request({url: "http://comrade-api.azurewebsites.net/listbanner/",json: true}, function (error, response, banner) {
-                    if (!error && response.statusCode === 200) {
+
                         res.render('pages/index', {
                             title: 'Halaman Utama',
-                            artikel: artikel.result,
                             moment: moment,
-                            banner: banner.result,
-                            berita: berita.result,
-                            event: event.result,
                             striptags: striptags,
                             slug: slug,
                             email: req.user ? req.user.email : '',
                             jenis_user: req.user ? req.user.jenis_user : ''
                         });
-                    } else {
-                        res.json(error);
-                    }
-                });
-            });
-        });
-    });
+  
 
 };
 
@@ -78,7 +64,7 @@ exports.detailposting = function(req, res, next) {
 
 exports.detailevent = function(req, res, next) {
     var id = req.params.id;
-    request({url: "http://comrade-api.azurewebsites.net/event/public"+req.params.id,json: true}, function (error, response, data) {
+    request({url: "http://comrade-api.azurewebsites.net/detailevent/"+req.params.id,json: true}, function (error, response, data) {
         request({url: "http://comrade-api.azurewebsites.net/banner",json: true}, function (error, response, banner) {
             if (!error && response.statusCode === 200) {
                 geocoder.reverse({lat:data[0].latitude, lon:data[0].longitude}, function(err, result) {

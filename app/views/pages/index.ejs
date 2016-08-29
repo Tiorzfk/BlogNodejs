@@ -1,116 +1,12 @@
-<% include ../partials/header %>
-<% include ../partials/banner %>
+	
 	<main id="home-1">
-		<div class="container">
-			<div class="wrapper">
-				<!-- Artikel -->
-				<div class="row">
-				  	<div class="side">
-						<h1>Artikel Terbaru</h1>
-				  	</div>
-					<% for(var i=0; i<3; i++) {%>
-					<% var date = moment(artikel[i].tgl_post),
-       					   formatted = date.format('YYYY[/]'+artikel[i].id_posting+'[/]');
-
-   					   var url = formatted + slug(artikel[i].judul);
-					%>
-					<div class="col-sm-4">
-						<article>
-							<a href="post/<%=url%>">
-								<div class="image">
-									<img src="/uploads/img/<%= artikel[i].foto %>" alt="<%= artikel[i].judul%>" style="width:360px;height:221px">
-									<div class="overlay">
-										<i class="fa fa-eye"></i>
-									</div>
-								</div>
-							</a>
-							<div class="content">
-								<div class="text">
-									<p class="time"><%= artikel[i].tgl_posting %></p>
-									<h5><a href="post/<%=url%>"><%= artikel[i].judul %></a></h5>
-									<p><%- artikel[i].deskripsi %>.</p>
-									<span class="line"></span>
-								</div> <!-- text -->
-							</div> <!-- content -->
-						</article>
-					</div>
-					<% }; %>
-				</div> <!-- row -->
-				<div class="row">
-					<a class="big-button" href="/artikel"><span>read more Artikel</span><i class="fa fa-arrow-right"></i></a>
-				</div> <!-- row -->
-				<!-- Berita -->
-				<div class="row">
-				  	<div class="side">
-						<h1>Berita Terbaru</h1>
-				  	</div>
-					<% for(var i=0; i<3; i++) { %>
-					<% var date = moment(berita[i].tgl_post),
-       					   formatted = date.format('YYYY[/]'+berita[i].id_posting+'[/]');
-
-   					   var url = formatted + slug(berita[i].judul);
-					%>
-					<div class="col-sm-4">
-						<article>
-							<a href="post/<%=url%>">
-								<div class="image">
-									<img src="/uploads/img/<%= berita[i].foto %>" alt="<%=berita[i].judul%>" style="width:360px;height:221px">
-									<div class="overlay">
-										<i class="fa fa-eye"></i>
-									</div>
-								</div>
-							</a>
-							<div class="content">
-								<div class="text">
-									<p class="time"><%= berita[i].tgl_posing %></p>
-									<h5><a href="post/<%=url%>"><%= berita[i].judul %></a></h5>
-									<p><%- berita[i].deskripsi %>.</p>
-									<span class="line"></span>
-								</div> <!-- text -->
-							</div> <!-- content -->
-						</article>
-					</div>
-					<% }; %>
-				</div> <!-- row -->
-				<div class="row">
-					<a class="big-button" href="/berita"><span>read more Berita</span><i class="fa fa-arrow-right"></i></a>
-				</div> <!-- row -->
-				<!-- Event -->
-				<div class="row">
-				  	<div class="side">
-						<h1>Event Terbaru</h1>
-				  	</div>
-					<!-- Item 1 -->
-					<% for(var i=0; i<3; i++) { %>
-					<% var date = moment(event[i].tgl_post),
-       					   formatted = date.format('YYYY[/]'+event[i].id_event+'[/]');
-
-   					   var url = formatted + slug(event[i].nama);
-					%>
-					<div class="col-sm-4">
-						<article>
-							<a href="event/<%=url%>">
-								<div class="image">
-									<img src="/uploads/img/event/<%= event[i].foto %>" alt="<%=event[i].nama%>" style="width:360px;height:221px">
-									<div class="overlay">
-										<i class="fa fa-eye"></i>
-									</div>
-								</div>
-							</a>
-							<div class="content">
-								<div class="text">
-									<p class="time"><%= event[i].tgl_posing %></p>
-									<h5><a href="event/<%=url%>"><%= event[i].nama %></a></h5>
-									<% 	var arrayisi = striptags(event[i].deskripsi).split(' ');
-        								var sliceisi = arrayisi.slice(0,17); %>
-									<p><%- sliceisi.join(' ') %>.</p>
-									<span class="line"></span>
-								</div> <!-- text -->
-							</div> <!-- content -->
-						</article>
-					</div>
-					<% }; %>
-				</div> <!-- row -->
+		<div class="container" ng-app="myApp">
+			<div class="wrapper" ng-controller="artikelController">
+				<ul class="list-group" ng-repeat="update in updates">
+				  <li class="list-group-item">
+					<h3><a href="{{update.status}}">{{update.status}}</a></h3>
+				  </li>
+				</ul> 
 			</div> <!-- wrapper -->
 			<div class="row">
 				<a class="big-button" href="/event"><span>read more Event</span><i class="fa fa-arrow-right"></i></a>
@@ -118,4 +14,6 @@
 		</div> <!-- container -->
 		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
 	</main>
-<% include ../partials/footer %>
+<script src="/frontend/js/jquery-2.1.1.min.js"></script>
+	<script src="/frontend/js/angular.min.js"></script>
+	<script src="/frontend/js/app.js"></script>
