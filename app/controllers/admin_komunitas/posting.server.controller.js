@@ -174,7 +174,7 @@ exports.delete = function(req, res, next) {
     var id_posting = req.params.id;
     DB.getConnection(function(err,koneksi){
     koneksi.query('SELECT * FROM posting WHERE id_posting='+id_posting,function(errselect,data){
-        koneksi.query('DELETE FROM posting WHERE id_posting=?',id_posting,function(err){
+        koneksi.query('DELETE FROM posting WHERE id_posting='+id_posting,function(err){
             if(err){
                 var message = err;
                 req.flash('error', message);
