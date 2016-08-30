@@ -22,7 +22,7 @@ exports.render = function(req, res, next) {
     DB.getConnection(function(err,koneksi){
     koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(err, articles){
         koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(err, berita){  
-            koneksi.query('SELECT id_event,foto,tgl_posting,nama,deskripsi FROM event ORDER BY tgl_posting DESC LIMIT 3',function(err, event){      
+            koneksi.query('SELECT id_event,foto,tgl_posting,nama,deskripsi FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(err, event){      
                 if (err) {
                     return next(err);
                 } else {
@@ -58,17 +58,16 @@ exports.detailposting = function(req, res, next) {
     koneksi.query('SELECT * FROM kategori',function(error, kategori){
         koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
             koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                koneksi.query('SELECT * FROM event ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
+                koneksi.query('SELECT * FROM event ORDER BY tgl_posting WHERE tipe="public" DESC LIMIT 3',function(error, event){
                     koneksi.query('SELECT * FROM banner',function(error, banner){
                         koneksi.query('SELECT * FROM posting WHERE id_posting='+id,function(err, articles){
                             if (err) {
                                 return next(err);
                             } else {
-                                if(articles){
                                     articles.forEach(function(data){
                                         res.render('pages/detail_posting', {
                                             title: 'Detail Posting',
-                                            articles: data,
+                                            data: data,
                                             kategori: kategori,
                                             artikel: artikel,
                                             moment: moment,
@@ -79,10 +78,6 @@ exports.detailposting = function(req, res, next) {
                                             email: req.user ? req.user.email : ''
                                         });
                                     });
-                                } else {
-                                    res.redirect('/GAGAGAGA');
-                                    
-                                }
                             }
                         });
                     });
@@ -132,7 +127,7 @@ exports.artikel = function(req, res, next) {
     koneksi.query('SELECT * FROM kategori',function(error, kategori){
         koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
             koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                koneksi.query('SELECT * FROM event ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
+                koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
                     koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC',function(err, articles){
                         if (err) {
                             return next(err);
@@ -171,7 +166,7 @@ exports.berita = function(req, res, next) {
     koneksi.query('SELECT * FROM kategori',function(error, kategori){
         koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
             koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                koneksi.query('SELECT * FROM event ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
+                koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
                     koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC',function(err, news){
                         if (err) {
                             return next(err);
@@ -210,8 +205,8 @@ exports.event = function(req, res, next) {
     koneksi.query('SELECT * FROM kategori',function(error, kategori){
         koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
             koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                koneksi.query('SELECT * FROM event ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    koneksi.query('SELECT * FROM event ORDER BY tgl_posting DESC',function(err, events){
+                koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
+                    koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting DESC',function(err, events){
                         if (err) {
                             return next(err);
                         } else {
