@@ -6,12 +6,12 @@
 				<div class="row">
 					<div class="col-md-9">
 						<article>
-							<img class="head" src="/uploads/img/<%=data.foto%>" alt="Article Picture" style="width:847.5px;height:400px">
+							<img class="head" src="/uploads/img/<%=data[0].foto%>" alt="Article Picture" style="width:847.5px;height:400px">
 							<div class="content">
 								<div class="text">
-									<p class="time"><%= moment(data.tgl_posting).format('DD MMM, YYYY')%></p>
-									<h5><%=data.judul %></h5>
-									<p><%-data.isi%></p>
+									<p class="time"><%= moment(data[0].tgl_posting).format('DD MMM, YYYY')%></p>
+									<h5><%=data[0].judul %> <%= kategori.length %></h5>
+									<p><%-data[0].isi%></p>
 									<span class="line"></span>
 									<ul class="list-unstyled list-inline bottom">
 										<li class="tags">
