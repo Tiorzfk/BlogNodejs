@@ -18,11 +18,12 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-module.exports = function(app) {
-
+module.exports = {
+  configure: function(app) {
     app.route('/admin-aplikasi/verifikasi_posting/:kategori/:id').all(isAuthenticated).get(posting.VerifikasiPosting);
 
     app.route('/admin-aplikasi/berita').all(isAuthenticated).get(posting.listberita);
 
     app.route('/admin-aplikasi/artikel').all(isAuthenticated).get(posting.listartikel);
+  }
 };

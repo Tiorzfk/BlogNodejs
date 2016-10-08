@@ -2,7 +2,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var config = require('./config/config'),
 	express = require('./config/express'),
-	passport = require('./config/passport'),
 	http = require('http');
 
 var app = express();

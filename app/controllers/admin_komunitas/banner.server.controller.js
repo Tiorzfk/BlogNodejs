@@ -2,7 +2,8 @@ var Banner = require('mongoose').model('Banner');
 var multer  = require('multer');
 const fs = require('fs');
 
-exports.renderNew = function(req, res, next) {
+function Todo() {
+this.renderNew = function(req, res, next) {
 
         res.render('pages/manage/banner/new', {
             title: 'Tambah Banner',
@@ -11,10 +12,10 @@ exports.renderNew = function(req, res, next) {
             email: req.user ? req.user.email : ''
         });
     }
-   
+
 };
 
-exports.new = function(req, res, next) {
+this.new = function(req, res, next) {
     var storage = multer.diskStorage({
         destination: function (req, file, callback) {
             callback(null, 'public/uploads/banner');
@@ -52,7 +53,7 @@ exports.new = function(req, res, next) {
     });
 };
 
-exports.list = function(req, res, next) {
+this.list = function(req, res, next) {
 
         Banner.find({}, function(err, banner) {
             if (err) {
@@ -69,7 +70,7 @@ exports.list = function(req, res, next) {
 
 };
 
-exports.renderEdit = function(req, res, next) {
+this.renderEdit = function(req, res, next) {
 
         Banner.findOne({_id: req.params.id}, function(err, banner) {
             if (err) {
@@ -85,10 +86,10 @@ exports.renderEdit = function(req, res, next) {
                 });
             }
         });
-   
+
 };
 
-exports.edit = function(req, res, next) {
+this.edit = function(req, res, next) {
     var storage = multer.diskStorage({
         destination: function (req, file, callback) {
             callback(null, 'public/uploads/banner');
@@ -135,3 +136,5 @@ exports.edit = function(req, res, next) {
     	});
     });
 };
+}
+module.exports = new Todo();

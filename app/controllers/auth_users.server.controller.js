@@ -1,5 +1,5 @@
 var passport = require('passport'),
-    DB = require('../../config/db').DB,
+    DB = require('../../config/db'),
     bcrypt = require('bcryptjs'),
     transport = require('../../config/mail').transport,
     EmailTemplates = require('swig-email-templates'),
@@ -98,7 +98,7 @@ exports.register = function(req, res, next) {
                     );
                 }
             });
-               
+
         });
     }
     else {

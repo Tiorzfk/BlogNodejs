@@ -1,4 +1,4 @@
-var DB = require('./db').DB;
+var DB = require('./db');
 var LocalStrategy   = require('passport-local').Strategy;
 module.exports = function(passport) {
 
@@ -7,11 +7,11 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(id, done) {
-        DB.getConnection(function(err,koneksi){
+        DB.acquire(function(err,koneksi){
             koneksi.query('SELECT * FROM admin where id_admin= ?',[id],function(err,admin){
+              koneksi.release();
                 done(err, admin[0]);
             });
-            koneksi.release();
         });
     });
 
@@ -20,9 +20,10 @@ module.exports = function(passport) {
         passwordField: 'password'
     },
     function(email, password, done) {
-        DB.getConnection(function(err,koneksi){
+        DB.acquire(function(err,koneksi){
             koneksi.query('SELECT * FROM admin where email = ? ',[email],
-                function(err,admin){   
+                function(err,admin){
+                  koneksi.release();
                     if (err) {
                         return done(err);
                     }
@@ -32,10 +33,9 @@ module.exports = function(passport) {
                     if (!( admin[0].password == password)) {
                         return done(null, false, {message: 'Invalid password'});
                     }
-                    
-                    return done(null, admin[0]);     
+
+                    return done(null, admin[0]);
             });
-            koneksi.release();
-        }); 
+        });
     }));
 };

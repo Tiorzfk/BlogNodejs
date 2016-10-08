@@ -2,18 +2,20 @@ var striptags = require('striptags');
 var multer  = require('multer');
 var moment = require('moment');
 const fs = require('fs');
-var DB = require('../../../config/db').DB;
+var db = require('../../../config/db');
 
-exports.renderIndex = function(req, res, next) {    
-     DB.getConnection(function(err,koneksi){
-        koneksi.query('SELECT * FROM user WHERE jenis_user="Odha" ORDER BY id_user DESC LIMIT 3',function(err,data_odha){
-            koneksi.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha" ORDER BY id_user DESC LIMIT 3',function(err,data_so){
-                koneksi.query('SELECT id_posting,posting.status,judul,tgl_posting,kategori.nama as kategori,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin INNER JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting DESC LIMIT 3',function(err,articles){
-                    koneksi.query('SELECT id_event,event.status,event.nama,tgl_event,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin = event.id_admin ORDER BY tgl_posting DESC LIMIT 3',function(err,event){
-                        koneksi.query('select count(*) as odha from user where jenis_user="Odha"',function(err,total_odha){
-                            koneksi.query('select count(*) as sh_odha from user where jenis_user="Sahabat Odha"',function(err,sh_odha){
-                                koneksi.query('select count(*) as artikel FROM posting',function(err,total_artikel){
-                                    koneksi.query('select count(*) as event FROM event',function(err,total_event){
+function Todo() {
+this.renderIndex = function(req, res, next) {
+     db.acquire(function(err,con){
+        con.query('SELECT * FROM user WHERE jenis_user="Odha" ORDER BY id_user DESC LIMIT 3',function(err,data_odha){
+          con.release();
+            con.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha" ORDER BY id_user DESC LIMIT 3',function(err,data_so){
+                con.query('SELECT id_posting,posting.status,judul,tgl_posting,kategori.nama as kategori,admin.nama as pengirim FROM posting INNER JOIN admin on admin.id_admin=posting.id_admin INNER JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting DESC LIMIT 3',function(err,articles){
+                    con.query('SELECT id_event,event.status,event.nama,tgl_mulai,tgl_berakhir,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin = event.id_admin ORDER BY tgl_posting DESC LIMIT 3',function(err,event){
+                        con.query('select count(*) as odha from user where jenis_user="Odha"',function(err,total_odha){
+                            con.query('select count(*) as sh_odha from user where jenis_user="Sahabat Odha"',function(err,sh_odha){
+                                con.query('select count(*) as artikel FROM posting',function(err,total_artikel){
+                                    con.query('select count(*) as event FROM event',function(err,total_event){
                                         res.render('pages/admin_aplikasi/index', {
                                             title: 'Halaman Admin Aplikasi',
                                             data_odha: data_odha,
@@ -27,7 +29,7 @@ exports.renderIndex = function(req, res, next) {
                                             email: req.user ? req.user.email : '',
                                             jenis: req.user ? req.user.jenis_admin : ''
                                         });
-                                        
+
                                     });
                                 });
                             });
@@ -36,19 +38,19 @@ exports.renderIndex = function(req, res, next) {
                 });
             });
         });
-        koneksi.release();
     });
 };
 
-exports.VerifikasiUser = function(req, res, next) {      
-     DB.getConnection(function(err,koneksi){
-            koneksi.query('UPDATE user SET status="1" WHERE id_user=?',req.params.id,function(err){
+this.VerifikasiUser = function(req, res, next) {
+     db.acquire(function(err,con){
+            con.query('UPDATE user SET status="1" WHERE id_user=?',req.params.id,function(err){
+              con.release();
                 if (err) {
                     req.flash('error', err.errors);
                     return res.redirect('/admin-aplikasi');
                 }
                 else {
-                    koneksi.query('SELECT * FROM user WHERE id_user=?',req.params.id,function(err,data){
+                    con.query('SELECT * FROM user WHERE id_user=?',req.params.id,function(err,data){
                         data.forEach(function(data) {
                             var message = 'User '+data.nama+' Berhasil di Verifikasi';
                             req.flash('success', message);
@@ -60,16 +62,16 @@ exports.VerifikasiUser = function(req, res, next) {
                         });
                     });
                 }
-            }); 
-            koneksi.release();
+            });
         });
 };
 
-exports.delete = function(req, res, next) {
-     DB.getConnection(function(err,koneksi){
+this.delete = function(req, res, next) {
+     db.acquire(function(err,con){
         var id_user = req.params.id;
-        koneksi.query('SELECT * FROM user WHERE id_user='+id_user,function(errselect,data){
-            koneksi.query('DELETE FROM user WHERE id_user=?',id_user,function(err){
+        con.query('SELECT * FROM user WHERE id_user='+id_user,function(errselect,data){
+          con.release();
+            con.query('DELETE FROM user WHERE id_user=?',id_user,function(err){
                 if(err){
                     var message = err;
                     req.flash('error', message);
@@ -91,13 +93,13 @@ exports.delete = function(req, res, next) {
                 }
             });
         });
-        koneksi.release();
     });
-};  
+};
 
-exports.listodha = function(req, res, next) {
-     DB.getConnection(function(err,koneksi){
-        koneksi.query('SELECT * FROM user WHERE jenis_user="Odha"',function(err,odha){
+this.listodha = function(req, res, next) {
+     db.acquire(function(err,con){
+        con.query('SELECT * FROM user WHERE jenis_user="Odha"',function(err,odha){
+          con.release();
             if (err) {
                 return next(err);
             } else {
@@ -111,13 +113,13 @@ exports.listodha = function(req, res, next) {
                 });
             }
         });
-        koneksi.release();
     });
 };
 
-exports.listsaodha = function(req, res, next) {
-     DB.getConnection(function(err,koneksi){
-        koneksi.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha"',function(err,saodha){
+this.listsaodha = function(req, res, next) {
+     db.acquire(function(err,con){
+        con.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha"',function(err,saodha){
+          con.release();
             if (err) {
                 return next(err);
             } else {
@@ -130,7 +132,8 @@ exports.listsaodha = function(req, res, next) {
                     messages_success: req.flash('success')
                 });
             }
-        }); 
-        koneksi.release();
-    });  
+        });
+    });
 };
+};
+module.exports = new Todo();

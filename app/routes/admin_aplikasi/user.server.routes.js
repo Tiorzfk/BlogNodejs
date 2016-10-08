@@ -18,8 +18,8 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-module.exports = function(app) {
-
+module.exports = {
+  configure: function(app) {
     app.route('/admin-aplikasi').all(isAuthenticated).get(user.renderIndex);
     app.route('/admin-aplikasi/verifikasi/:user/:id').all(isAuthenticated).get(user.VerifikasiUser);
 
@@ -27,5 +27,5 @@ module.exports = function(app) {
     app.route('/admin-aplikasi/user2').all(isAuthenticated).get(user.listsaodha);
 
     app.route('/admin-aplikasi/:user/delete/:id').all(isAuthenticated).get(user.delete);
-
+  }
 };

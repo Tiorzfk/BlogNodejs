@@ -1,7 +1,7 @@
 var striptags = require('striptags'),
     multer  = require('multer'),
     moment = require('moment'),
-    DB = require('../../../config/db').DB,
+    db = require('../../../config/db'),
     gmAPI = require('../../../config/maps').gmAPI,
     geocoderProvider = 'google',
     httpAdapter = 'https';
@@ -15,15 +15,17 @@ var extra = {
 
 var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
 
-exports.VerifikasiEvent = function(req, res, next) {
-    
-            DB.query('UPDATE event SET status="1" WHERE id_event=?',req.params.id,function(err){
+function Todo() {
+this.VerifikasiEvent = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('UPDATE event SET status="1" WHERE id_event=?',req.params.id,function(err){
+              con.release();
                 if (err) {
                     req.flash('error', err.errors);
                     return res.redirect('/admin-aplikasi/event');
                 }
                 else {
-                DB.query('SELECT * FROM event WHERE id_event=?',req.params.id,function(err,data){
+                db.query('SELECT * FROM event WHERE id_event=?',req.params.id,function(err,data){
                     data.forEach(function(data) {
                         var message = 'Event '+data.nama+' Berhasil di Verifikasi';
                         req.flash('success', message);
@@ -32,11 +34,12 @@ exports.VerifikasiEvent = function(req, res, next) {
                 });
                 }
             });
-       
+        });
 };
-exports.listevent = function(req, res, next) {
-    
-            DB.query('SELECT * FROM event ORDER BY tgl_posting DESC',function(err,event){
+this.listevent = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('SELECT * FROM event ORDER BY tgl_posting DESC',function(err,event){
+              con.release();
                 if (err) {
                     return next(err);
                 } else {
@@ -51,16 +54,17 @@ exports.listevent = function(req, res, next) {
                     });
                 }
             });
-        
+        });
 };
-exports.detail = function(req, res, next) {
-    
-            DB.query('SELECT foto,event.nama,tgl_event,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
+this.detail = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('SELECT foto,event.nama,tgl_mulai,tgl_berakhir,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
+              con.release();
                 if (err) {
                     console.log(err);
                 } else {
                     event.forEach(function(data){
-                        geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {                                 
+                        geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {
                                 res.render('pages/admin_aplikasi/event/detail', {
                                     title: 'Detail Event',
                                     event: data,
@@ -74,13 +78,15 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-        
+          });
 };
 
-exports.delete = function(req, res, next) {
-    var id_event = req.params.id;
-    DB.query('SELECT * FROM event WHERE id_event='+id_event,function(errselect,data){
-        DB.query('DELETE FROM event WHERE id_event=?',id_event,function(err){
+this.delete = function(req, res, next) {
+  var id_event = req.params.id;
+  db.acquire(function(err,con){
+    con.query('SELECT * FROM event WHERE id_event='+id_event,function(errselect,data){
+      con.release();
+        con.query('DELETE FROM event WHERE id_event=?',id_event,function(err){
             if(err){
                 var message = err;
                 req.flash('error', message);
@@ -97,4 +103,7 @@ exports.delete = function(req, res, next) {
             }
         });
     });
+  });
 };
+}
+module.exports = new Todo();

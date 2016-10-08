@@ -1,7 +1,7 @@
 var index = require('../controllers/index.server.controller');
 
-module.exports = function(app) {
-
+module.exports = {
+  configure: function(app) {
     app.get('/', index.render);
 
     app.get('/post/:year/:id/:slug', index.detailposting);
@@ -15,4 +15,5 @@ module.exports = function(app) {
     app.get('/event', index.event);
 
     app.get('/testsms', index.testsms);
+  }
 };

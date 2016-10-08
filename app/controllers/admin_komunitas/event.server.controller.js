@@ -1,7 +1,7 @@
 var striptags = require('striptags'),
     multer  = require('multer'),
     moment = require('moment'),
-    DB = require('../../../config/db').DB,
+    db = require('../../../config/db'),
     gmAPI = require('../../../config/maps').gmAPI, //menghasilkan google maps dalam bentuk png
     geocoderProvider = 'google',
     httpAdapter = 'https';
@@ -16,10 +16,11 @@ var extra = {
 var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra); //menghasilkan address dari lat dan long
 
 //CRUD
-
-exports.renderNew = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
-            koneksi.query('SELECT * FROM kategori ',function(err, kategori){
+function Todo() {
+this.renderNew = function(req, res, next) {
+    db.acquire(function(err,con){
+            con.query('SELECT * FROM kategori ',function(err, kategori){
+              con.release();
                 res.render('pages/admin_komunitas/event/new', {
                     title: 'Tambah Event',
                     messages_errors: req.flash('error'),
@@ -29,11 +30,10 @@ exports.renderNew = function(req, res, next) {
                     kategori: kategori,
                 });
             });
-            koneksi.release();
     });
 };
 
-exports.new = function(req, res, next) {
+this.new = function(req, res, next) {
      var storage = multer.diskStorage({
         destination: function (req, file, callback) {
             callback(null, 'public/uploads/img/event');
@@ -61,13 +61,16 @@ exports.new = function(req, res, next) {
                 status: "0",
                 foto: req.file.filename,
                 tgl_posting: now,
-                tgl_event: req.body.tgl_event,
+                tgl_mulai: req.body.tgl_mulai,
+                tgl_berakhir: req.body.tgl_berakhir,
+                alamat: req.body.alamat,
                 lokasi: req.body.posisi,
                 latitude: result[0].latitude,
                 longitude: result[0].longitude
             }
-            DB.getConnection(function(err,koneksi){
-            koneksi.query('INSERT INTO event SET ? ',data,function(err){
+            db.acquire(function(err,con){
+            con.query('INSERT INTO event SET ? ',data,function(err){
+              con.release();
                 //error simpan ke database
                 if (err) {
                     fs.unlink('public/uploads/img/event'+data.foto);
@@ -79,20 +82,20 @@ exports.new = function(req, res, next) {
                 req.flash('success', message);
                 return res.redirect('/admin-komunitas/event/new');
             });
-            koneksi.release();
             });
         });
     });
 };
 
-exports.renderEdit = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
-            koneksi.query('SELECT * FROM event WHERE id_event=?',req.params.id,function(err,event){
+this.renderEdit = function(req, res, next) {
+    db.acquire(function(err,con){
+            con.query('SELECT * FROM event WHERE id_event=?',req.params.id,function(err,event){
+              con.release();
                 if (err) {
                     return next(err);
                 } else {
                     event.forEach(function(data){
-                        geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {    
+                        geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {
                             res.render('pages/admin_komunitas/event/edit', {
                                 title: 'Edit Event',
                                 event: data,
@@ -106,11 +109,10 @@ exports.renderEdit = function(req, res, next) {
                     });
                 }
             });
-            koneksi.release();
     });
 };
 
-exports.edit = function(req, res, next) {
+this.edit = function(req, res, next) {
     var storage = multer.diskStorage({
         destination: function (req, file, callback) {
             callback(null, 'public/uploads/img/event');
@@ -155,8 +157,9 @@ exports.edit = function(req, res, next) {
             if(req.file) {
                 data.foto = req.file.filename;
             };
-            DB.getConnection(function(err,koneksi){
-            koneksi.query('UPDATE event SET ? WHERE id_event='+req.params.id,data,function(err){
+            db.acquire(function(err,con){
+            con.query('UPDATE event SET ? WHERE id_event='+req.params.id,data,function(err){
+              con.release();
                 if (err) {
                     if(req.file){
                         fs.unlink('public/uploads/img/event/'+req.file.filename);
@@ -172,17 +175,17 @@ exports.edit = function(req, res, next) {
                     return res.redirect('/admin-komunitas/event');
                 }
             });
-            koneksi.release();
             });
         });
     });
 };
 
-exports.delete = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
+this.delete = function(req, res, next) {
+    db.acquire(function(err,con){
             var id_event = req.params.id;
-            koneksi.query('SELECT * FROM event WHERE id_event='+id_event,function(errselect,data){
-                koneksi.query('DELETE FROM event WHERE id_event=?',id_event,function(err){
+            con.query('SELECT * FROM event WHERE id_event='+id_event,function(errselect,data){
+              con.release();
+                con.query('DELETE FROM event WHERE id_event=?',id_event,function(err){
                     if(err){
                         req.flash('error', err);
                         return res.redirect('/admin-komunitas/event');
@@ -195,13 +198,13 @@ exports.delete = function(req, res, next) {
                     }
                 });
             });
-            koneksi.release();
     });
 };
 
-exports.list = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
-            koneksi.query('SELECT * FROM event ORDER BY tgl_posting',function(err,event){
+this.list = function(req, res, next) {
+    db.acquire(function(err,con){
+            con.query('SELECT * FROM event ORDER BY tgl_posting',function(err,event){
+              con.release();
                 if (err) {
                     return next(err);
                 } else {
@@ -221,13 +224,13 @@ exports.list = function(req, res, next) {
                     });
                 }
             });
-            koneksi.release();
     });
 };
 
-exports.mylist = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
-            koneksi.query('SELECT * FROM event WHERE id_admin = ?',req.user.id_admin,function(err,event){
+this.mylist = function(req, res, next) {
+    db.acquire(function(err,con){
+            con.query('SELECT * FROM event WHERE id_admin = ?',req.user.id_admin,function(err,event){
+              con.release();
                 if (err) {
                     return next(err);
                 } else {
@@ -240,18 +243,18 @@ exports.mylist = function(req, res, next) {
                     });
                 }
             });
-            koneksi.release();
     });
 };
 
-exports.detail = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
-            koneksi.query('SELECT foto,event.nama,tgl_event,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
+this.detail = function(req, res, next) {
+    db.acquire(function(err,con){
+            con.query('SELECT foto,event.nama,tgl_event,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
+              con.release();
                 if (err) {
                     console.log(err);
                 } else {
                     event.forEach(function(data){
-                        geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {                                 
+                        geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {
                             res.render('pages/admin_komunitas/event/detail', {
                                 title: 'Detail Event',
                                 event: data,
@@ -264,6 +267,7 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-            koneksi.release();
     });
 };
+}
+module.exports = new Todo();

@@ -18,8 +18,8 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-module.exports = function(app) {
-
+module.exports = {
+  configure: function(app) {
     app.route('/admin-aplikasi/lokasi-pemeriksaan').all(isAuthenticated).get(pemeriksaan.listpemeriksaan);
 
     app.route('/admin-aplikasi/lokasi-pemeriksaan/new').all(isAuthenticated).get(pemeriksaan.renderNew);
@@ -28,5 +28,5 @@ module.exports = function(app) {
     app.route('/admin-aplikasi/lokasi-pemeriksaan/detail/:id').all(isAuthenticated).get(pemeriksaan.detail);
 
     app.route('/admin-aplikasi/lokasi-pemeriksaan/hapus/:id').all(isAuthenticated).get(pemeriksaan.delete);
-
+  }
 };

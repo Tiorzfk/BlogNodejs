@@ -18,8 +18,8 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-module.exports = function(app) {
-
+module.exports = {
+  configure: function(app) {
     app.route('/admin-komunitas/event/new').all(isAuthenticated).get(event.renderNew).post(event.new);
 
     app.route('/admin-komunitas/event').all(isAuthenticated).get(event.list);
@@ -29,5 +29,5 @@ module.exports = function(app) {
     app.route('/admin-komunitas/event/edit/:id').all(isAuthenticated).get(event.renderEdit).post(event.edit);
 
     app.route('/admin-komunitas/event/delete/:id').all(isAuthenticated).get(event.delete);
-
+  }
 };

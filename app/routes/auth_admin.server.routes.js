@@ -1,7 +1,7 @@
 var admin = require('../../app/controllers/auth_admin.server.controller');
 
-module.exports = function(app,passport) {
-
+module.exports = {
+  configure: function(app,passport) {
     app.route('/admin/register')
         .get(admin.renderRegister)
         .post(admin.register);
@@ -12,7 +12,7 @@ module.exports = function(app,passport) {
             failureRedirect: '/admin/login',
             failureFlash: true
         }),
-            function(req, res, next) { 
+            function(req, res, next) {
                 if (req.user.jenis_admin === 'admin komunitas') {
                     return res.redirect('/admin-komunitas');
                 } else {
@@ -22,5 +22,5 @@ module.exports = function(app,passport) {
         );
 
     app.get('/admin/logout', admin.logout);
-
+  }
 };

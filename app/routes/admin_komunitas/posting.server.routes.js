@@ -18,8 +18,8 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-module.exports = function(app) {
-
+module.exports = {
+  configure: function(app) {
     app.route('/admin-komunitas').all(isAuthenticated).get(posting.renderIndex);
 
     app.route('/admin-komunitas/posting/new').all(isAuthenticated).get(posting.renderNew).post(posting.new);
@@ -31,5 +31,5 @@ module.exports = function(app) {
     app.route('/admin-komunitas/posting/edit/:id').all(isAuthenticated).get(posting.renderEdit).post(posting.edit);
 
     app.route('/admin-komunitas/posting/delete/:id').all(isAuthenticated).get(posting.delete);
-
+  }
 };

@@ -18,8 +18,8 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-module.exports = function(app) {
-
+module.exports = {
+  configure: function(app) {
     app.route('/admin-aplikasi/verifikasi_event/:id').all(isAuthenticated).get(event.VerifikasiEvent);
 
     app.route('/admin-aplikasi/event').all(isAuthenticated).get(event.listevent);
@@ -27,4 +27,5 @@ module.exports = function(app) {
     app.route('/admin-aplikasi/event/detail/:id').all(isAuthenticated).get(event.detail);
 
     app.route('/admin-aplikasi/event/hapus/:id').all(isAuthenticated).get(event.delete);
+  }
 };

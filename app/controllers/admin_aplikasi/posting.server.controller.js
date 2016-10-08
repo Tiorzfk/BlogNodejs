@@ -2,17 +2,19 @@ var striptags = require('striptags');
 var multer  = require('multer');
 var moment = require('moment');
 const fs = require('fs');
-var DB = require('../../../config/db').DB;
+var db = require('../../../config/db');
 
-exports.VerifikasiPosting = function(req, res, next) {
-
-            DB.query('UPDATE posting SET status="1" WHERE id_posting=?',req.params.id,function(err){
+function Todo() {
+this.VerifikasiPosting = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('UPDATE posting SET status="1" WHERE id_posting=?',req.params.id,function(err){
+              con.release();
                 if (err) {
                     req.flash('error', err.errors);
                     return res.redirect('/admin-aplikasi');
                 }
                 else {
-                    DB.query('SELECT * FROM posting WHERE id_posting=?',req.params.id,function(err,data){
+                    con.query('SELECT * FROM posting WHERE id_posting=?',req.params.id,function(err,data){
                         data.forEach(function(data) {
                             if(req.params.kategori === "Artikel"){
                                 var message = 'Artikel dengan judul '+data.judul+' Berhasil di Verifikasi';
@@ -27,10 +29,12 @@ exports.VerifikasiPosting = function(req, res, next) {
                     });
                 }
             });
+          });
 };
-exports.listberita = function(req, res, next) {
-
-            DB.query('SELECT id_posting,kategori.nama as kategori,judul,deskripsi,status,tgl_posting FROM posting INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE kategori.nama="Berita"',function(err,berita){
+this.listberita = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('SELECT id_posting,kategori.nama as kategori,judul,deskripsi,status,tgl_posting FROM posting INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE kategori.nama="Berita"',function(err,berita){
+              con.release();
                 if (err) {
                     return next(err);
                 } else {
@@ -44,11 +48,12 @@ exports.listberita = function(req, res, next) {
                     });
                 }
             });
-
+          });
 };
-exports.listartikel = function(req, res, next) {
-
-            DB.query('SELECT id_posting,kategori.nama as kategori,judul,deskripsi,status,tgl_posting FROM posting INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE kategori.nama="Artikel"',function(err,artikel){
+this.listartikel = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('SELECT id_posting,kategori.nama as kategori,judul,deskripsi,status,tgl_posting FROM posting INNER JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE kategori.nama="Artikel"',function(err,artikel){
+              con.release();
                 if (err) {
                     return next(err);
                 } else {
@@ -62,5 +67,7 @@ exports.listartikel = function(req, res, next) {
                     });
                 }
             });
-
+        });
 };
+}
+module.exports = new Todo();

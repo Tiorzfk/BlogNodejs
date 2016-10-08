@@ -1,4 +1,4 @@
-var DB = require('../../config/db').DB,
+var DB = require('../../config/db'),
     striptags = require('striptags'),
     gmAPI = require('../../config/maps').gmAPI, //menghasilkan google maps dalam bentuk png
     slug = require("slug"),
@@ -19,37 +19,31 @@ exports.testsms = function(req, res, next){
 }
 
 exports.render = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
+    /*DB.getConnection(function(err,koneksi){
     koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(err, articles){
-        koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(err, berita){  
-            koneksi.query('SELECT id_event,foto,tgl_posting,nama,deskripsi FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(err, event){      
+        koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(err, berita){
+            koneksi.query('SELECT id_event,foto,tgl_posting,nama,deskripsi FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(err, event){
                 if (err) {
                     return next(err);
                 } else {
                     koneksi.query('SELECT * FROM banner',function(error, banner){
                         if (err) {
                             return next(err);
-                        } else {
+                        } else {*/
                             res.render('pages/index', {
                                 title: 'Halaman Utama',
-                                articles: articles,
-                                moment: moment,
-                                berita: berita,
-                                event: event,
                                 striptags: striptags,
-                                slug: slug,
-                                banner: banner,
                                 email: req.user ? req.user.email : '',
                                 jenis_user: req.user ? req.user.jenis_user : ''
                             });
-                        }
+                        /*}
                     });
                 }
             });
         });
     });
     koneksi.release();
-    });
+  });*/
 };
 
 exports.detailposting = function(req, res, next) {
@@ -84,10 +78,10 @@ exports.detailposting = function(req, res, next) {
                 });
             });
         });
-    });     
+    });
     koneksi.release();
 });
-};  
+};
 
 exports.detailevent = function(req, res, next) {
     var id = req.params.id;
@@ -102,7 +96,7 @@ exports.detailevent = function(req, res, next) {
                             geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {
                                 res.render('pages/detail_event', {
                                     title: 'Detail Posting',
-                                    events: data,                                       
+                                    events: data,
                                     moment: moment,
                                     banner: banner,
                                     gmAPI: gmAPI,
@@ -113,13 +107,13 @@ exports.detailevent = function(req, res, next) {
                         });
                     } else {
                         res.redirect('/GAGAGAGA');
-                        
+
                     }
                 }
             });
         });
         koneksi.release();
-    });               
+    });
 };
 
 exports.artikel = function(req, res, next) {
@@ -158,7 +152,7 @@ exports.artikel = function(req, res, next) {
         });
     });
     koneksi.release();
-    }); 
+    });
 };
 
 exports.berita = function(req, res, next) {

@@ -1,11 +1,12 @@
 var moment = require('moment');
 const fs = require('fs');
-var DB = require('../../../config/db').DB;
+var db = require('../../../config/db');
 var geocoder = require('../../../config/geocoder').geocoder;
 var gmAPI = require('../../../config/maps').gmAPI; //menghasilkan google maps dalam bentuk png
 
-exports.renderNew = function(req, res, next) {
-    
+function Todo() {
+this.renderNew = function(req, res, next) {
+
             res.render('pages/admin_aplikasi/lokasi_obat/new', {
                 title: 'Halaman Tambah Lokasi Obat',
                 email: req.user ? req.user.email : '',
@@ -16,17 +17,20 @@ exports.renderNew = function(req, res, next) {
 
 };
 
-exports.new = function(req, res, next) {
+this.new = function(req, res, next) {
     var message = null;
 
     geocoder.geocode(req.body.posisi, function(err, result) {
         var data = {
             id_admin: req.user.id_admin,
             nama: req.body.nama,
+            alamat: req.body.posisi,
             latitude: result[0].latitude,
             longitude: result[0].longitude
         }
-        DB.query('INSERT INTO lokasi_obat SET ? ',data,function(err){
+        db.acquire(function(err,con){
+          con.query('INSERT INTO lokasi_obat SET ? ',data,function(err){
+            con.release();
             //error simpan ke database
             if (err) {
                 console.log(err);
@@ -36,13 +40,15 @@ exports.new = function(req, res, next) {
             var message = 'Data Berhasil Ditambahkan.';
             req.flash('success', message);
             return res.redirect('/admin-aplikasi/lokasi-obat/new');
+          });
         });
     });
 };
 
-exports.listobat = function(req, res, next) {
-    
-            DB.query('SELECT id_lokasi,lokasi_obat.nama,admin.nama as pengirim FROM lokasi_obat INNER JOIN admin on admin.id_admin=lokasi_obat.id_admin',function(err,obat){
+this.listobat = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('SELECT id_lokasi,lokasi_obat.nama,admin.nama as pengirim FROM lokasi_obat INNER JOIN admin on admin.id_admin=lokasi_obat.id_admin',function(err,obat){
+              con.release();
                 if (err) {
                     return next(err);
                 } else {
@@ -56,17 +62,18 @@ exports.listobat = function(req, res, next) {
                     });
                 }
             });
-       
+        });
 };
 
-exports.detail = function(req, res, next) {
-    
-            DB.query('SELECT lokasi_obat.nama,latitude,longitude,admin.nama as pengirim FROM lokasi_obat INNER JOIN admin on admin.id_admin=lokasi_obat.id_admin WHERE lokasi_obat.id_lokasi = ?',req.params.id,function(err,lp){
+this.detail = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('SELECT lokasi_obat.nama,latitude,longitude,admin.nama as pengirim FROM lokasi_obat INNER JOIN admin on admin.id_admin=lokasi_obat.id_admin WHERE lokasi_obat.id_lokasi = ?',req.params.id,function(err,lp){
+              con.release();
                 if (err) {
                     console.log(err);
                 } else {
                     lp.forEach(function(data){
-                        geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {                                 
+                        geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {
                             res.render('pages/admin_aplikasi/lokasi_obat/detail', {
                                 title: 'Detail Lokasi Obat',
                                 lp: data,
@@ -79,14 +86,16 @@ exports.detail = function(req, res, next) {
                     });
                 }
             });
-       
+         });
 };
 
-exports.delete = function(req, res, next) {
-    
-            var id_lokasi = req.params.id;
-            DB.query('SELECT * FROM lokasi_obat WHERE id_lokasi='+id_lokasi,function(errselect,data){
-                DB.query('DELETE FROM lokasi_obat WHERE id_lokasi=?',id_lokasi,function(err){
+this.delete = function(req, res, next) {
+
+          var id_lokasi = req.params.id;
+          db.acquire(function(err,con){
+            con.query('SELECT * FROM lokasi_obat WHERE id_lokasi='+id_lokasi,function(errselect,data){
+              con.release();
+                con.query('DELETE FROM lokasi_obat WHERE id_lokasi=?',id_lokasi,function(err){
                     if(err){
                         var message = err;
                         req.flash('error', message);
@@ -100,14 +109,16 @@ exports.delete = function(req, res, next) {
                     }
                 });
             });
-        
+          });
+
 };
 
-exports.renderEdit = function(req, res, next) {
-    
-            DB.query('SELECT * FROM lokasi_obat WHERE id_lokasi=?',req.params.id,function(err,lokasi){
+this.renderEdit = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('SELECT * FROM lokasi_obat WHERE id_lokasi=?',req.params.id,function(err,lokasi){
+              con.release();
                 lokasi.forEach(function(data){
-                    geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {    
+                    geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {
                         res.render('pages/admin_aplikasi/lokasi_obat/edit', {
                             title: 'Halaman Edit Lokasi Obat',
                             email: req.user ? req.user.email : '',
@@ -120,10 +131,11 @@ exports.renderEdit = function(req, res, next) {
                     });
                 });
             });
+          });
 
 };
 
-exports.edit = function(req, res, next) {
+this.edit = function(req, res, next) {
     geocoder.geocode(req.body.posisi, function(err, result) {
         var data = {
             nama: req.body.nama,
@@ -131,8 +143,9 @@ exports.edit = function(req, res, next) {
             longitude: result[0].longitude
         }
         var id_lokasi = req.params.id;
-
-        DB.query('UPDATE lokasi_obat SET ? WHERE id_lokasi='+id_lokasi,data,function(err){
+      db.acquire(function(err,con){
+        con.query('UPDATE lokasi_obat SET ? WHERE id_lokasi='+id_lokasi,data,function(err){
+          con.release();
             if (err) {
                 console.log(err);
                 //req.flash('error', err.errors);
@@ -142,5 +155,8 @@ exports.edit = function(req, res, next) {
                 req.flash('success', message);
                 return res.redirect('/admin-aplikasi/lokasi-obat');
         });
+      });
     });
 };
+}
+module.exports = new Todo();

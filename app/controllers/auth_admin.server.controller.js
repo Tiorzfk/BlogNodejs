@@ -1,5 +1,5 @@
 var passport = require('passport'),
-    DB = require('../../config/db').DB;
+    DB = require('../../config/db');
 
 exports.renderLogin = function(req, res, next) {
     if (!req.user) {

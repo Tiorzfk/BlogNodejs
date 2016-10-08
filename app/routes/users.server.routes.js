@@ -1,7 +1,8 @@
 var users = require('../../app/controllers/users.server.controller'),
 	passport = require('passport');
 
-module.exports = function(app) {
+module.exports = {
+	configure: function(app) {
     app.route('/users').post(users.create).get(users.list);
 
     app.route('/users/:userId').get(users.read).put(users.update).delete(users.delete);
@@ -23,4 +24,5 @@ module.exports = function(app) {
     app.get('/logout', users.logout);
 
     app.get('/manage/sahabat-odha', users.sahabat_odha);
+	}
 };

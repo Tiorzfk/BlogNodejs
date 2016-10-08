@@ -18,19 +18,19 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-module.exports = function(app) {
+module.exports = {
+  configure: function(app) {
+    app.route('/admin-aplikasi/lokasi-pemeriksaan-obat').all(isAuthenticated).get(obat.listobat);
 
-    app.route('/admin-aplikasi/lokasi-obat').all(isAuthenticated).get(obat.listobat);
+    app.route('/admin-aplikasi/lokasi-pemeriksaan-obat/new').all(isAuthenticated).get(obat.renderNew);
+    app.route('/admin-aplikasi/lokasi-pemeriksaan-obat/new').all(isAuthenticated).post(obat.new);
 
-    app.route('/admin-aplikasi/lokasi-obat/new').all(isAuthenticated).get(obat.renderNew);
-    app.route('/admin-aplikasi/lokasi-obat/new').all(isAuthenticated).post(obat.new);
+    app.route('/admin-aplikasi/lokasi-pemeriksaan-obat/detail/:id').all(isAuthenticated).get(obat.detail);
 
-    app.route('/admin-aplikasi/lokasi-obat/detail/:id').all(isAuthenticated).get(obat.detail);
+    app.route('/admin-aplikasi/lokasi-pemeriksaan-obat/hapus/:id').all(isAuthenticated).get(obat.delete);
 
-    app.route('/admin-aplikasi/lokasi-obat/hapus/:id').all(isAuthenticated).get(obat.delete);
+    app.route('/admin-aplikasi/lokasi-pemeriksaan-obat/edit/:id').all(isAuthenticated).get(obat.renderEdit);
 
-    app.route('/admin-aplikasi/lokasi-obat/edit/:id').all(isAuthenticated).get(obat.renderEdit);
-
-     app.route('/admin-aplikasi/lokasi-obat/edit/:id').all(isAuthenticated).post(obat.edit);
-
+     app.route('/admin-aplikasi/lokasi-pemeriksaan-obat/edit/:id').all(isAuthenticated).post(obat.edit);
+  }
 };

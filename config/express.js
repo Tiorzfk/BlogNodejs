@@ -1,11 +1,29 @@
 var config = require('./config'),
     mysql = require('mysql'),
-	express = require('express'),
- 	bodyParser = require('body-parser'),
+	  express = require('express'),
+ 	  bodyParser = require('body-parser'),
     flash = require('connect-flash'),
     passport = require('passport'),
     session = require('express-session'),
     path = require('path');
+
+    //koneksi
+    connection = require('./db');
+    //routing
+    index = require('../app/routes/index.server.routes.js');
+    auth_admin = require('../app/routes/auth_admin.server.routes.js');
+
+    //admin komunitas
+    posting_komunitas = require('../app/routes/admin_komunitas/posting.server.routes.js');
+    event_komunitas = require('../app/routes/admin_komunitas/event.server.routes.js');
+    //require('../app/routes/admin_komunitas/banner.server.routes.js')(app);
+
+    //admin aplikasi
+    user = require('../app/routes/admin_aplikasi/user.server.routes.js');
+    posting_aplikasi = require('../app/routes/admin_aplikasi/posting.server.routes.js');
+    event_aplikasi = require('../app/routes/admin_aplikasi/event.server.routes.js');
+    pemeriksaan = require('../app/routes/admin_aplikasi/pemeriksaan.server.routes.js');
+    obat = require('../app/routes/admin_aplikasi/obat.server.routes.js');
 
 module.exports = function() {
     var app = express();
@@ -25,28 +43,26 @@ module.exports = function() {
     }));
 
     app.set('views', './app/views');
-	app.set('view engine', 'ejs');
+	  app.set('view engine', 'ejs');
     app.use(express.static('./public'));
 
     app.use(flash());
     app.use(passport.initialize());
     app.use(passport.session());
-
-    require('../app/routes/index.server.routes.js')(app);
-    require('../app/routes/auth_users.server.routes.js')(app);
-    require('../app/routes/auth_admin.server.routes.js')(app,passport);
-    
+    //koneksi
+    connection.init();
+    //routing
+    index.configure(app);
+    auth_admin.configure(app,passport);
     //admin komunitas
-    require('../app/routes/admin_komunitas/posting.server.routes.js')(app);
-    require('../app/routes/admin_komunitas/event.server.routes.js')(app);
-    //require('../app/routes/admin_komunitas/banner.server.routes.js')(app);
-
+    posting_komunitas.configure(app);
+    event_komunitas.configure(app);
     //admin aplikasi
-    require('../app/routes/admin_aplikasi/user.server.routes.js')(app);
-    require('../app/routes/admin_aplikasi/posting.server.routes.js')(app);
-    require('../app/routes/admin_aplikasi/event.server.routes.js')(app);
-    require('../app/routes/admin_aplikasi/pemeriksaan.server.routes.js')(app);
-    require('../app/routes/admin_aplikasi/obat.server.routes.js')(app);
+    user.configure(app);
+    posting_aplikasi.configure(app);
+    event_aplikasi.configure(app);
+    pemeriksaan.configure(app);
+    obat.configure(app);
 
     return app;
 };
