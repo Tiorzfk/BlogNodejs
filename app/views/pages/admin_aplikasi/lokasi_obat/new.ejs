@@ -1,11 +1,17 @@
 <% include ../partials/headeradmin %>
 <% include ../partials/menuadmin %>
+<link href="/backend/css/plugins/summernote/summernote.css" rel="stylesheet">
+<link href="/backend/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
  <!-- Toastr style -->
 <link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!-- clock Picker -->
+<link href="/backend/css/jquery-clockpicker.min.css" rel="stylesheet">
 <!-- Date Picker -->
 <link href="/backend/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!-- autocomplite address maps css -->
 <link rel="stylesheet" type="text/css" href="/backend/css/addressmaps.css">
+<!-- FileUpload -->
+<link rel="stylesheet" type="text/css" href="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
 
         <div class="row">
             <div class="col-lg-12">
@@ -20,9 +26,44 @@
                                     <li><%= data %></li>
                             </div>
                         <% }); %>
-                        <form action="" method="post" class="form-horizontal" id="form">
+                        <form action="" method="post" class="form-horizontal" id="form" enctype="multipart/form-data">
                             <div class="form-group"><label class="col-sm-2 control-label">Nama</label>
                                 <div class="col-sm-9"><input type="text" name="nama" class="form-control" placeholder="Nama Lokasi obat"></div>
+                            </div>
+                            <div class="form-group" id="data_1">
+                              <label class="col-sm-2 control-label">Buka dari</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group clockpicker" data-autoclose="true">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_mulai" class="form-control" value="09:30">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">sampai</label>
+                                  <div class="col-sm-3">
+                                      <div class="input-group clockpicker" data-autoclose="true">
+                                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_berakhir" class="form-control" value="09:30">
+                                      </div>
+                                  </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Deskripsi</label>
+                                <div class="col-sm-9">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-content no-padding">
+                                            <textarea name="deskripsi" class="summernote"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Foto</label>
+                                <div class="col-sm-9">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="" alt="" />
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                        </div>*Required, only jpg,png, and gif files allowed.
+                                        <input type="file" name="foto">
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group"><label class="col-sm-2 control-label">Lokasi</label>
                                 <div class="col-sm-9">
@@ -43,13 +84,18 @@
             </div>
         </div>
 <% include ../partials/footeradmin %>
+<!-- FileUpload -->
+<script type="text/javascript" src="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <!-- Autocomplite address from maps -->
 <script type="text/javascript" src="/backend/js/addressmaps.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDjE5MTfUt5RYaEdA_I_PVvaQJlkro5e80&signed_in=true&libraries=places&callback=initAutocomplete"async defer></script>
 <!-- Toastr script -->
 <script src="/backend/js/plugins/toastr/toastr.min.js"></script>
+<!-- Clock picker -->
+<script type="text/javascript" src="/backend/js/jquery-clockpicker.min.js"></script>
 <!-- Button disabled when click -->
 <script type="text/javascript" src="/backend/js/buttondisabled.js"></script>
+<script src="/backend/js/plugins/summernote/summernote.min.js"></script>
 <!-- Jquery Validate -->
 <script src="/backend/js/plugins/validate/jquery.validate.min.js"></script>
 <% for(var i in messages_success) { %>
@@ -58,11 +104,20 @@
     </script>
 <% } %>
 <script>
+    $('.clockpicker').clockpicker();
     $(document).ready(function(){
+        $('.summernote').summernote({
+            height : '300px'
+        });
+
         $("#form").validate({
             rules: {
                 nama: {
                     required: true
+                },
+                foto: {
+                    required: true,
+                    extension: "jpg|png|gif|jpeg"
                 },
                 posisi: {
                     required: true,
