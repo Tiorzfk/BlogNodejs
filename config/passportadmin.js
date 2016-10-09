@@ -1,4 +1,4 @@
-var DB = require('./db');
+var db = require('./db');
 var LocalStrategy   = require('passport-local').Strategy;
 module.exports = function(passport) {
 
@@ -7,9 +7,9 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(id, done) {
-        DB.acquire(function(err,koneksi){
-            koneksi.query('SELECT * FROM admin where id_admin= ?',[id],function(err,admin){
-              koneksi.release();
+        db.acquire(function(err,con){
+            con.query('SELECT * FROM admin where id_admin= ?',[id],function(err,admin){
+              con.release();
                 done(err, admin[0]);
             });
         });
@@ -20,10 +20,10 @@ module.exports = function(passport) {
         passwordField: 'password'
     },
     function(email, password, done) {
-        DB.acquire(function(err,koneksi){
-            koneksi.query('SELECT * FROM admin where email = ? ',[email],
+        db.acquire(function(err,con){
+            con.query('SELECT * FROM admin where email = ? ',[email],
                 function(err,admin){
-                  koneksi.release();
+                  con.release();
                     if (err) {
                         return done(err);
                     }

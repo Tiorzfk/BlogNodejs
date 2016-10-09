@@ -4,6 +4,10 @@
 <link href="/backend/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
  <!-- Toastr style -->
 <link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!-- clock Picker -->
+<link href="/backend/css/jquery-clockpicker.min.css" rel="stylesheet">
+<!-- Date Picker -->
+<link href="/backend/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!-- FileUpload -->
 <link rel="stylesheet" type="text/css" href="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
 <!-- autocomplite address maps css -->
@@ -12,7 +16,7 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                       <h5>Halaman Edit Form<small>Menampilkan Form untuk mengedit data. </small></h5>                                 
+                       <h5>Halaman Edit Form<small>Menampilkan Form untuk mengedit data. </small></h5>
                     </div>
                     <div class="ibox-content">
                         <% messages_errors.forEach(function(data) { %>
@@ -28,18 +32,39 @@
                                 <div class="col-sm-9"><input type="text" name="nama" class="form-control" placeholder="Nama Event" value="<%=event.nama%>"></div>
                                 <input type="hidden" name="img_old" value="<%=event.foto%>">
                             </div>
-                            <div class="form-group" id="data_1"><label class="col-sm-2 control-label">Tanggal</label>
-                                <div class="col-sm-9">
+                            <div class="form-group" id="data_1">
+                              <label class="col-sm-2 control-label">Tanggal Mulai</label>
+                                <div class="col-sm-3">
                                     <div class="input-group date">
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_event" class="form-control" value="<%=event.tgl_event%>">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_mulai" class="form-control" value="<%=tgl_mulai%>">
                                     </div>
                                 </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">Tanggal Berakhir</label>
+                                  <div class="col-sm-3">
+                                      <div class="input-group date">
+                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_berakhir" class="form-control" value="<%=tgl_berakhir%>">
+                                      </div>
+                                  </div>
+                            </div>
+                            <div class="form-group" id="data_1">
+                              <label class="col-sm-2 control-label">Waktu Mulai</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group clockpicker" data-autoclose="true">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_mulai" class="form-control" value="<%=waktu_mulai%>">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">Waktu Berakhir</label>
+                                  <div class="col-sm-3">
+                                      <div class="input-group clockpicker" data-autoclose="true">
+                                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_berakhir" class="form-control" value="<%=waktu_berakhir%>">
+                                      </div>
+                                  </div>
                             </div>
                             <div class="form-group"><label class="col-sm-2 control-label">Deskripsi</label>
                                 <div class="col-sm-9">
                                     <div class="ibox float-e-margins">
                                         <div class="ibox-content no-padding">
-                                            <textarea name="isi" class="summernote"><%=event.isi%></textarea>
+                                            <textarea name="isi" class="summernote"><%=event.deskripsi%></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +77,7 @@
                                         </div>
                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
                                         </div>*Required, only jpg,png, and gif files allowed.
-                                        <input type="file" name="foto">                         
+                                        <input type="file" name="foto">
                                     </div>
                                 </div>
                             </div>
@@ -79,6 +104,10 @@
 <script type="text/javascript" src="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <!-- Toastr script -->
 <script src="/backend/js/plugins/toastr/toastr.min.js"></script>
+<!-- Data picker -->
+<script src="/backend/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<!-- Clock picker -->
+<script type="text/javascript" src="/backend/js/jquery-clockpicker.min.js"></script>
 <script src="/backend/js/plugins/summernote/summernote.min.js"></script>
 <!-- Button disabled when click -->
 <script type="text/javascript" src="/backend/js/buttondisabled.js"></script>
@@ -93,6 +122,15 @@
     </script>
 <% } %>
 <script>
+    $('.clockpicker').clockpicker();
+    $('#data_1 .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
     $(document).ready(function(){
         $('.summernote').summernote({
             height : '300px'
@@ -123,7 +161,7 @@
                 }
             }
         });
-    }); 
+    });
 </script>
 <script type="text/javascript">
 function initAutocomplete() {

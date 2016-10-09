@@ -18,11 +18,13 @@ var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra); /
 //CRUD
 function Todo() {
 this.renderNew = function(req, res, next) {
+    var now = moment().format('DD/MM/YYYY');
     db.acquire(function(err,con){
             con.query('SELECT * FROM kategori ',function(err, kategori){
               con.release();
                 res.render('pages/admin_komunitas/event/new', {
                     title: 'Tambah Event',
+                    now:now,
                     messages_errors: req.flash('error'),
                     messages_success: req.flash('success'),
                     email: req.user ? req.user.email : '',
@@ -46,13 +48,13 @@ this.new = function(req, res, next) {
     upload(req,res,function(errupload) {
         var message = null;
 
-        var now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-
         if(req.body.isi.length<30){
         req.flash('error', 'Maaf, Deskripsi yang anda masukan tidak boleh kurang dari 30.');
         return res.redirect('/admin-komunitas/event/new');
         }
-
+        var now = moment().format('DD MMMM YYYY');
+        var tgl_mulai = moment(req.body.tgl_mulai, 'DD/MM/YYYY').format('DD MMMM YYYY');
+        var tgl_berakhir = moment(req.body.tgl_berakhir, 'DD/MM/YYYY').format('DD MMMM YYYY');
         geocoder.geocode(req.body.posisi, function(err, result) {
             var data = {
                 id_admin: req.user.id_admin,
@@ -61,10 +63,8 @@ this.new = function(req, res, next) {
                 status: "0",
                 foto: req.file.filename,
                 tgl_posting: now,
-                tgl_mulai: req.body.tgl_mulai,
-                tgl_berakhir: req.body.tgl_berakhir,
-                alamat: req.body.alamat,
-                lokasi: req.body.posisi,
+                tgl_mulai: tgl_mulai+' '+req.body.waktu_mulai,
+                tgl_berakhir: tgl_berakhir+' '+req.body.waktu_berakhir,
                 latitude: result[0].latitude,
                 longitude: result[0].longitude
             }
@@ -95,10 +95,18 @@ this.renderEdit = function(req, res, next) {
                     return next(err);
                 } else {
                     event.forEach(function(data){
+                        var tgl_mulai = moment(data.tgl_mulai, 'D MMMM YYYY').format('DD/MM/YYYY');
+                        var waktu_mulai = data.tgl_mulai.substring(16);
+                        var tgl_berakhir = moment(data.tgl_berakhir, 'D MMMM YYYY').format('DD/MM/YYYY');
+                        var waktu_berakhir = data.tgl_berakhir.substring(16);
                         geocoder.reverse({lat:data.latitude, lon:data.longitude}, function(err, result) {
                             res.render('pages/admin_komunitas/event/edit', {
                                 title: 'Edit Event',
                                 event: data,
+                                tgl_mulai:tgl_mulai,
+                                waktu_mulai:waktu_mulai,
+                                tgl_berakhir:tgl_berakhir,
+                                waktu_berakhir:waktu_berakhir,
                                 results: result,
                                 messages_errors: req.flash('error'),
                                 messages_success: req.flash('success'),
@@ -129,11 +137,6 @@ this.edit = function(req, res, next) {
         }
         var message = null;
 
-        //res.json(req.file);
-        //membuat showmore
-        var arrayisi = striptags(req.body.isi).split(' ');
-        var slicedesc = arrayisi.slice(0,25);
-
         if(req.body.isi.length<30){
             if(req.file != null){
                fs.unlink('public/uploads/img/event/'+data.foto);
@@ -141,16 +144,16 @@ this.edit = function(req, res, next) {
             req.flash('error', 'Maaf, Deskripsi yang anda masukan tidak boleh kurang dari 30.');
             return res.redirect('/admin-komunitas/event/new');
         }
-
+        var tgl_mulai = moment(req.body.tgl_mulai, 'DD/MM/YYYY').format('DD MMMM YYYY');
+        var tgl_berakhir = moment(req.body.tgl_berakhir, 'DD/MM/YYYY').format('DD MMMM YYYY');
         geocoder.geocode(req.body.posisi, function(err, result) {
 
             var data = {
                 nama: req.body.nama,
-                deskripsi: slicedesc.join(' '),
-                isi: req.body.isi,
-                status: "0",
+                deskripsi: req.body.isi,
                 foto: req.body.img_old,
-                tgl_event: req.body.tgl_event,
+                tgl_mulai: tgl_mulai+' '+req.body.waktu_mulai,
+                tgl_berakhir: tgl_berakhir+' '+req.body.waktu_berakhir,
                 latitude: result[0].latitude,
                 longitude: result[0].longitude
             };
@@ -191,7 +194,7 @@ this.delete = function(req, res, next) {
                         return res.redirect('/admin-komunitas/event');
                     }else{
                         if(data[0].foto){
-                            fs.unlink('public/uploads/img/event/'+data.foto);
+                            fs.unlink('public/uploads/img/event/'+data[0].foto);
                         }
                         req.flash('success', 'Berhasil Dihapus.');
                         return res.redirect('/admin-komunitas/event');
@@ -248,7 +251,7 @@ this.mylist = function(req, res, next) {
 
 this.detail = function(req, res, next) {
     db.acquire(function(err,con){
-            con.query('SELECT foto,event.nama,tgl_event,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
+            con.query('SELECT foto,event.nama,tgl_mulai,tgl_berakhir,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
               con.release();
                 if (err) {
                     console.log(err);

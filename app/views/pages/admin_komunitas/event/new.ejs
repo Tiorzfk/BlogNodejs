@@ -4,6 +4,8 @@
 <link href="/backend/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
  <!-- Toastr style -->
 <link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!-- clock Picker -->
+<link href="/backend/css/jquery-clockpicker.min.css" rel="stylesheet">
 <!-- FileUpload -->
 <link rel="stylesheet" type="text/css" href="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
 <!-- Date Picker -->
@@ -40,38 +42,29 @@
                               <label class="col-sm-2 control-label">Tanggal Mulai</label>
                                 <div class="col-sm-3">
                                     <div class="input-group date">
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_mulai" class="form-control" value="03/04/2016">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_mulai" class="form-control" value="<%=now%>">
                                     </div>
                                 </div>
                                 <label class="col-sm-2 col-sm-offset-1 control-label">Tanggal Berakhir</label>
                                   <div class="col-sm-3">
                                       <div class="input-group date">
-                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_berakhir" class="form-control" value="03/04/2016">
+                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_berakhir" class="form-control" value="<%=now%>">
                                       </div>
                                   </div>
                             </div>
                             <div class="form-group" id="data_1">
                               <label class="col-sm-2 control-label">Waktu Mulai</label>
                                 <div class="col-sm-3">
-                                    <div class="input-group date">
-                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="tgl_mulai" class="form-control" value="03/04/2016">
+                                    <div class="input-group clockpicker" data-autoclose="true">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_mulai" class="form-control" value="09:30">
                                     </div>
                                 </div>
                                 <label class="col-sm-2 col-sm-offset-1 control-label">Waktu Berakhir</label>
                                   <div class="col-sm-3">
-                                      <div class="input-group date">
-                                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="tgl_berakhir" class="form-control" value="03/04/2016">
+                                      <div class="input-group clockpicker" data-autoclose="true">
+                                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_berakhir" class="form-control" value="09:30">
                                       </div>
                                   </div>
-                            </div>
-                            <div class="form-group"><label class="col-sm-2 control-label">Alamat</label>
-                                <div class="col-sm-9">
-                                    <div class="ibox float-e-margins">
-                                        <div class="ibox-content no-padding">
-                                            <textarea name="alamat" width="100px"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-group"><label class="col-sm-2 control-label">Deskripsi</label>
                                 <div class="col-sm-9">
@@ -96,7 +89,7 @@
                             </div>
                             <div class="form-group"><label class="col-sm-2 control-label">Lokasi Event</label>
                                 <div class="col-sm-9">
-                                    <input name="posisi" id="pac-input" class="controls" type="text" placeholder="Masukan Alamat Lokasi Event">
+                                    <input name="posisi" id="pac-input" class="controls" type="text" placeholder="Masukan Alamat Lengkap Lokasi Event">
                                     <div class="google-map" id="map"></div>
                                 </div>
                             </div>
@@ -117,6 +110,8 @@
 <script type="text/javascript" src="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <!-- Data picker -->
 <script src="/backend/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<!-- Clock picker -->
+<script type="text/javascript" src="/backend/js/jquery-clockpicker.min.js"></script>
 <!-- Autocomplite address from maps -->
 <script type="text/javascript" src="/backend/js/addressmaps.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDjE5MTfUt5RYaEdA_I_PVvaQJlkro5e80&signed_in=true&libraries=places&callback=initAutocomplete"async defer></script>
@@ -134,6 +129,7 @@
     </script>
 <% } %>
 <script>
+    $('.clockpicker').clockpicker();
     $(document).ready(function(){
         $('.summernote').summernote({
             height : '300px'
@@ -172,6 +168,7 @@
         keyboardNavigation: false,
         forceParse: false,
         calendarWeeks: true,
-        autoclose: true
+        autoclose: true,
+        format: 'dd/mm/yyyy'
     });
 </script>
