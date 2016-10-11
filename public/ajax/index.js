@@ -1,3 +1,12 @@
+var slug = function(str) {
+    var $slug = '';
+    var trimmed = $.trim(str);
+    $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').
+    replace(/-+/g, '-').
+    replace(/^-|-$/g, '');
+    return $slug.toLowerCase();
+}
+
 $.ajax({
   type: 'GET',
   url: 'http://comrade-api.azurewebsites.net/posting/kategori/artikel',
@@ -8,9 +17,10 @@ $.ajax({
   success: function (data) {
     document.getElementById('loadingartikel').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data.id_posting;
       var a = "<div class='col-sm-4'>"+
                 "<article>"+
-                  "<a href='post/'> "+
+                  "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
                       "<img src='https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"' alt='' style='width:360px;height:221px'>"+
                         "<div class='overlay'>"+
@@ -21,7 +31,7 @@ $.ajax({
                   "<div class='content'>"+
                     "<div class='text'>"+
                       "<p class='time'>"+data.tgl_posting+"</p>"+
-                      "<h5><a href='post/'>"+data.judul+"</a></h5>"+
+                      "<h5><a href='post/"+url+"'>"+data.judul+"</a></h5>"+
                       "<p>"+data.deskripsi+".</p>"+
                       "<span class='line'></span>"+
                       "<ul class='list-unstyled list-inline bottom'>"+
@@ -58,9 +68,10 @@ $.ajax({
   success: function (data) {
     document.getElementById('loadingberita').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data.id_posting;
       var a = "<div class='col-sm-4'>"+
                 "<article>"+
-                  "<a href='post/'> "+
+                  "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
                       "<img src='https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"' alt='' style='width:360px;height:221px'>"+
                         "<div class='overlay'>"+
@@ -71,7 +82,7 @@ $.ajax({
                   "<div class='content'>"+
                     "<div class='text'>"+
                       "<p class='time'>"+data.tgl_posting+"</p>"+
-                      "<h5><a href='post/'>"+data.judul+"</a></h5>"+
+                      "<h5><a href='post/"+url+"'>"+data.judul+"</a></h5>"+
                       "<p>"+data.deskripsi+".</p>"+
                       "<span class='line'></span>"+
                       "<ul class='list-unstyled list-inline bottom'>"+
@@ -108,12 +119,13 @@ $.ajax({
   success: function (data) {
     document.getElementById('loadingevent').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.nama)+"/"+data.id_event;
       var text = $(data.deskripsi).text()
       var arrayisi = text.split(' ');//striptags(data.deskripsi).split(' ');
       var sliceisi = arrayisi.slice(0,17);
       var a = "<div class='col-sm-4'>"+
                 "<article>"+
-                  "<a href='post/'> "+
+                  "<a href='event/"+url+"'> "+
                     "<div class='image'>"+
                       "<img src='https://comrade-app.azurewebsites.net/uploads/img/event/"+data.foto+"' alt='' style='width:360px;height:221px'>"+
                         "<div class='overlay'>"+
@@ -124,7 +136,7 @@ $.ajax({
                   "<div class='content'>"+
                     "<div class='text'>"+
                       "<p class='time'>"+data.tgl_event+"</p>"+
-                      "<h5><a href='post/'>"+data.nama+"</a></h5>"+
+                      "<h5><a href='event/"+url+"'>"+data.nama+"</a></h5>"+
                       "<p>"+sliceisi.join(' ')+".</p>"+
                       "<span class='line'></span>"+
                       "<ul class='list-unstyled list-inline bottom'>"+

@@ -1,4 +1,4 @@
-var DB = require('../../config/db'),
+var db = require('../../config/db'),
     striptags = require('striptags'),
     gmAPI = require('../../config/maps').gmAPI, //menghasilkan google maps dalam bentuk png
     slug = require("slug"),
@@ -47,47 +47,19 @@ exports.render = function(req, res, next) {
 };
 
 exports.detailposting = function(req, res, next) {
-    var id = req.params.id;
-    DB.getConnection(function(err,koneksi){
-    koneksi.query('SELECT * FROM kategori',function(error, kategori){
-        koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting  DESC LIMIT 3',function(error, event){
-                    koneksi.query('SELECT * FROM banner',function(error, banner){
-                        koneksi.query('SELECT * FROM posting WHERE id_posting='+id,function(err, articles){
-                            if (err) {
-                                return next(err);
-                            } else {
-                                    //articles.forEach(function(data){
-                                        res.render('pages/detail_posting', {
-                                            title: 'Detail Posting',
-                                            data: articles,
-                                            kategori: kategori,
-                                            artikel: artikel,
-                                            moment: moment,
-                                            slug: slug,
-                                            event: event,
-                                            berita: berita,
-                                            banner: banner,
-                                            email: req.user ? req.user.email : ''
-                                        });
-                                    //});
-                            }
-                        });
-                    });
-                });
-            });
-        });
+    res.render('pages/detail_posting', {
+        title: 'Detail Posting',
+        email: req.user ? req.user.email : ''
     });
-    koneksi.release();
-});
+
 };
 
 exports.detailevent = function(req, res, next) {
     var id = req.params.id;
-     DB.getConnection(function(err,koneksi){
-        koneksi.query('SELECT * FROM banner',function(error, banner){
-            koneksi.query('SELECT event.nama,tgl_posting,tgl_event,foto,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin ON admin.id_admin=event.id_admin WHERE id_event='+id,function(err, events){
+     db.acquire(function(err,con){
+       con.release();
+        con.query('SELECT * FROM banner',function(error, banner){
+            con.query('SELECT event.nama,tgl_posting,tgl_mulai,tgl_berakhir,foto,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin ON admin.id_admin=event.id_admin WHERE id_event='+id,function(err, events){
                 if (err) {
                     return next(err);
                 } else {
@@ -112,7 +84,6 @@ exports.detailevent = function(req, res, next) {
                 }
             });
         });
-        koneksi.release();
     });
 };
 

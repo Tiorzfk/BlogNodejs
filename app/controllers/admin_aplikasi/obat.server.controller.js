@@ -39,7 +39,6 @@ this.new = function(req, res, next) {
               id_admin: req.user.id_admin,
               nama: req.body.nama,
               foto: req.file.filename,
-              alamat: req.body.posisi,
               deskripsi: req.body.deskripsi,
               open_timeinfo: req.body.waktu_mulai+' - '+req.body.waktu_berakhir,
               latitude: result[0].latitude,

@@ -52,7 +52,7 @@ var params = {
 									<span class="line"></span>
 								</div> <!-- text -->
 							</div> <!-- content -->
-						</article>					
+						</article>
 					</div>
 					<div class="col-md-5">
 						<div class="sidebar">
@@ -67,8 +67,12 @@ var params = {
 													<p class="time" style="color:#6E7179"><%=events.nama%></p>
 												</li>
 												<li>
-													<p><strong>Tanggal Event : </strong></p>
-													<p class="time" style="color:#6E7179"><%=events.tgl_event%></p>
+													<p><strong>Tanggal Mulai : </strong></p>
+													<p class="time" style="color:#6E7179"><%=events.tgl_mulai%></p>
+												</li>
+                        <li>
+													<p><strong>Tanggal Berakhir : </strong></p>
+													<p class="time" style="color:#6E7179"><%=events.tgl_berakhir%></p>
 												</li>
 												<li>
 													<p><strong>Pengirim : </strong></p>
@@ -95,5 +99,3 @@ var params = {
 		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
 	</main>
 <% include ../partials/footer %>
-					
-					

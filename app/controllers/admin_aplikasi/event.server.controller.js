@@ -58,7 +58,7 @@ this.listevent = function(req, res, next) {
 };
 this.detail = function(req, res, next) {
         db.acquire(function(err,con){
-            con.query('SELECT foto,event.nama,tgl_mulai,tgl_berakhir,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
+            con.query('SELECT foto,event.nama,event.tempat,tgl_mulai,tgl_berakhir,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
               con.release();
                 if (err) {
                     console.log(err);

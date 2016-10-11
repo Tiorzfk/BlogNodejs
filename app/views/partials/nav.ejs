@@ -13,77 +13,25 @@
 									<h1>Kategori</h1>
 									<div class="body">
 										<div class="content">
-											<ul class="list-unstyled">
-											<% for(var i=0; i<kategori.length; i++) {%>
-												<li><p><a href="/<%=kategori[i].nama%>"><%=kategori[i].nama%><span>
-												<% if(kategori[i].nama==="Berita"){%>
-													<%=berita.length%>
-												<%}else{%>
-													<%=artikel.length%>
-												<% } %></span></a></p></li>
-											<% }; %>
-												<li><p><a href="/event">Event<span><%=event.length%></span></a></p></li>
+											<ul class="list-unstyled" id="kategori">
+
 											</ul>
 										</div> <!-- content -->
 									</div> <!-- body -->
 								</li>
-								<!-- Event Terbaru -->
+                <!-- Event Terbaru -->
 								<li class="element">
 									<h1>Event Terbaru</h1>
 									<div class="body">
 										<div class="content">
-											<ul class="list-unstyled">
-											<% for(var i=0; i<event.length; i++) {%>
-											<% var date = moment(event[i].tgl_post),
-       					   						formatted = date.format('YYYY[/]'+event[i].id_event+'[/]');
-   					   							var url = formatted + slug(event[i].nama);%>
-												<li>
-													<p><a href="/event/<%=url%>"><%=event[i].nama%>.</a></p>
-													<p class="time"><%= moment(event[i].tgl_posting).format('DD MMM YYYY') %></p>
-												</li>
-											<% }; %>
+											<ul class="list-unstyled" id="event">
+
 											</ul>
 										</div> <!-- content -->
 									</div> <!-- body -->
 								</li>
-								<!-- Berita Terbaru -->
-								<li class="element">
-									<h1>Berita Terbaru</h1>
-									<div class="body">
-										<div class="content">
-											<ul class="list-unstyled">
-											<% for(var i=0; i<berita.length; i++) {%>
-											<% var date = moment(berita[i].tgl_post),
-       					   						formatted = date.format('YYYY[/]'+berita[i].id_posting+'[/]');
-   					   							var url = formatted + slug(berita[i].judul);%>
-												<li>
-													<p><a href="/post/<%=url%>"><%=berita[i].judul%>.</a></p>
-													<p class="time"><%= moment(berita[i].tgl_posting).format('DD MMM YYYY') %></p>
-												</li>
-											<% }; %>
-											</ul>
-										</div> <!-- content -->
-									</div> <!-- body -->
-								</li>
-								<!-- Artikel Terbaru -->
-								<li class="element">
-									<h1>Artikel Terbaru</h1>
-									<div class="body">
-										<div class="content">
-											<ul class="list-unstyled">
-											<% for(var i=0; i<artikel.length; i++) {%>
-											<% var date = moment(artikel[i].tgl_post),
-       					   						formatted = date.format('YYYY[/]'+artikel[i].id_posting+'[/]');
-   					   							var url = formatted + slug(artikel[i].judul);%>
-												<li>
-													<p><a href="/post/<%=url%>"><%=artikel[i].judul%>.</a></p>
-													<p class="time"><%= moment(artikel[i].tgl_posting).format('DD MMM YYYY') %></p>
-												</li>
-											<% }; %>
-											</ul>
-										</div> <!-- content -->
-									</div> <!-- body -->
-								</li>
+
 							</ul>
 						</div> <!-- sidebar -->
 					</div>
+          <script type="text/javascript" src="/ajax/nav.js"></script>

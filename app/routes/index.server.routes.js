@@ -4,9 +4,9 @@ module.exports = {
   configure: function(app) {
     app.get('/', index.render);
 
-    app.get('/post/:year/:id/:slug', index.detailposting);
+    app.get('/post/:year/:slug/:id', index.detailposting);
 
-    app.get('/event/:year/:id/:slug', index.detailevent);
+    app.get('/event/:year/:slug/:id', index.detailevent);
 
     app.get('/artikel', index.artikel);
 

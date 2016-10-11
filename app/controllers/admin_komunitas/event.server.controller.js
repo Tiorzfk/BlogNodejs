@@ -59,6 +59,7 @@ this.new = function(req, res, next) {
             var data = {
                 id_admin: req.user.id_admin,
                 nama: req.body.nama,
+                tempat: req.body.tempat,
                 deskripsi: req.body.isi,
                 status: "0",
                 foto: req.file.filename,
@@ -150,6 +151,7 @@ this.edit = function(req, res, next) {
 
             var data = {
                 nama: req.body.nama,
+                tempat: req.body.tempat,
                 deskripsi: req.body.isi,
                 foto: req.body.img_old,
                 tgl_mulai: tgl_mulai+' '+req.body.waktu_mulai,
@@ -251,7 +253,7 @@ this.mylist = function(req, res, next) {
 
 this.detail = function(req, res, next) {
     db.acquire(function(err,con){
-            con.query('SELECT foto,event.nama,tgl_mulai,tgl_berakhir,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
+            con.query('SELECT foto,event.nama,tempat,tgl_mulai,tgl_berakhir,tgl_posting,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin on admin.id_admin=event.id_admin WHERE event.id_event = ?',req.params.id,function(err,event){
               con.release();
                 if (err) {
                     console.log(err);

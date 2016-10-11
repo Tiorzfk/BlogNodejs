@@ -4,41 +4,15 @@
 			<div class="wrapper">
 				<div class="row">
 					<div class="col-md-9">
-						<article>
-							<img class="head" src="/uploads/img/<%=data[0].foto%>" alt="Article Picture" style="width:847.5px;height:400px">
-							<div class="content">
-								<div class="text">
-									<p class="time"><%= moment(data[0].tgl_posting).format('DD MMM, YYYY')%></p>
-									<h5><%=data[0].judul %> <%= kategori.length %></h5>
-									<p><%-data[0].isi%></p>
-									<span class="line"></span>
-									<ul class="list-unstyled list-inline bottom">
-										<li class="tags">
-											<h3>
-												<i class="fa fa-tags"></i>
-												<a href="#">#nature</a>
-												<a href="#">#landscape</a>
-												<a href="#">#flowers</a>
-												<a href="#">#travel</a>
-												<a href="#">#photography</a>
-												<a href="#">#forest</a>
-											</h3>
-										</li>
-										<li class="pull-right">
-											<ul class="list-unstyled list-inline share-like">
-												<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
-												<li><a class="tooltips like" href="#"><i class="fa fa-heart"></i><span>12</span></a></li>
-											</ul>
-										</li>
-									</ul>
-								</div> <!-- text -->
-							</div> <!-- content -->
+						<article id="detail">
+								<div id="loadingartikel" style="display:none">loading...</div>
 						</article>
 					</div>
-				<% include ../partials/nav %>
+					<% include ../partials/nav %>
 				</div> <!-- row -->
 			</div> <!-- wrapper -->
 		</div> <!-- container -->
 		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
 	</main>
 <% include ../partials/footer %>
+<script type="text/javascript" src="/ajax/detail_posting.js"></script>
