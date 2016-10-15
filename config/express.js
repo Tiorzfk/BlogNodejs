@@ -19,7 +19,8 @@ var config = require('./config'),
     //require('../app/routes/admin_komunitas/banner.server.routes.js')(app);
 
     //admin aplikasi
-    user = require('../app/routes/admin_aplikasi/user.server.routes.js');
+    index_aplikasi = require('../app/routes/admin_aplikasi/index_aplikasi.server.routes.js');
+    tweet = require('../app/routes/admin_aplikasi/tweets.server.routes.js');
     posting_aplikasi = require('../app/routes/admin_aplikasi/posting.server.routes.js');
     event_aplikasi = require('../app/routes/admin_aplikasi/event.server.routes.js');
     pemeriksaan = require('../app/routes/admin_aplikasi/pemeriksaan.server.routes.js');
@@ -58,11 +59,12 @@ module.exports = function() {
     posting_komunitas.configure(app);
     event_komunitas.configure(app);
     //admin aplikasi
-    user.configure(app);
+    tweet.configure(app);
     posting_aplikasi.configure(app);
     event_aplikasi.configure(app);
     pemeriksaan.configure(app);
     obat.configure(app);
+    index_aplikasi.configure(app);
 
     return app;
 };

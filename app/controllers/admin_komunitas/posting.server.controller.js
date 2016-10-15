@@ -3,6 +3,13 @@ var multer  = require('multer');
 var moment = require('moment');
 const fs = require('fs');
 var db = require('../../../config/db');
+var Pusher = require('pusher');
+
+var pusher = new Pusher({
+  appId: '259128',
+  key: 'e8fe5124173e43eea51a',
+  secret: '364ac806cf6f11be4cce'
+});
 
 function Todo() {
 this.renderIndex = function(req, res, next) {
@@ -62,6 +69,8 @@ this.new = function(req, res, next) {
         var arrayisi = striptags(req.body.isi).split(' ');
         var sliceisi = arrayisi.slice(0,17);
 
+        var notifbody = arrayisi.slice(0,6);
+
         var data = {
             id_admin: req.user.id_admin,
             judul: req.body.judul,
@@ -82,6 +91,17 @@ this.new = function(req, res, next) {
                 req.flash('error', err.errors);
                 return res.redirect('/admin-komunitas/posting/new');
             }
+
+            pusher.notify(['newpost'], {
+              fcm: {
+                notification: {
+                    'title': req.body.judul,
+                    'body': notifbody.join(' '),
+                    'icon':  'logo'
+                  }
+                }
+            });
+
             var message = 'Berhasil';
             req.flash('success', message);
             return res.redirect('/admin-komunitas/posting/new');
@@ -197,8 +217,9 @@ this.delete = function(req, res, next) {
 };
 
 this.list = function(req, res, next) {
+
     db.acquire(function(err,con){
-            con.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting',function(err,articles){
+            con.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting ASC',function(err,articles){
               con.release();
                 if (err) {
                     return next(err);
