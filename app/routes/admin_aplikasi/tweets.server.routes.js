@@ -20,9 +20,11 @@ function isAuthenticated(req, res, next) {
 
 module.exports = {
   configure: function(app) {
-    app.route('/admin-aplikasi/verifikasi_tweet/:id').all(isAuthenticated).get(tweet.VerifikasiTweet);
+    app.route('/admin-aplikasi/verifikasi_tweet').all(isAuthenticated).post(tweet.VerifikasiTweet);
 
     app.route('/admin-aplikasi/tweets').all(isAuthenticated).get(tweet.listtweets);
+
+    app.route('/admin-aplikasi/tweet/delete/:id').all(isAuthenticated).get(tweet.deletetweets);
 
     app.route('/admin-aplikasi/tweets/verificated').all(isAuthenticated).get(tweet.listtweetsverifiy);
 

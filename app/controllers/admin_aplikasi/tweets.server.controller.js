@@ -6,37 +6,34 @@ var db = require('../../../config/db');
 
 function Todo() {
 this.VerifikasiTweet = function(req, res, next) {
+        var data = {
+          klasifikasi : req.body.klasifikasi,
+          status : 'vertifikasi'
+        }
         db.acquire(function(err,con){
-            con.query('UPDATE posting SET status="1" WHERE id_posting=?',req.params.id,function(err){
+            con.query('UPDATE tweet_support SET ? WHERE id="'+req.body.id+'"',data,function(err,data){
               con.release();
-                if (err) {
+                if (err){
                     req.flash('error', err.errors);
-                    return res.redirect('/admin-aplikasi');
+                    return res.redirect('/admin-aplikasi/tweets');
                 }
-                else {
-                    con.query('SELECT * FROM posting WHERE id_posting=?',req.params.id,function(err,data){
-                        data.forEach(function(data) {
-                            if(req.params.kategori === "Artikel"){
-                                var message = 'Artikel dengan judul '+data.judul+' Berhasil di Verifikasi';
-                                req.flash('success', message);
-                                return res.redirect('/admin-aplikasi/artikel');
-                            }else{
-                                var message = 'Berita dengan judul '+data.judul+' Berhasil di Verifikasi';
-                                req.flash('success', message);
-                                return res.redirect('/admin-aplikasi/berita');
-                            }
-                        });
-                    });
+                if(!data.affectedRows){
+                  req.flash('error', 'User not found');
+                  return res.redirect('/admin-aplikasi/tweets');
                 }
+                var message = 'Tweet Berhasil di Verifikasi';
+                req.flash('success', message);
+                return res.redirect('/admin-aplikasi/tweets');
             });
-          });
+        });
 };
 this.listtweets = function(req, res, next) {
         db.acquire(function(err,con){
             con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="baru"',function(err,berita){
               con.release();
                 if (err) {
-                    return next(err);
+                    req.flash('error', err.errors);
+                    return res.redirect('/admin-aplikasi/tweets');
                 } else {
                     res.render('pages/admin_aplikasi/tweet/index', {
                         title: 'Data Berita',
@@ -50,12 +47,27 @@ this.listtweets = function(req, res, next) {
             });
           });
 };
+this.deletetweets = function(req, res, next) {
+        db.acquire(function(err,con){
+            con.query('DELETE FROM tweet_support WHERE id="'+req.params.id+'"',function(err,berita){
+              con.release();
+                if (err) {
+                    req.flash('error', err.errors);
+                    return res.redirect('/admin-aplikasi/tweets');
+                }
+                var message = 'Tweet Berhasil di Hapus';
+                req.flash('success', message);
+                return res.redirect('/admin-aplikasi/tweets');
+            });
+          });
+};
 this.listtweetsverifiy = function(req, res, next) {
         db.acquire(function(err,con){
             con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="vertifikasi"',function(err,berita){
               con.release();
                 if (err) {
-                    return next(err);
+                    req.flash('error', err.errors);
+                    return res.redirect('/admin-aplikasi/tweets');
                 } else {
                     res.render('pages/admin_aplikasi/tweet/index', {
                         title: 'Data Berita',
