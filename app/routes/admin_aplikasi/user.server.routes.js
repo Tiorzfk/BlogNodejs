@@ -20,12 +20,14 @@ function isAuthenticated(req, res, next) {
 
 module.exports = {
   configure: function(app) {
-    app.route('/admin-aplikasi').all(isAuthenticated).get(user.renderIndex);
     app.route('/admin-aplikasi/verifikasi/:user/:id').all(isAuthenticated).get(user.VerifikasiUser);
 
     app.route('/admin-aplikasi/user1').all(isAuthenticated).get(user.listodha);
+
     app.route('/admin-aplikasi/user2').all(isAuthenticated).get(user.listsaodha);
 
-    app.route('/admin-aplikasi/:user/delete/:id').all(isAuthenticated).get(user.delete);
+    app.route('/admin-aplikasi/user2/add').all(isAuthenticated).get(user.addso).post(user.simpanso);
+
+    app.route('/admin-aplikasi/user2/delete/:id').all(isAuthenticated).get(user.deleteso);
   }
 };

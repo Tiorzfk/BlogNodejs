@@ -25,6 +25,7 @@ var config = require('./config'),
     event_aplikasi = require('../app/routes/admin_aplikasi/event.server.routes.js');
     pemeriksaan = require('../app/routes/admin_aplikasi/pemeriksaan.server.routes.js');
     obat = require('../app/routes/admin_aplikasi/obat.server.routes.js');
+    user = require('../app/routes/admin_aplikasi/user.server.routes.js');
 
 module.exports = function() {
     var app = express();
@@ -65,6 +66,7 @@ module.exports = function() {
     pemeriksaan.configure(app);
     obat.configure(app);
     index_aplikasi.configure(app);
+    user.configure(app);
 
     return app;
 };

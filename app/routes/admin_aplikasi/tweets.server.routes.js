@@ -22,6 +22,8 @@ module.exports = {
   configure: function(app) {
     app.route('/admin-aplikasi/verifikasi_tweet').all(isAuthenticated).post(tweet.VerifikasiTweet);
 
+    app.route('/admin-aplikasi/unverifikasi_tweet/:id').all(isAuthenticated).get(tweet.UnVerifikasiTweet);
+
     app.route('/admin-aplikasi/tweets').all(isAuthenticated).get(tweet.listtweets);
 
     app.route('/admin-aplikasi/tweet/delete/:id').all(isAuthenticated).get(tweet.deletetweets);

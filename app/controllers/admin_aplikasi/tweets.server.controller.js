@@ -27,6 +27,27 @@ this.VerifikasiTweet = function(req, res, next) {
             });
         });
 };
+this.UnVerifikasiTweet = function(req, res, next) {
+        var data = {
+          status : 'baru'
+        }
+        db.acquire(function(err,con){
+            con.query('UPDATE tweet_support SET ? WHERE id="'+req.params.id+'"',data,function(err,data){
+              con.release();
+                if (err){
+                    req.flash('error', err.errors);
+                    return res.redirect('/admin-aplikasi/tweets');
+                }
+                if(!data.affectedRows){
+                  req.flash('error', 'User not found');
+                  return res.redirect('/admin-aplikasi/tweets');
+                }
+                var message = 'Tweet Berhasil di Un-Verifikasi';
+                req.flash('success', message);
+                return res.redirect('/admin-aplikasi/tweets');
+            });
+        });
+};
 this.listtweets = function(req, res, next) {
         db.acquire(function(err,con){
             con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="baru"',function(err,berita){
@@ -36,7 +57,7 @@ this.listtweets = function(req, res, next) {
                     return res.redirect('/admin-aplikasi/tweets');
                 } else {
                     res.render('pages/admin_aplikasi/tweet/index', {
-                        title: 'Data Berita',
+                        title: 'Data Tweets',
                         berita: berita,
                         email: req.user ? req.user.email : '',
                         jenis: req.user ? req.user.jenis_admin : '',

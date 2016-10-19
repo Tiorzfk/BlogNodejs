@@ -41,7 +41,9 @@
                                     <td><%= data.klasifikasi%></td>
                                     <td><center><a href="/admin-aplikasi/tweet/delete/<%=data.id%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus tweet <%=data.screen_name%> ?')">Delete</a>
                                       <% if(data.status == 'baru'){ %>
-                                        <a href="/admin-aplikasi/verifikasi_tweet/<%=data.id%>" data-toggle="modal" data-target="#myModal<%=data.id%>" class="btn btn-info btn-xs">Verifikasi</a>
+                                        <a data-toggle="modal" data-target="#myModal<%=data.id%>" class="btn btn-info btn-xs">Verifikasi</a>
+                                      <% }else{ %>
+                                        <a href="/admin-aplikasi/unverifikasi_tweet/<%=data.id%>" class="btn btn-danger btn-xs" onClick="return confirm('Apakah anda yakin ?')">Un-Verifikasi</a>
                                       <% } %>
                                     </center></td>
                                 </tr>

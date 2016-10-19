@@ -6,9 +6,9 @@ var db = require('../../../config/db');
 var Pusher = require('pusher');
 
 var pusher = new Pusher({
-  appId: '259128',
-  key: 'e8fe5124173e43eea51a',
-  secret: '364ac806cf6f11be4cce'
+  appId: '259913',
+  key: '1bba48d795f7e899c4d0',
+  secret: '0826f796c436807884b2'
 });
 
 function Todo() {
@@ -25,6 +25,15 @@ this.renderIndex = function(req, res, next) {
 //CRUD
 
 this.renderNew = function(req, res, next) {
+  pusher.notify(['newpost'], {
+    fcm: {
+      notification: {
+          'title': 'TESTT',
+          'body': 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
+          'icon':  'logo'
+        }
+      }
+  });
     db.acquire(function(err,con){
             con.query('SELECT * FROM kategori ',function(err, kategori){
               con.release();
