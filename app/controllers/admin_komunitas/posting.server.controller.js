@@ -4,6 +4,7 @@ var moment = require('moment');
 const fs = require('fs');
 var db = require('../../../config/db');
 var Pusher = require('pusher');
+//var ggsmsc = require('../../../config/ggsmsc');
 
 var pusher = new Pusher({
   appId: '259913',
@@ -12,13 +13,15 @@ var pusher = new Pusher({
 });
 
 function Todo() {
+
 this.renderIndex = function(req, res, next) {
 
-                    res.render('pages/admin_komunitas/index', {
-                        title: 'Halaman Admin Komunitas',
-                        email: req.user ? req.user.email : '',
-                        jenis: req.user ? req.user.jenis_admin : ''
-                    });
+
+  res.render('pages/admin_komunitas/index', {
+      title: 'Halaman Admin Komunitas',
+      email: req.user ? req.user.email : '',
+      jenis: req.user ? req.user.jenis_admin : ''
+  });
 
 };
 
