@@ -8,7 +8,7 @@ function Todo() {
 this.VerifikasiTweet = function(req, res, next) {
         var data = {
           klasifikasi : req.body.klasifikasi,
-          status : 'vertifikasi'
+          status : 'selesai'
         }
         db.acquire(function(err,con){
             con.query('UPDATE tweet_support SET ? WHERE id="'+req.body.id+'"',data,function(err,data){
@@ -29,7 +29,7 @@ this.VerifikasiTweet = function(req, res, next) {
 };
 this.UnVerifikasiTweet = function(req, res, next) {
         var data = {
-          status : 'baru'
+          status : 'vertifikasi'
         }
         db.acquire(function(err,con){
             con.query('UPDATE tweet_support SET ? WHERE id="'+req.params.id+'"',data,function(err,data){
@@ -50,7 +50,7 @@ this.UnVerifikasiTweet = function(req, res, next) {
 };
 this.listtweets = function(req, res, next) {
         db.acquire(function(err,con){
-            con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="baru"',function(err,berita){
+            con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="vertifikasi"',function(err,berita){
               con.release();
                 if (err) {
                     req.flash('error', err.errors);

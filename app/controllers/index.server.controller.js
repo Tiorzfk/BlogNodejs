@@ -79,7 +79,6 @@ exports.detailevent = function(req, res, next) {
                         });
                     } else {
                         res.redirect('/GAGAGAGA');
-
                     }
                 }
             });
@@ -88,119 +87,31 @@ exports.detailevent = function(req, res, next) {
 };
 
 exports.artikel = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
-    koneksi.query('SELECT * FROM kategori',function(error, kategori){
-        koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC',function(err, articles){
-                        if (err) {
-                            return next(err);
-                        } else {
-                            koneksi.query('SELECT * FROM banner',function(error, banner){
-                                if (err) {
-                                    return next(err);
-                                } else {
+
                                     res.render('pages/artikel', {
                                         title: 'Halaman Artikel',
-                                        articles: articles,
-                                        kategori: kategori,
-                                        artikel: artikel,
-                                        moment: moment,
-                                        slug: slug,
-                                        event: event,
-                                        berita: berita,
-                                        banner: banner,
                                         email: req.user ? req.user.email : '',
                                         jenis_user: req.user ? req.user.jenis_user : ''
                                     });
-                                }
-                            });
-                        }
-                    });
-                });
-            });
-        });
-    });
-    koneksi.release();
-    });
+
 };
 
 exports.berita = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
-    koneksi.query('SELECT * FROM kategori',function(error, kategori){
-        koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC',function(err, news){
-                        if (err) {
-                            return next(err);
-                        } else {
-                            koneksi.query('SELECT * FROM banner',function(error, banner){
-                                if (err) {
-                                    return next(err);
-                                } else {
+
                                     res.render('pages/berita', {
-                                        title: 'Halaman Artikel',
-                                        news: news,
-                                        kategori: kategori,
-                                        artikel: artikel,
-                                        moment: moment,
-                                        slug: slug,
-                                        event: event,
-                                        berita: berita,
-                                        banner: banner,
+                                        title: 'Halaman Berita',
                                         email: req.user ? req.user.email : '',
                                         jenis_user: req.user ? req.user.jenis_user : ''
                                     });
-                                }
-                            });
-                        }
-                    });
-                });
-            });
-        });
-    });
-    koneksi.release();
-    });
+
 };
 
 exports.event = function(req, res, next) {
-    DB.getConnection(function(err,koneksi){
-    koneksi.query('SELECT * FROM kategori',function(error, kategori){
-        koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(error, berita){
-            koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(error, artikel){
-                koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting DESC LIMIT 3',function(error, event){
-                    koneksi.query('SELECT * FROM event WHERE tipe="public" ORDER BY tgl_posting DESC',function(err, events){
-                        if (err) {
-                            return next(err);
-                        } else {
-                            koneksi.query('SELECT * FROM banner',function(error, banner){
-                                if (err) {
-                                    return next(err);
-                                } else {
+
                                     res.render('pages/event', {
-                                        title: 'Halaman Artikel',
-                                        events: events,
-                                        kategori: kategori,
-                                        artikel: artikel,
-                                        moment: moment,
-                                        slug: slug,
-                                        event: event,
-                                        berita: berita,
-                                        banner: banner,
-                                        striptags: striptags,
+                                        title: 'Halaman Event',
                                         email: req.user ? req.user.email : '',
                                         jenis_user: req.user ? req.user.jenis_user : ''
                                     });
-                                }
-                            });
-                        }
-                    });
-                });
-            });
-        });
-    });
-    koneksi.release();
-    });
+
 };

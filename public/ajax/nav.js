@@ -1,3 +1,12 @@
+var slug = function(str) {
+    var $slug = '';
+    var trimmed = $.trim(str);
+    $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').
+    replace(/-+/g, '-').
+    replace(/^-|-$/g, '');
+    return $slug.toLowerCase();
+}
+
 $.ajax({
   type: 'GET',
   url: 'http://comrade-api.azurewebsites.net/kategori',
@@ -15,17 +24,17 @@ $.ajax({
 
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/kategori',
+  url: 'http://comrade-api.azurewebsites.net/event/public',
   dataType: 'json',
   success: function (data) {
     jQuery.each(data.result, function(i, data) {
-      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data.id_posting;
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.nama)+"/"+data.id_event;
       var a = "<li>"+
-                "<p><a href='/event/<%=url%>'><%=data.nama%>.</a></p>"+
-                "<p class='time'><%= moment(data.tgl_posting).format('DD MMM YYYY') %></p>"+
+                "<p><a href='/event/"+url+"'>"+data.nama+".</a></p>"+
+                "<p class='time'>"+data.tgl_mulai+"</p>"+
               "</li>";
-        $('#event').append(a);
-        if(i==1)
+        $('#eventnav').append(a);
+        if(i==5)
         return false;
     });
   },

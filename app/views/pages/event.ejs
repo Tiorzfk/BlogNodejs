@@ -4,46 +4,8 @@
 			<div class="wrapper">
 				<div class="row">
 					<div class="col-md-9">
-						<div class="row">
-							<!-- Item 1 -->
-							<% for(var i=0; i<event.length; i++) { %>
-							<% var date = moment(event[i].tgl_post),
-       							   formatted = date.format('YYYY[/]'+event[i].id_event+'[/]');
-
-   							   var url = formatted + slug(event[i].nama);
-							%>
-							<div class="col-sm-4">
-								<article>
-									<a href="event/<%=url%>">
-										<div class="image">
-											<img src="/uploads/img/event/<%=event[i].foto%>" alt="Article Picture" style="height:153px">
-											<div class="overlay">
-												<i class="fa fa-eye"></i>
-											</div>
-										</div>
-									</a>
-									<div class="content">
-										<div class="text">
-											<p class="time"><%=event[i].tgl_posting%></p>
-											<h5><a href="event/<%=url%>"><%=event[i].nama%></a></h5>
-											<% 	var arrayisi = striptags(event[i].deskripsi).split(' ');
-        										var sliceisi = arrayisi.slice(0,17); %>
-												<p><%- sliceisi.join(' ') %>.</p>
-											<span class="line"></span>
-											<ul class="list-unstyled list-inline bottom">
-												<li><h2><a href="blog-post.html#comments-list"><i class="fa fa-comment"></i>10 comments</a></h2></li>
-												<li class="pull-right">
-													<ul class="list-unstyled list-inline share-like">
-														<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
-														<li><a class="tooltips like" href="#"><i class="fa fa-heart"></i><span>10</span></a></li>
-													</ul>
-												</li>
-											</ul>
-										</div> <!-- text -->
-									</div> <!-- content -->
-								</article>
-							</div>
-							<% }; %>
+						<div class="row" id="event">
+							<div id="loadingevent" style="display:none"><img src="/frontend/img/loader.gif" style="display: block;margin: auto;"/></div>
 						</div> <!-- row -->
 						<div class="pagination">
 							<ul class="list-unstyled list-inline">
@@ -63,3 +25,4 @@
 		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
 	</main>
 <% include ../partials/footer %>
+<script type="text/javascript" src="/ajax/event.js"></script>

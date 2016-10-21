@@ -32,6 +32,28 @@ this.VerifikasiUser = function(req, res, next) {
         });
 };
 
+this.recommend = function(req, res, next) {
+     db.acquire(function(err,con){
+            con.query('UPDATE user SET jenis_user="Odha" WHERE id_user=?',req.params.id,function(err){
+              con.release();
+                if (err) {
+                    req.flash('error', err.errors);
+                    return res.redirect('/admin-aplikasi/user2');
+                }
+                else {
+                    con.query('SELECT * FROM user WHERE id_user=?',req.params.id,function(err,data){
+                        data.forEach(function(data) {
+                            var message = 'User '+data.nama+' Berhasil di rekomendasikan menjadi odha';
+                            req.flash('success', message);
+
+                            res.redirect('/admin-aplikasi/user2');
+                        });
+                    });
+                }
+            });
+        });
+};
+
 this.delete = function(req, res, next) {
      db.acquire(function(err,con){
         var id_user = req.params.id;

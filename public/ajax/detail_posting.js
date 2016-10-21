@@ -18,26 +18,6 @@ $.ajax({
                 "<h5>"+data.judul+"</h5>"+
                 "<p>"+data.isi+"</p>"+
                 "<span class='line'></span>"+
-                "<ul class='list-unstyled list-inline bottom'>"+
-                  "<li class='tags'>"+
-                    "<h3>"+
-                      "<i class='fa fa-tags'></i>"+
-                      "<a href='#'>#nature</a>"+
-                      "<a href='#'>#landscape</a>"+
-                      "<a href='#'>#flowers</a>"+
-                      "<a href='#'>#travel</a>"+
-                      "<a href='#'>#photography</a>"+
-                      "<a href='#'>#forest</a>"+
-                    "</h3>"+
-                  "</li>"+
-                  "<li class='pull-right'>"+
-                    "<ul class='list-unstyled list-inline share-like'>"+
-                      "<li><a href='#'><i class='fa fa-share-alt'></i></a></li>"+
-                      "<li><a class='tooltips like' href='#'><i class='fa fa-heart'></i><span>12</span></a></li>"+
-                    "</ul>"+
-                  "</li>"+
-                "</ul>"+
-              "</div>"+
             "</div>";
       $('#detail').append(a);
     });
