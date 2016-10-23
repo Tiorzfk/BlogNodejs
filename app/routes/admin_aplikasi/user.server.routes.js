@@ -20,14 +20,16 @@ function isAuthenticated(req, res, next) {
 
 module.exports = {
   configure: function(app) {
-    app.route('/admin-aplikasi/verifikasi/:user/:id').all(isAuthenticated).get(user.VerifikasiUser);
+    app.route('/admin-aplikasi/recommend-odha/verifikasi/:id_recommend/:id_user').all(isAuthenticated).get(user.verifikasiOdha);
 
-    app.route('/admin-aplikasi/user1').all(isAuthenticated).get(user.listodha);
+    app.route('/admin-aplikasi/recommend-odha').all(isAuthenticated).get(user.recommendlist);
 
-    app.route('/admin-aplikasi/user2').all(isAuthenticated).get(user.listsaodha);
+    app.route('/admin-aplikasi/recommend-odha/:id').all(isAuthenticated).get(user.detailRecommend);
 
-    app.route('/admin-aplikasi/user2/add').all(isAuthenticated).get(user.addso).post(user.simpanso);
+    app.route('/admin-aplikasi/sahabat-odha').all(isAuthenticated).get(user.listsaodha);
 
-    app.route('/admin-aplikasi/user2/delete/:id').all(isAuthenticated).get(user.deleteso);
+    app.route('/admin-aplikasi/sahabat-odha/add').all(isAuthenticated).get(user.addso).post(user.simpanso);
+
+    app.route('/admin-aplikasi/sahabat-odha/delete/:id').all(isAuthenticated).get(user.deleteso);
   }
 };

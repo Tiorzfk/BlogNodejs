@@ -28,12 +28,11 @@ var SmsBatch = require("ggsmsc").Batch;
         this.smsc.SendTo(DisplayCallBack,{phone: '+6281355703115', msg : 'This is my message from nodejs'});
     }*/
 
-    function ResponseCB (response) {
-        console.log ("### Testing CallBack --> Response=%j", response);
-        if (response.status ===0) process.exit();
-    };
-
     function sms() {
+        this.ResponseCB = function(response) {
+          console.log ("### Testing CallBack --> Response=%j", response.status);
+          if (response.status ===0) process.exit();
+        };
         var MySmsRqt1 =  {
             phone   : '+6281355703115'            // warning phone number should be a string not a number
           , ack     : false                  // don't wait for target to send back an acknowledgement response
@@ -46,7 +45,9 @@ var SmsBatch = require("ggsmsc").Batch;
         };
 
         this.smsc= new GGsmsc (SmscConfig);     // connect onto gammu SMSgateway
-        new SmsBatch (this.smsc, ResponseCB, [MySmsRqt1,MySmsRqt2]);
+        this.kirim = function(data){
+            new SmsBatch (this.smsc, this.ResponseCB, data);
+        }
     }
 
 module.exports = new sms();

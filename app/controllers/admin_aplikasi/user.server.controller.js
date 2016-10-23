@@ -7,93 +7,57 @@ var bcrypt = require('bcryptjs');
 
 function Todo() {
 
-this.VerifikasiUser = function(req, res, next) {
+this.verifikasiOdha = function(req, res, next) {
      db.acquire(function(err,con){
-            con.query('UPDATE user SET status="1" WHERE id_user=?',req.params.id,function(err){
+       con.query('DELETE FROM recommend WHERE id_recommend='+req.params.id_recommend,function(err){
+            con.query('UPDATE user SET jenis_user="Odha" WHERE id_user='+req.params.id_user,function(err){
               con.release();
                 if (err) {
                     req.flash('error', err.errors);
-                    return res.redirect('/admin-aplikasi');
+                    return res.redirect('/admin-aplikasi/recommend-odha');
                 }
                 else {
-                    con.query('SELECT * FROM user WHERE id_user=?',req.params.id,function(err,data){
-                        data.forEach(function(data) {
-                            var message = 'User '+data.nama+' Berhasil di Verifikasi';
-                            req.flash('success', message);
-                            if(req.params.user === "Odha"){
-                                return res.redirect('/admin-aplikasi/user1');
-                            }else{
-                                 return res.redirect('/admin-aplikasi/user2');
-                            }
-                        });
+                    con.query('SELECT * FROM user WHERE id_user=?',req.params.id_user,function(err,data){
+                       var message = 'User '+data[0].nama+' Berhasil menjadi odha';
+                       req.flash('success', message);
+
+                       res.redirect('/admin-aplikasi/recommend-odha');
                     });
                 }
             });
         });
+      });
 };
 
-this.recommend = function(req, res, next) {
+this.recommendlist = function(req, res, next) {
      db.acquire(function(err,con){
-            con.query('UPDATE user SET jenis_user="Odha" WHERE id_user=?',req.params.id,function(err){
-              con.release();
-                if (err) {
-                    req.flash('error', err.errors);
-                    return res.redirect('/admin-aplikasi/user2');
-                }
-                else {
-                    con.query('SELECT * FROM user WHERE id_user=?',req.params.id,function(err,data){
-                        data.forEach(function(data) {
-                            var message = 'User '+data.nama+' Berhasil di rekomendasikan menjadi odha';
-                            req.flash('success', message);
-
-                            res.redirect('/admin-aplikasi/user2');
-                        });
-                    });
-                }
-            });
-        });
-};
-
-this.delete = function(req, res, next) {
-     db.acquire(function(err,con){
-        var id_user = req.params.id;
-        con.query('SELECT * FROM user WHERE id_user='+id_user,function(errselect,data){
-          con.release();
-            con.query('DELETE FROM user WHERE id_user=?',id_user,function(err){
-                if(err){
-                    var message = err;
-                    req.flash('error', message);
-                    if(req.params.user === "odha"){
-                        return res.redirect('/admin-aplikasi/user1');
-                    }else{
-                        return res.redirect('/admin-aplikasi/user2');
-                    }
-                }else{
-                    data.forEach(function(data){
-                        var message = "User "+data.nama+" Berhasil Dihapus.";
-                        req.flash('success', message);
-                        if(req.params.user === "odha"){
-                            return res.redirect('/admin-aplikasi/user1');
-                        }else{
-                            return res.redirect('/admin-aplikasi/user2');
-                        }
-                    });
-                }
-            });
-        });
-    });
-};
-
-this.listodha = function(req, res, next) {
-     db.acquire(function(err,con){
-        con.query('SELECT * FROM user WHERE jenis_user="Odha"',function(err,odha){
+        con.query('SELECT recommend.id_user,id_recommend,us.nama as perecommend,uu.nama as user,pesan FROM recommend INNER JOIN user as us on us.id_user=recommend.id_sahabatodha INNER JOIN user as uu on uu.id_user=recommend.id_user',function(err,odha){
           con.release();
             if (err) {
                 return next(err);
             } else {
-                res.render('pages/admin_aplikasi/odha/index', {
-                    title: 'Data User',
+                res.render('pages/admin_aplikasi/recommend-odha/index', {
+                    title: 'Data Verifikasi User Odha',
                     odha: odha,
+                    email: req.user ? req.user.email : '',
+                    jenis: req.user ? req.user.jenis_admin : '',
+                    messages_errors: req.flash('error'),
+                    messages_success: req.flash('success')
+                });
+            }
+        });
+    });
+};
+this.detailRecommend = function(req, res, next) {
+     db.acquire(function(err,con){
+        con.query('SELECT us.nama as perecommend,us.email as sa_email,us.jk as sa_jk,us.telp as sa_telp,us.tgl_lahir as sa_tgl_lahir,us.foto as sa_foto,sahabat_odha.komunitas,sahabat_odha.about_sahabatodha,uu.nama as user,uu.email,uu.jk,uu.telp,uu.tgl_lahir,uu.foto,pesan FROM recommend INNER JOIN user as us on us.id_user=recommend.id_sahabatodha INNER JOIN sahabat_odha on sahabat_odha.id_user=recommend.id_sahabatodha INNER JOIN user as uu on uu.id_user=recommend.id_user WHERE id_recommend='+req.params.id,function(err,data){
+          con.release();
+            if (err) {
+                return next(err);
+            } else {
+                res.render('pages/admin_aplikasi/recommend-odha/detail', {
+                    title: 'Data Detail Verifikasi User Odha',
+                    data: data,
                     email: req.user ? req.user.email : '',
                     jenis: req.user ? req.user.jenis_admin : '',
                     messages_errors: req.flash('error'),
@@ -132,7 +96,7 @@ this.simpanso = function(req, res, next) {
         con.query('INSERT INTO sahabat_odha SET ? ',data2,function(err,result2){
           var message = "User Berhasil Dibuat.";
           req.flash('success', message);
-          return res.redirect('/admin-aplikasi/user2/add');
+          return res.redirect('/admin-aplikasi/sahabat-odha/add');
         });
       });
     });
@@ -147,13 +111,13 @@ this.deleteso = function(req, res, next) {
         if(!result.affectedRows){
           var message = "User tidak ditemukan.";
           req.flash('error', message);
-          return res.redirect('/admin-aplikasi/user2');
+          return res.redirect('/admin-aplikasi/sahabat-odha');
         }
 
         con.query('DELETE FROM sahabat_odha WHERE id_user='+req.params.id,function(err,result2){
           var message = "Sahabat Odha Berhasil Dihapus.";
           req.flash('success', message);
-          return res.redirect('/admin-aplikasi/user2');
+          return res.redirect('/admin-aplikasi/sahabat-odha');
         });
       });
     });

@@ -1,0 +1,43 @@
+<% include ../partials/headeradmin %>
+<% include ../partials/menuadmin %>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                       <h5>Halaman Detail Recommend Odha <small>Menampilkan detail recommend odha. </small></h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ibox-title">
+                                <h5>Detail Sahabat Odha</h5>
+                            </div>
+                            <div class="ibox-content">
+                              <p class="title"><strong>Foto : </strong></p><center><img src="http://comrade-api.azurewebsites.net/pic_sahabatodha/<%=data[0].sa_foto%>" style="width:100px;height:100px"></center><p><br>
+                                <p class="title"><strong>Nama : </strong></p><%=data[0].perecommend %><p><br>
+                                <p class="title"><strong>Email : </strong></p><%=data[0].sa_email %><p><br>
+                                <p class="title"><strong>Jenis Kelamin : </strong><%= data[0].sa_jk %></p><br>
+                                <p class="title"><strong>Telepon : </strong><%= data[0].sa_telp %></p><br>
+                                <p class="title"><strong>Tanggal Lahir : </strong><%= data[0].sa_tgl_lahir %></p><br>
+                                <p class="title"><strong>Komunitas : </strong><%= data[0].komunitas %></p><br>
+                                <p class="title"><strong>About : </strong><%= data[0].about_sahabatodha %></p><br>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="ibox-title">
+                                <h5>Detail Odha</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <p class="title"><strong>Foto : </strong></p><center><img src="http://comrade-api.azurewebsites.net/pic_user/<%=data[0].foto%>" style="width:100px;height:100px"></center><p><br>
+                                <p class="title"><strong>Nama : </strong><%= data[0].user %></p><br>
+                                <p class="title"><strong>Email : </strong><%= data[0].email %></p><br>
+                                <p class="title"><strong>Jenis Kelamin : </strong><%= data[0].jk %></p><br>
+                                <p class="title"><strong>Telepon : </strong><%= data[0].telp %></p><br>
+                                <p class="title"><strong>Tanggal Lahir : </strong><%= data[0].tgl_lahir %></p><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% include ../partials/footeradmin %>
