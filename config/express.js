@@ -9,6 +9,7 @@ var config = require('./config'),
 
     //koneksi
     connection = require('./db');
+    connection_sms = require('./dbsms');
     //routing
     index = require('../app/routes/index.server.routes.js');
     auth_admin = require('../app/routes/auth_admin.server.routes.js');
@@ -68,6 +69,8 @@ module.exports = function() {
     obat.configure(app);
     index_aplikasi.configure(app);
     user.configure(app);
+    //koneksi sms
+    connection_sms.init();
     kirim_sms.configure(app);
 
     return app;

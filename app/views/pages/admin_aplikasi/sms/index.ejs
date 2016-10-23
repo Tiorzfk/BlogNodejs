@@ -21,18 +21,21 @@
                             <thead>
                                 <tr>
                                     <th width="10%">Status</th>
-                                    <th width="25%">message</th>
+                                    <th width="25%">SendingDateTime</th>
+                                    <th width="40%">Message</th>
+                                    <th width="14%">Destination Number</th>
                                 </tr>
                             </thead>
                             <tbody>
-
+                            <% data.forEach(function(data){ %>
                                 <tr>
 
-                                    <td></td>
-                                    <td></td>
-
+                                    <td><%= data.status %></td>
+                                    <td><%= data.SendingDateTime %></td>
+                                    <td><%= data.TextDecoded %></td>
+                                    <td><%= data.DestinationNumber %></td>
                                 </tr>
-                                
+                            <% }); %>
                             </tbody>
                         </table>
                     </div>

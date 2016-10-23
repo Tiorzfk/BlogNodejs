@@ -3,10 +3,10 @@ var SmsBatch = require("ggsmsc").Batch;
 
    var SmscConfig = {
         debug   : 1,            // can be overloaded with --debug in cli
-        hostname: 'localhost', // Gammu MySql config
-        username: 'root',
-        basename: 'sms',
-        password: '',
+        hostname: 'ap-cdbr-azure-southeast-b.cloudapp.net', // Gammu MySql config
+        username: 'b3671d957c98a8',
+        basename: 'comradesms',
+        password: '8abfbc7d',
 
         smsc    : '+6281573734314',  // your SMS gateway phone number
         report  : true          // enforce delivery report when sending
@@ -31,7 +31,7 @@ var SmsBatch = require("ggsmsc").Batch;
     function sms() {
         this.ResponseCB = function(response) {
           console.log ("### Testing CallBack --> Response=%j", response.status);
-          if (response.status ===0) process.exit();
+          return response.status;
         };
         var MySmsRqt1 =  {
             phone   : '+6281355703115'            // warning phone number should be a string not a number
