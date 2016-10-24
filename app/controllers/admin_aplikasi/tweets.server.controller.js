@@ -82,9 +82,9 @@ this.deletetweets = function(req, res, next) {
             });
           });
 };
-this.listtweetsverifiy = function(req, res, next) {
+this.listtweetsselesai = function(req, res, next) {
         db.acquire(function(err,con){
-            con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="vertifikasi"',function(err,berita){
+            con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="selesai"',function(err,berita){
               con.release();
                 if (err) {
                     req.flash('error', err.errors);
