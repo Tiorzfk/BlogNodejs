@@ -3,12 +3,14 @@ var db = require('../../config/db'),
     gmAPI = require('../../config/maps').gmAPI, //menghasilkan google maps dalam bentuk png
     slug = require("slug"),
     moment = require("moment"),
-    geocoder = require('../../config/geocoder').geocoder,
-    nexmo = require('easynexmo');
+    geocoder = require('../../config/geocoder').geocoder;
+    //nexmo = require('easynexmo');
 
-    nexmo.initialize('e44219fb', '35339240f1dc297e', true);
+    //nexmo.initialize('e44219fb', '35339240f1dc297e', true);
 
-exports.testsms = function(req, res, next){
+function Todo() {
+
+/*this.testsms = function(req, res, next){
     clockwork.sendSms({ To: '628982044805', Content: 'Test!', From: 'Tio'}, function(error, resp) {
         if (error) {
             console.log('Something went wrong', error);
@@ -16,9 +18,9 @@ exports.testsms = function(req, res, next){
             console.log('Message sent',resp.responses[0].id);
         }
     });
-}
+}*/
 
-exports.render = function(req, res, next) {
+this.render = function(req, res, next) {
     /*DB.getConnection(function(err,koneksi){
     koneksi.query('SELECT * FROM posting WHERE id_kategori=2 ORDER BY tgl_posting DESC LIMIT 3',function(err, articles){
         koneksi.query('SELECT * FROM posting WHERE id_kategori=1 ORDER BY tgl_posting DESC LIMIT 3',function(err, berita){
@@ -46,7 +48,15 @@ exports.render = function(req, res, next) {
   });*/
 };
 
-exports.detailposting = function(req, res, next) {
+this.about = function(req, res, next) {
+    res.render('pages/about', {
+        title: 'Halaman About',
+        email: req.user ? req.user.email : ''
+    });
+
+};
+
+this.detailposting = function(req, res, next) {
     res.render('pages/detail_posting', {
         title: 'Detail Posting',
         email: req.user ? req.user.email : ''
@@ -54,7 +64,7 @@ exports.detailposting = function(req, res, next) {
 
 };
 
-exports.detailevent = function(req, res, next) {
+this.detailevent = function(req, res, next) {
     var id = req.params.id;
      db.acquire(function(err,con){
        con.release();
@@ -86,7 +96,7 @@ exports.detailevent = function(req, res, next) {
     });
 };
 
-exports.artikel = function(req, res, next) {
+this.artikel = function(req, res, next) {
 
                                     res.render('pages/artikel', {
                                         title: 'Halaman Artikel',
@@ -96,7 +106,7 @@ exports.artikel = function(req, res, next) {
 
 };
 
-exports.berita = function(req, res, next) {
+this.berita = function(req, res, next) {
 
                                     res.render('pages/berita', {
                                         title: 'Halaman Berita',
@@ -106,7 +116,7 @@ exports.berita = function(req, res, next) {
 
 };
 
-exports.event = function(req, res, next) {
+this.event = function(req, res, next) {
 
                                     res.render('pages/event', {
                                         title: 'Halaman Event',
@@ -115,3 +125,5 @@ exports.event = function(req, res, next) {
                                     });
 
 };
+}
+module.exports = new Todo();

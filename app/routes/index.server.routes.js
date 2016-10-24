@@ -14,6 +14,8 @@ module.exports = {
 
     app.get('/event', index.event);
 
-    app.get('/testsms', index.testsms);
+    app.get('/about', index.about);
+
+    //app.get('/contact', index.about);
   }
 };
