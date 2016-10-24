@@ -19,7 +19,7 @@ this.kirimSms = function(req, res, next) {
             setTimeout(function(){
               req.flash('success', 'Done.');
               return res.redirect('/admin-aplikasi/kirim-sms');
-            },30000);
+            },3000);
           });
 
         });
