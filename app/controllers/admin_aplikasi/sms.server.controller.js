@@ -7,7 +7,7 @@ var datauser = [];
 this.kirimSms = function(req, res, next) {
      db.acquire(function(err,con){
        con.release();
-        con.query('SELECT * FROM user WHERE id_user=682 OR id_user=21',function(err,data){
+        con.query('SELECT * FROM user WHERE id_user=21',function(err,data){
           data.forEach(function(data){
             datauser.push({
               phone : data.telp,
