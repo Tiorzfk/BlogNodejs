@@ -12,7 +12,7 @@ this.kirimSms = function(req, res, next) {
             datauser.push({
               phone : data.telp,
               ack : false,
-              msg : req.body.msg+"<p>Comrade Team</p>"
+              msg : req.body.msg
             });
             sms.kirim(datauser);
             console.log('Sedang Mengirim...');
