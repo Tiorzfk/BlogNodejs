@@ -1,5 +1,5 @@
 var db = require('../../../config/db');
-var dbsms = require('../../../config/dbsms');
+//var dbsms = require('../../../config/dbsms');
 var sms = require('../../../config/ggsmsc');
 
 function Todo() {
