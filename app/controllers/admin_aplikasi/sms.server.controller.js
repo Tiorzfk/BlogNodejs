@@ -28,7 +28,6 @@ this.kirimSms = function(req, res, next) {
             ];
 
             sms.kirim(datauser);
-            console.log('Sedang Mengirim...');
             setTimeout(function(){
               req.flash('success', 'Done.');
               return res.redirect('/admin-aplikasi/kirim-sms');
