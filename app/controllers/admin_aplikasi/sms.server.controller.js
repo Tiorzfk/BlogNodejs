@@ -5,7 +5,7 @@ var sms = require('../../../config/ggsmsc');
 function Todo() {
 var datauser = [];
 this.kirimSms = function(req, res, next) {
-     db.acquire(function(err,con){
+     /*db.acquire(function(err,con){
        con.release();
         con.query('SELECT * FROM user WHERE id_user=21',function(err,data){
           data.forEach(function(data){
@@ -13,17 +13,30 @@ this.kirimSms = function(req, res, next) {
               phone : data.telp,
               ack : false,
               msg : req.body.msg
-            });
+            });*/
+            var datauser =  [
+              {
+                phone   : '085871500098',
+                ack     : false,
+                msg     : req.body.msg
+              }
+              {
+                phone   : '082312023112',
+                ack     : false,
+                msg     : req.body.msg
+              }
+            ];
+
             sms.kirim(datauser);
             console.log('Sedang Mengirim...');
             setTimeout(function(){
               req.flash('success', 'Done.');
               return res.redirect('/admin-aplikasi/kirim-sms');
             },3000);
-          });
+          /*});
 
         });
-    });
+    });*/
 };
 this.index = function(req, res, next) {
   dbsms.acquire(function(err,con){
