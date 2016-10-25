@@ -19,7 +19,7 @@ this.kirimSms = function(req, res, next) {
                 phone   : '085871500098',
                 ack     : false,
                 msg     : req.body.msg
-              }
+              },
               {
                 phone   : '082312023112',
                 ack     : false,
