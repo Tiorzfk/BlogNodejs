@@ -1,5 +1,4 @@
 var GGsmsc = require("ggsmsc").Client;
-var SmsBatch = require("ggsmsc").Batch;
 
    /*var SmscConfig = {
         debug   : 1,            // can be overloaded with --debug in cli
@@ -40,10 +39,12 @@ var SmsBatch = require("ggsmsc").Batch;
     }*/
 
     function sms() {
-        this.ResponseCB = function(response) {
-          console.log ("### Testing CallBack --> Response=%j", response.status);
-          return response.status;
-        };
+        this.DisplayCallback = function(message) {
+        var count=1;
+            for (var sms in message) {
+                console.log("-%d- Inbox SMS=%j", count++, message[sms]);
+            }
+        }
         var MySmsRqt1 =  {
             phone   : '+6281355703115'            // warning phone number should be a string not a number
           , ack     : false                  // don't wait for target to send back an acknowledgement response
@@ -57,7 +58,9 @@ var SmsBatch = require("ggsmsc").Batch;
 
         this.smsc= new GGsmsc (SmscConfig);     // connect onto gammu SMSgateway
         this.kirim = function(data){
-            new SmsBatch (this.smsc, this.ResponseCB, data);
+            this.smsc.GetAll  (this.DisplayCallBack);
+            this.smsc.SendTo  (this.DisplayCallBack, {phone:'082312023112', msg: data});
+            //new SmsBatch (this.smsc, this.ResponseCB, data);
         }
     }
 
