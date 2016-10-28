@@ -1,6 +1,17 @@
 var GGsmsc = require("ggsmsc").Client;
 var SmsBatch = require("ggsmsc").Batch;
 
+   /*var SmscConfig = {
+        debug   : 1,            // can be overloaded with --debug in cli
+        hostname: '127.0.0.1', // Gammu MySql config
+        username: 'codelabs_comrade',
+        basename: 'codelabs_comradesms',
+        password: 'bismilah123',
+
+        smsc    : '+6281573734314',  // your SMS gateway phone number
+        report  : true          // enforce delivery report when sending
+   };*/
+
    var SmscConfig = {
         debug   : 1,            // can be overloaded with --debug in cli
         hostname: 'ap-cdbr-azure-southeast-b.cloudapp.net', // Gammu MySql config
