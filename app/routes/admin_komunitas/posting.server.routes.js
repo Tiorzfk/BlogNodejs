@@ -31,5 +31,40 @@ module.exports = {
     app.route('/admin-komunitas/posting/edit/:id').all(isAuthenticated).get(posting.renderEdit).post(posting.edit);
 
     app.route('/admin-komunitas/posting/delete/:id').all(isAuthenticated).get(posting.delete);
+    app.route('/tesfcm').get(function(req,res2,next){
+      var Pusher = require('pusher');
+      var pusher = new Pusher({
+        appId: '270190',
+        key: 'cb75a653f5b4dbd9fefc',
+        secret: '63a19f31a186219fddfe'
+      });
+      var data = {
+        "apns": {
+          "aps": {
+            "alert": {
+              "body": "hello"
+            }
+          }
+        },
+        fcm: {
+          notification: {
+              'title': 'gaga Alert!',
+              'body': 'bbbb',
+              'icon':  'logo'
+          }
+        }
+      }
+      pusher.notify(["kittens"], data, function(error, req, res) {
+        if (error) {
+          return res2.json(error);
+        }
+        if (req) {
+          console.log(req);
+        }else {
+          console.log(res);
+        }
+      });
+      //pusher.trigger('kittens', {message: "hello world"});
+    });
   }
 };

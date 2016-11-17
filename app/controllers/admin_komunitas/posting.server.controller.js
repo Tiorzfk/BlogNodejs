@@ -4,18 +4,30 @@ var moment = require('moment');
 const fs = require('fs');
 var db = require('../../../config/db');
 var Pusher = require('pusher');
+var pusher = new Pusher({
+  appId: '270190',
+  key: 'cb75a653f5b4dbd9fefc',
+  secret: '63a19f31a186219fddfe'
+});
+// var FCM = require('fcm-push');
+// var serverKey = 'AIzaSyBW8CBv20jkMnSpJKU9Diddds96Y5pkTIY';
+// var fcm = new FCM(serverKey);
 //var ggsmsc = require('../../../config/ggsmsc');
 
-var pusher = new Pusher({
-  appId: '259913',
-  key: '1bba48d795f7e899c4d0',
-  secret: '0826f796c436807884b2'
-});
 
 function Todo() {
 
 this.renderIndex = function(req, res, next) {
 
+  // var data = {
+  //   fcm: {
+  //     notification: {
+  //         'title': 'Alhamdulilah!',
+  //         'body': 'Lorem ipsum',
+  //         'icon':  'xxx'
+  //     }
+  //   }
+  // }
 
   res.render('pages/admin_komunitas/index', {
       title: 'Halaman Admin Komunitas',
@@ -26,16 +38,15 @@ this.renderIndex = function(req, res, next) {
 };
 
 //CRUD
-
 this.renderNew = function(req, res, next) {
-  pusher.notify(['newpost'], {
+  pusher.notify(['kittens'], {
     fcm: {
-      notification: {
-          'title': 'TESTT',
-          'body': 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
-          'icon':  'logo'
+        notification: {
+            'title': 'Alhamdulilah!',
+            'body': 'Lorem ipsum dolor sit amet',
+            'icon':  'xxx'
         }
-      }
+    }
   });
     db.acquire(function(err,con){
             con.query('SELECT * FROM kategori ',function(err, kategori){
@@ -91,7 +102,8 @@ this.new = function(req, res, next) {
             foto: req.file.filename,
             status: "0",
             tgl_posting: now,
-            id_kategori: req.body.kategori
+            id_kategori: req.body.kategori,
+            sumber: req.body.sumber
         }
         db.acquire(function(err,con){
         con.query('INSERT INTO posting SET ? ',data,function(err){
@@ -104,7 +116,7 @@ this.new = function(req, res, next) {
                 return res.redirect('/admin-komunitas/posting/new');
             }
 
-            pusher.notify(['newpost'], {
+            /*pusher.notify(['newpost'], {
               fcm: {
                 notification: {
                     'title': req.body.judul,
@@ -112,7 +124,7 @@ this.new = function(req, res, next) {
                     'icon':  'logo'
                   }
                 }
-            });
+            });*/
 
             var message = 'Berhasil';
             req.flash('success', message);
@@ -170,7 +182,8 @@ this.edit = function(req, res, next) {
             judul: req.body.judul,
             deskripsi: sliceisi.join(' '),
             isi: req.body.isi,
-            foto: req.body.img_old
+            foto: req.body.img_old,
+            sumber: req.body.sumber
         }
 
         if(req.file) {
@@ -178,7 +191,8 @@ this.edit = function(req, res, next) {
                 judul: req.body.judul,
                 deskripsi: sliceisi.join(' '),
                 isi: req.body.isi,
-                foto: req.file.filename
+                foto: req.file.filename,
+                sumber: req.body.sumber
             }
         }
         db.acquire(function(err,con){

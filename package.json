@@ -27,6 +27,7 @@
     "ejs": "^2.0.6",
     "express": "^4.10.7",
     "express-session": "^1.13.0",
+    "fcm-push": "^1.1.2",
     "ggsmsc": "^0.1.8",
     "googlemaps": "^1.2.0",
     "moment": "^2.11.2",

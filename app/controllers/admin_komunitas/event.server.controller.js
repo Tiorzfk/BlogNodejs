@@ -67,7 +67,8 @@ this.new = function(req, res, next) {
                 tgl_mulai: tgl_mulai+' '+req.body.waktu_mulai,
                 tgl_berakhir: tgl_berakhir+' '+req.body.waktu_berakhir,
                 latitude: result[0].latitude,
-                longitude: result[0].longitude
+                longitude: result[0].longitude,
+                kontak_person: req.body.kontak_person
             }
             db.acquire(function(err,con){
             con.query('INSERT INTO event SET ? ',data,function(err){
@@ -157,7 +158,8 @@ this.edit = function(req, res, next) {
                 tgl_mulai: tgl_mulai+' '+req.body.waktu_mulai,
                 tgl_berakhir: tgl_berakhir+' '+req.body.waktu_berakhir,
                 latitude: result[0].latitude,
-                longitude: result[0].longitude
+                longitude: result[0].longitude,
+                kontak_person: req.body.kontak_person
             };
             if(req.file) {
                 data.foto = req.file.filename;

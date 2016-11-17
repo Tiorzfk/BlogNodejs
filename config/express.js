@@ -43,7 +43,7 @@ module.exports = function() {
     app.use(session({
         saveUninitialized: true,
         resave: true,
-        secret: 'OurSuperSecretCookieSecret'
+        secret: '18912d90ansdj09asjn1k2n1029eu32489203nkdskj'
     }));
 
     app.set('views', './app/views');
