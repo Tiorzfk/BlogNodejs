@@ -15,19 +15,18 @@ this.kirimSms = function(req, res, next) {
               msg : req.body.msg
             });*/
             var datauser =  [
-              {
+              /*{
                 phone   : '085871500098',
                 ack     : false,
                 msg     : req.body.msg
-              },
+              },*/
               {
                 phone   : '082312023112',
-                ack     : false,
                 msg     : req.body.msg
               }
             ];
 
-            sms.kirim(datauser);
+            sms.kirim(req.body.msg);
             setTimeout(function(){
               req.flash('success', 'Done.');
               return res.redirect('/admin-aplikasi/kirim-sms');
