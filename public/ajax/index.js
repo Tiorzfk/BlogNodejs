@@ -23,7 +23,6 @@ $.ajax({
       if(cek == 'http'){
         foto = data.foto;
       }
-      console.log(foto);
       var a = "<div class='col-sm-4'>"+
                 "<article>"+
                   "<a href='post/"+url+"'> "+
