@@ -9,7 +9,7 @@ var slug = function(str) {
 
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/posting/kategori/artikel',
+  url: 'http://comrade-api.azurewebsites.net/posting/kategori/2/page/0',
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingartikel').style.display = 'block';

@@ -10,7 +10,7 @@ var slug = function(str) {
 //berita
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/posting/kategori/berita',
+  url: 'http://comrade-api.azurewebsites.net/posting/kategori/1/page/0',
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingberita').style.display = 'block';

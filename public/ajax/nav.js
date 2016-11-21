@@ -24,7 +24,7 @@ $.ajax({
 
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/event/public',
+  url: 'http://comrade-api.azurewebsites.net/event/public/page/0',
   dataType: 'json',
   success: function (data) {
     jQuery.each(data.result, function(i, data) {

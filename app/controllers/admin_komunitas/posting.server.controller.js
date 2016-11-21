@@ -5,9 +5,9 @@ const fs = require('fs');
 var db = require('../../../config/db');
 var Pusher = require('pusher');
 var pusher = new Pusher({
-  appId: '270190',
-  key: 'cb75a653f5b4dbd9fefc',
-  secret: '63a19f31a186219fddfe'
+  appId: '259913',
+  key: '1bba48d795f7e899c4d0',
+  secret: '0826f796c436807884b2'
 });
 // var FCM = require('fcm-push');
 // var serverKey = 'AIzaSyBW8CBv20jkMnSpJKU9Diddds96Y5pkTIY';
@@ -19,15 +19,28 @@ function Todo() {
 
 this.renderIndex = function(req, res, next) {
 
-  // var data = {
+  var data = {
+    fcm: {
+      notification: {
+          'title': 'Alhamdulilah!',
+          'body': 'Lorem ipsum',
+          'icon':  'comrade.png'
+      }
+    }
+  }
+
+  pusher.notify(["posting"], data, function(error, req, res) {
+    console.log(error, req, res);
+  })
+  // pusher.notify(['newpost'], {
   //   fcm: {
-  //     notification: {
-  //         'title': 'Alhamdulilah!',
-  //         'body': 'Lorem ipsum',
-  //         'icon':  'xxx'
-  //     }
+  //       notification: {
+  //           'title': 'Alhamdulilah!',
+  //           'body': 'Lorem ipsum dolor sit amet',
+  //           'icon':  'xxx'
+  //       }
   //   }
-  // }
+  // });
 
   res.render('pages/admin_komunitas/index', {
       title: 'Halaman Admin Komunitas',
