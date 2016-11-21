@@ -9,9 +9,14 @@ $.ajax({
   },
   success: function (data) {
     document.getElementById('loadingartikel').style.display = 'none';
+    var cek = data.foto.substr(0, 4);
+    var foto = "https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"";
+    if(cek == 'http'){
+      foto = data.foto;
+    }
     jQuery.each(data.result, function(i, data) {
       var a =
-        "<img class='head' src='https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"' alt='Article Picture' style='width:847.5px;height:400px'>"+
+        "<img class='head' src='"+foto+"' alt='Article Picture' style='width:847.5px;height:400px'>"+
           "<div class='content'>"+
             "<div class='text'>"+
                 "<p class='time'>"+data.tgl_posting+"</p>"+
