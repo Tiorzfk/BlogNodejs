@@ -19,11 +19,16 @@ $.ajax({
     document.getElementById('loadingberita').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
       var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data.id_posting;
+      var cek = data.foto.substr(0, 4);
+      var foto = "https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"";
+      if(cek == 'http'){
+        foto = data.foto;
+      }
       var a = "<div class='col-sm-4'>"+
                 "<article>"+
                   "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"' alt='' style='width:360px;height:221px'>"+
+                      "<img src='"+foto+"' alt='' style='width:360px;height:221px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+
