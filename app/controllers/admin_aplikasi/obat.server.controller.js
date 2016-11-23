@@ -40,6 +40,7 @@ this.new = function(req, res, next) {
               nama: req.body.nama,
               foto: req.file.filename,
               deskripsi: req.body.deskripsi,
+              deskripsi_eng: req.body.deskripsi_en,
               open_timeinfo: req.body.waktu_mulai+' - '+req.body.waktu_berakhir,
               latitude: result[0].latitude,
               longitude: result[0].longitude

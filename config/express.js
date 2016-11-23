@@ -12,6 +12,7 @@ var config = require('./config'),
     connection_sms = require('./dbsms');
     //routing
     index = require('../app/routes/index.server.routes.js');
+    userPremium = require('../app/routes/user_premium.server.routes.js');
     auth_admin = require('../app/routes/auth_admin.server.routes.js');
 
     //admin komunitas
@@ -57,6 +58,7 @@ module.exports = function() {
     connection.init();
     //routing
     index.configure(app);
+    userPremium.configure(app);
     auth_admin.configure(app,passport);
     //admin komunitas
     posting_komunitas.configure(app);
