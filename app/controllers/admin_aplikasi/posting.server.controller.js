@@ -3,6 +3,12 @@ var multer  = require('multer');
 var moment = require('moment');
 const fs = require('fs');
 var db = require('../../../config/db');
+var Pusher = require('pusher');
+var pusher = new Pusher({
+  appId: '259913',
+  key: '1bba48d795f7e899c4d0',
+  secret: '0826f796c436807884b2'
+});
 
 function Todo() {
 this.VerifikasiPosting = function(req, res, next) {
@@ -17,10 +23,33 @@ this.VerifikasiPosting = function(req, res, next) {
                     con.query('SELECT * FROM posting WHERE id_posting=?',req.params.id,function(err,data){
                         data.forEach(function(data) {
                             if(req.params.kategori === "Artikel"){
+                                var arrayisi = striptags(data.deskripsi).split(' ');
+                                var notifbody = arrayisi.slice(0,5);
+                                pusher.notify(['posting'], {
+                                  fcm: {
+                                      notification: {
+                                          'title': data.judul,
+                                          'body': notifbody.join(' '),
+                                          'icon':  'comrade.png'
+                                      }
+                                  }
+                                });
                                 var message = 'Artikel dengan judul '+data.judul+' Berhasil di Verifikasi';
                                 req.flash('success', message);
                                 return res.redirect('/admin-aplikasi/artikel');
                             }else{
+                                var arrayisi = striptags(data.deskripsi).split(' ');
+                                var notifbody = arrayisi.slice(0,5);
+                                pusher.notify(['posting'], {
+                                  fcm: {
+                                      notification: {
+                                          'title': data.judul,
+                                          'body': notifbody.join(' '),
+                                          'icon':  'comrade.png'
+                                      }
+                                  }
+                                });
+
                                 var message = 'Berita dengan judul '+data.judul+' Berhasil di Verifikasi';
                                 req.flash('success', message);
                                 return res.redirect('/admin-aplikasi/berita');

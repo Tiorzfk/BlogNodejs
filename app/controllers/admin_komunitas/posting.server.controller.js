@@ -4,6 +4,11 @@ var moment = require('moment');
 const fs = require('fs');
 var db = require('../../../config/db');
 var Pusher = require('pusher');
+// var pusher = new Pusher({
+//   appId: '270190',
+//   key: 'cb75a653f5b4dbd9fefc',
+//   secret: '63a19f31a186219fddfe'
+// });
 var pusher = new Pusher({
   appId: '259913',
   key: '1bba48d795f7e899c4d0',
@@ -19,19 +24,6 @@ function Todo() {
 
 this.renderIndex = function(req, res, next) {
 
-  var data = {
-    fcm: {
-      notification: {
-          'title': 'Alhamdulilah!',
-          'body': 'Lorem ipsum',
-          'icon':  'comrade.png'
-      }
-    }
-  }
-
-  pusher.notify(["posting"], data, function(error, req, res) {
-    console.log(error, req, res);
-  })
   // pusher.notify(['newpost'], {
   //   fcm: {
   //       notification: {
@@ -52,15 +44,7 @@ this.renderIndex = function(req, res, next) {
 
 //CRUD
 this.renderNew = function(req, res, next) {
-  pusher.notify(['kittens'], {
-    fcm: {
-        notification: {
-            'title': 'Alhamdulilah!',
-            'body': 'Lorem ipsum dolor sit amet',
-            'icon':  'xxx'
-        }
-    }
-  });
+
     db.acquire(function(err,con){
             con.query('SELECT * FROM kategori ',function(err, kategori){
               con.release();
@@ -110,8 +94,8 @@ this.new = function(req, res, next) {
         var data = {
             id_admin: req.user.id_admin,
             judul: req.body.judul,
-            deskripsi: sliceisi.join(' '),
             isi: req.body.isi,
+            deskripsi: sliceisi.join(' '),
             foto: req.file.filename,
             status: "0",
             tgl_posting: now,
@@ -129,15 +113,19 @@ this.new = function(req, res, next) {
                 return res.redirect('/admin-komunitas/posting/new');
             }
 
-            /*pusher.notify(['newpost'], {
-              fcm: {
-                notification: {
-                    'title': req.body.judul,
-                    'body': notifbody.join(' '),
-                    'icon':  'logo'
-                  }
-                }
-            });*/
+            // var data = {
+            //   fcm: {
+            //     notification: {
+            //         'title': 'comrade ',
+            //         'body': 'comrade your care for a better life comrade your care for a better life ',
+            //         'icon':  'comrade.png'
+            //     }
+            //   }
+            // }
+            //
+            // pusher.notify(["posting"], data, function(error, req, res) {
+            //   console.log(error, req, res);
+            // });
 
             var message = 'Berhasil';
             req.flash('success', message);
