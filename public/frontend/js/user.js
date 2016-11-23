@@ -131,44 +131,6 @@
 		/*--------------------------------------------------------
 			8. Contact Form
 		--------------------------------------------------------*/
-        $("#contacts button.mini-button").click(function() {
-            var user_name = $('input[name=input-name]').val(),
-                user_email = $('input[name=input-email]').val(),
-                user_message = $('textarea[name=input-message]').val(),
-                process = true;
-            if (user_name == "") {
-                $('input[name=input-name]').css('border-color','#ed5564');
-                process = false;
-            }
-
-            if (user_email == "") {
-                $('input[name=input-email]').css('border-color','#ed5564');
-                process = false;
-            }
-
-            if (user_message == "") {
-                $('textarea[name=input-message]').css('border-color','#ed5564');
-                process = false;
-            }
-
-            if (process) {
-                var post_data = {'userName':user_name, 'userEmail':user_email, 'userMessage':user_message};
-                $.post('contact_me.html', post_data, function(response){     /* change your email and subject in contact_me.php */
-                    if(response.type == 'error') {
-                        output = response.text;
-                    }
-                    else {
-                        output = response.text;
-                        $('#contacts input').val('');
-                        $('#contacts textarea').val('');
-                    }
-                    $(".result").hide().html(output).slideDown();
-                }, 'json');
-            }
-        });
-        $("#contacts input, #contacts textarea").keyup(function() {
-            $("#contacts input, #contacts textarea").css('border-color','');
-            $("#result").slideUp();
-        });
+        
 	});
 })(jQuery);
