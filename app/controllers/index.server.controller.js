@@ -126,7 +126,10 @@ this.event = function(req, res, next) {
 
 };
 this.formSahabatBerbagi = function(req,res,next) {
-  
+  res.render('pages/daftarSahabatBerbagi', {
+      title: 'Halaman Daftar User Premium',
+      email: req.body.email
+  });
 }
 }
 module.exports = new Todo();

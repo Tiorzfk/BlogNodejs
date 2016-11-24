@@ -1,4 +1,5 @@
 var index = require('../controllers/index.server.controller');
+var cektokenemail = require('../../config/cektokenemail');
 
 module.exports = {
   configure: function(app) {
@@ -16,7 +17,8 @@ module.exports = {
 
     app.get('/about', index.about);
 
-    app.get('/user/sahabatberbagi/form', index.formSahabatBerbagi);
+    app.use(cektokenemail.cektoken);
+    app.post('/user/sahabatberbagi/form', index.formSahabatBerbagi);
 
     //app.get('/contact', index.about);
   }

@@ -1,0 +1,96 @@
+<% include ../partials/header %>
+	<main id="contacts">
+		<div class="container">
+			<div class="wrapper">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<section class="main">
+							<div class="content-block">
+								<div class="text">
+									<h5>some information</h5>
+									<p>User Premiun merupakan layanan dari aplikasi comrade yang dapat memberikan suatu informasi menggunakan teknologi sms gateway, dengan mendaftarkan diri melalui form dibawah ini maka user akan mendapatkan informasi berupa berita, artikel, dan event terbaru melalui sms..</p>
+									<div class="alert alert-success" id="message_success" style="display:none">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									  <strong>Success,</strong> User Berhasil Dibuat.
+									</div>
+									<h5>Daftar User Sahabat Berbagi <%=email%></h5>
+									<div class="forms">
+										<p><input type="text" name="nama" placeholder="Nama"></p>
+										<p><input type="text" name="email" placeholder="Email"></p>
+										<p><input type="text" name="no_telp" placeholder="Nomor Telepon"></p>
+										<p><input type="text" name="kota" placeholder="Kota"></p>
+										<button type="button" class="mini-button" id="simpan">Send</button>
+										<img src="/frontend/img/loaderr.gif" style="width:100px;display:none" id="loading">
+										<span class="result"></span>
+									</div>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</section>
+					</div>
+				</div> <!-- row -->
+			</div> <!-- wrapper -->
+		</div> <!-- container -->
+		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
+	</main>
+<% include ../partials/footer %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#simpan").click(function() {
+				var nama = $('input[name=nama]').val(),
+						email = $('input[name=email]').val(),
+						no_telp = $('input[name=no_telp]').val(),
+						kota = $('input[name=kota]').val(),
+						process = true;
+				if (nama == "") {
+						$('input[name=nama]').css('border-color','#ed5564');
+						process = false;
+				}
+
+				if (email == "") {
+						$('input[name=email]').css('border-color','#ed5564');
+						process = false;
+				}
+
+				if (no_telp == "") {
+						$('input[name=no_telp]').css('border-color','#ed5564');
+						process = false;
+				}
+
+				if (kota == "") {
+						$('input[name=kota]').css('border-color','#ed5564');
+						process = false;
+				}
+
+				if (process) {
+					var data = {
+						nama : nama,
+						email : email,
+						telepon : no_telp,
+						kota : kota
+					}
+					$("#simpan").click(function(){
+						$.ajax({
+							type: 'POST',
+							url: 'http://comrade-api.azurewebsites.net/user/premium',
+							dataType: 'json',
+							data: data,
+							beforeSend: function () {
+										document.getElementById('loading').style.display = 'block';
+										document.getElementById('simpan').style.display = 'none';
+							},
+							success: function (data) {
+								document.getElementById('loading').style.display = 'none';
+								document.getElementById('simpan').style.display = 'block';
+								$('#contacts input').val('');
+								document.getElementById('message_success').style.display = 'block';
+							},
+							error: function (xhr, ajaxOptions, thrownError) {
+								console.log(thrownError);
+							}
+						});
+
+					});
+				}
+		});
+	});
+</script>
