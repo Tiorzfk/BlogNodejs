@@ -20,10 +20,11 @@ module.exports.cektoken=function(req, res, next) {
 
     	// if there is no token
     	// return an error
-    	return res.status(403).send({
-    	    status : 403,
-    	    message: 'No token provided.'
-    	});
+			return res.redirect('/');
+    	// return res.status(403).send({
+    	//     status : 403,
+    	//     message: 'No token provided.'
+    	// });
 
   	}
 }
