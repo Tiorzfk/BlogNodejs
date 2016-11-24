@@ -21,7 +21,7 @@
                                     <th width="25%">Nama</th>
                                     <th width="25%">Email</th>
                                     <th width="5%">JK</th>
-                                    <th width="15%">Tanggal Lahir</th>
+                                    <th width="15%">Status</th>
                                     <th width="15%">Option</th>
                                 </tr>
                             </thead>
@@ -31,7 +31,7 @@
                                     <td><%= data.nama %></td>
                                     <td><%= data.email %></td>
                                     <td><%= data.jk%></td>
-                                    <td><%= data.tgl_lahir%></td>
+                                    <td><%= data.status_aktivasi%></td>
                                     <td><center><a href="/admin-aplikasi/sahabat-odha/delete/<%=data.id_user%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus user <%=data.nama%> ?')">Delete</a>
                                 </tr>
                             <% }); %>

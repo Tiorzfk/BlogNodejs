@@ -16,6 +16,8 @@ module.exports = {
 
     app.get('/about', index.about);
 
+    app.get('/user/sahabatberbagi/form', index.formSahabatBerbagi);
+
     //app.get('/contact', index.about);
   }
 };

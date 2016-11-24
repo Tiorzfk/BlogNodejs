@@ -21,7 +21,6 @@ $.ajax({
     console.log(xhr);
   }
 });
-
 $.ajax({
   type: 'GET',
   url: 'http://comrade-api.azurewebsites.net/event/public/page/0',

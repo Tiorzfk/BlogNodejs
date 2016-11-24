@@ -16,7 +16,7 @@ $.ajax({
         foto = data.foto;
       }
       var a =
-        "<img class='head' src='"+foto+"' alt='Article Picture' style='width:847.5px;height:400px'>"+
+        "<img class='head' src='"+foto+"' alt='Article Picture' style='width:749.5px;height:400px'>"+
           "<div class='content'>"+
             "<div class='text'>"+
                 "<p class='time'>"+data.tgl_posting+"</p>"+
