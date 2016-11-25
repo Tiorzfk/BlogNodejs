@@ -41,7 +41,7 @@
                                     <td><%= data.komunitas%></td>
                                     <td><%= data.about_sahabatodha%></td>
                                     <td><center><a href="/admin-aplikasi/sahabat-odha/delete/<%=data.id_user%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus user <%=data.nama%> ?')">Delete</a></center>
-                                      <center><a href="/admin-aplikasi/sahabat-odha/konfirmasi-sahabatBerbagi/<%=data.id_user%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menkonfirmasi Sahabat Berbagi <%=data.nama%> ?')">Konfirmasi</a></center>
+                                      <center><a href="/admin-aplikasi/sahabat-odha/konfirmasi-sahabatBerbagi/<%=data.email%>/<%=data.id_user%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menkonfirmasi Sahabat Berbagi <%=data.nama%> ?')">Konfirmasi</a></center>
                                     </td>
                                 </tr>
                             <% }); %>

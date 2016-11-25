@@ -32,7 +32,7 @@ module.exports = {
 
     app.route('/admin-aplikasi/sahabat-odha/delete/:id').all(isAuthenticated).get(user.deleteso);
 
-    //app.route('/admin-aplikasi/sahabat-odha/konfirmasi-sahabatBerbagi/:id_user').all(isAuthenticated).get(user.konfirmasiso);
+    app.route('/admin-aplikasi/sahabat-odha/konfirmasi-sahabatBerbagi/:email/:id_user').all(isAuthenticated).get(user.konfirmasiso);
 
   }
 };

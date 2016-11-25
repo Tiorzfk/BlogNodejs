@@ -4,6 +4,8 @@ var moment = require('moment');
 const fs = require('fs');
 var db = require('../../../config/db');
 var bcrypt = require('bcryptjs');
+var EmailTemplates = require('swig-email-templates');
+var transport = require('../../../config/mail').transport;
 
 function Todo() {
 
@@ -126,7 +128,7 @@ this.deleteso = function(req, res, next) {
 
 this.listsaodha = function(req, res, next) {
      db.acquire(function(err,con){
-        con.query('SELECT nama,email,jk,telp,komunitas,about_sahabatodha,pekerjaan,institusi,usia FROM user INNER JOIN sahabat_odha on sahabat_odha.id_user=user.id_user WHERE jenis_user="Sahabat Odha" AND sahabat_odha.status_aktivasi="0"',function(err,saodha){
+        con.query('SELECT user.id_user,nama,email,jk,telp,komunitas,about_sahabatodha,pekerjaan,institusi,usia FROM user INNER JOIN sahabat_odha on sahabat_odha.id_user=user.id_user WHERE jenis_user="Sahabat Odha" AND sahabat_odha.status_aktivasi="0"',function(err,saodha){
           con.release();
             if (err) {
                 return next(err);
@@ -142,6 +144,63 @@ this.listsaodha = function(req, res, next) {
             }
         });
     });
+};
+
+this.konfirmasiso = function(req, res, next) {
+    //  db.acquire(function(err,con){
+    //     con.query('SELECT * FROM user WHERE id_user='+req.params.id_user,function(err,data){
+    //       con.release();
+            // if (err)
+            //     return next(err);
+
+                var templates = new EmailTemplates({root: 'app/views/emails'});
+                var locals = {
+                    email: req.params.email
+                };
+
+                templates.render('success_aktivasi_sahabatodha.html', locals, function(err, html) {
+                    if (err) {
+                      return res.json({
+                        result: 'Failed',
+                        status: 403,
+                        errors: err,
+                      });
+                    } else {
+                        transport.sendMail({
+                            from: 'Comrade app <Admin@comrade.com>',
+                            to: locals.email,
+                            subject: 'Activation User Berbagi.',
+                            html: html
+                            }, function(err, responseStatus) {
+                                if (err) {
+                                    return res.json({
+                                      result: 'Failed',
+                                      status: 403,
+                                      errors: err,
+                                    });
+                                } else {
+                                  var data = {
+                                    status_aktivasi: '1'
+                                  }
+                                  db.acquire(function(err,con){
+                                      con.query('UPDATE sahabat_odha SET ? WHERE id_user='+req.params.id_user,data,function(err,data){
+                                        con.release();
+                                          if (err)
+                                              return next(err);
+
+                                              var message = "User Sahabat Odha berhasil di-aktivasi";
+                                              req.flash('success', message);
+                                              return res.redirect('/admin-aplikasi/sahabat-odha');
+                                      });
+                                  });
+                                }
+                            }
+                        );
+                    }
+                });
+
+    //     });
+    // });
 };
 };
 module.exports = new Todo();
