@@ -21,7 +21,7 @@ $.ajax({
             "<div class='text'>"+
                 "<p class='time'>"+data.tgl_posting+"</p>"+
                 "<h5>"+data.judul+"</h5>"+
-                "<p>"+data.isi+"<a href="+data.sumber">More</a></p>"+
+                "<p>"+data.isi+" <a href="+data.sumber+">More</a></p>"+
                 "<span class='line'></span>"+
             "</div>";
       $('#detail').append(a);
