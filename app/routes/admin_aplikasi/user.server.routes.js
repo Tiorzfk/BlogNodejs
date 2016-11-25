@@ -26,7 +26,7 @@ module.exports = {
 
     app.route('/admin-aplikasi/recommend-odha/:id').all(isAuthenticated).get(user.detailRecommend);
 
-    app.route('/admin-aplikasi/sahabat-odha').get(user.listsaodha);
+    app.route('/admin-aplikasi/sahabat-odha').all(isAuthenticated).get(user.listsaodha);
 
     app.route('/admin-aplikasi/sahabat-odha/add').all(isAuthenticated).get(user.addso).post(user.simpanso);
 
