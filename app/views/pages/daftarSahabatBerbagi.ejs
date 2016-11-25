@@ -13,6 +13,10 @@
 										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 									  <strong>Success,</strong> Terimakasih telah mendaftar sebagai user sahabat berbagi, untuk sementara ini user anda belum kami aktifkan, kami akan menginformasikan melalui email jika user anda sudah bisa digunakan, Terimakasih .
 									</div>
+									<div class="alert alert-danger" id="message_errors" style="display:none">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									  <strong>Failed,</strong> Maaf, data anda tidak bisa diproses.</strong> .
+									</div>
 									<h5>Daftar User Sahabat Berbagi <%=email%></h5>
 									<div class="forms">
 										<p><input type="text" name="pekerjaan" placeholder="Pekerjaan"></p>
@@ -20,7 +24,19 @@
 										<p><input type="text" name="komunitas" placeholder="Nama Komunitas (optional)"></p>
 										<input type="hidden" name="email" value="<%=email%>">
 										<p><input type="text" name="usia" placeholder="Usia"></p>
-										<p><textarea name="about" placeholder="About"></textarea></p>
+										<p><textarea name="about" placeholder="About"></textarea></p><br>
+										<div class="row">
+											<div class="col-md-4 col-sm-12">
+													<br><p>I agree to the <a class="btn btn-xs"><font color="blue">terms of service</font></a></p>
+											</div>
+											<div class="col-md-1 col-sm-12">
+													<br><p><input type="checkbox" id="cekterm" name="check_terms" value="ok" style="width:15px;margin:0"></p>
+											</div>
+										</div>
+										<div id="terms" style="display:none">
+											<p><h1>Terms of Service</h1></p>
+											<p><textarea name="terms" style="height:80px;overflow:hidden" placeholder="About" disabled>You agree to show your phone number for calling via telephone and email address to connecting with society via email and also take a commite to give a positive support to People Living with HIV/AIDS and help society who want to consult about HIV/AIDS.</textarea></p>
+										</div>
 										<button type="button" class="mini-button" id="simpan">Send</button>
 										<img src="/frontend/img/loaderr.gif" style="width:100px;display:none" id="loading">
 										<span class="result"></span>
@@ -37,16 +53,25 @@
 <% include ../partials/footer %>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$(".text a").click(function() {
+				document.getElementById('terms').style.display = 'block';
+    });
 		$("#simpan").click(function() {
 				var pekerjaan = $('input[name=pekerjaan]').val(),
 						institusi = $('input[name=institusi]').val(),
 						komunitas = $('input[name=komunitas]').val(),
 						email = $('input[name=email]').val(),
 						usia = $('input[name=usia]').val(),
-						about = $('textarea[name=about]').val();
+						about = $('textarea[name=about]').val(),
+						terms =  $('input[type=checkbox]');
 						process = true;
 				if (pekerjaan == "") {
 						$('input[name=pekerjaan]').css('border-color','#ed5564');
+						process = false;
+				}
+
+				if (terms.prop("checked") == false) {
+						document.getElementById('message_errors').style.display = 'block';
 						process = false;
 				}
 
