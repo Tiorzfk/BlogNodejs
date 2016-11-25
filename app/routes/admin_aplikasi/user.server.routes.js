@@ -26,10 +26,13 @@ module.exports = {
 
     app.route('/admin-aplikasi/recommend-odha/:id').all(isAuthenticated).get(user.detailRecommend);
 
-    app.route('/admin-aplikasi/sahabat-odha').all(isAuthenticated).get(user.listsaodha);
+    app.route('/admin-aplikasi/sahabat-odha').get(user.listsaodha);
 
     app.route('/admin-aplikasi/sahabat-odha/add').all(isAuthenticated).get(user.addso).post(user.simpanso);
 
     app.route('/admin-aplikasi/sahabat-odha/delete/:id').all(isAuthenticated).get(user.deleteso);
+
+    //app.route('/admin-aplikasi/sahabat-odha/konfirmasi-sahabatBerbagi/:id_user').all(isAuthenticated).get(user.konfirmasiso);
+
   }
 };

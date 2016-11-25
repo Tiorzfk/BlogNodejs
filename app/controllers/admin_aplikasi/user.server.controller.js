@@ -126,13 +126,13 @@ this.deleteso = function(req, res, next) {
 
 this.listsaodha = function(req, res, next) {
      db.acquire(function(err,con){
-        con.query('SELECT * FROM user WHERE jenis_user="Sahabat Odha"',function(err,saodha){
+        con.query('SELECT nama,email,jk,telp,komunitas,about_sahabatodha,pekerjaan,institusi,usia FROM user INNER JOIN sahabat_odha on sahabat_odha.id_user=user.id_user WHERE jenis_user="Sahabat Odha" AND sahabat_odha.status_aktivasi="0"',function(err,saodha){
           con.release();
             if (err) {
                 return next(err);
             } else {
                 res.render('pages/admin_aplikasi/sahabat_odha/index', {
-                    title: 'Data Sahabat Odha',
+                    title: 'Aktivasi Sahabat Odha',
                     saodha: saodha,
                     email: req.user ? req.user.email : '',
                     jenis: req.user ? req.user.jenis_admin : '',
