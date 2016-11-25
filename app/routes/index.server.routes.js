@@ -17,8 +17,7 @@ module.exports = {
 
     app.get('/about', index.about);
 
-    app.use(cektokenemail.cektoken);
-    app.post('/user/sahabatberbagi/form', index.formSahabatBerbagi);
+    app.post('/user/sahabatberbagi/form',cektokenemail.cektoken, index.formSahabatBerbagi);
 
     //app.get('/contact', index.about);
   }

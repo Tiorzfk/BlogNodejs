@@ -8,17 +8,19 @@
 							<div class="content-block">
 								<div class="text">
 									<h5>some information</h5>
-									<p>User Premiun merupakan layanan dari aplikasi comrade yang dapat memberikan suatu informasi menggunakan teknologi sms gateway, dengan mendaftarkan diri melalui form dibawah ini maka user akan mendapatkan informasi berupa berita, artikel, dan event terbaru melalui sms..</p>
+									<p>Silahkan isi form dibawah ini untuk melengkapi data pendaftaran anda.</p>
 									<div class="alert alert-success" id="message_success" style="display:none">
 										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-									  <strong>Success,</strong> User Berhasil Dibuat.
+									  <strong>Success,</strong> Terimakasih telah mendaftar sebagai user sahabat berbagi, untuk sementara ini user anda belum kami aktifkan, kami akan menginformasikan melalui email jika user anda sudah bisa digunakan, Terimakasih .
 									</div>
 									<h5>Daftar User Sahabat Berbagi <%=email%></h5>
 									<div class="forms">
-										<p><input type="text" name="nama" placeholder="Nama"></p>
-										<p><input type="text" name="email" placeholder="Email"></p>
-										<p><input type="text" name="no_telp" placeholder="Nomor Telepon"></p>
-										<p><input type="text" name="kota" placeholder="Kota"></p>
+										<p><input type="text" name="pekerjaan" placeholder="Pekerjaan"></p>
+										<p><input type="text" name="institusi" placeholder="Nama Institusi (optional)"></p>
+										<p><input type="text" name="komunitas" placeholder="Nama Komunitas (optional)"></p>
+										<input type="hidden" name="email" value="tiorezafk@outlook.com">
+										<p><input type="text" name="usia" placeholder="Usia"></p>
+										<p><textarea name="about" placeholder="About"></textarea></p>
 										<button type="button" class="mini-button" id="simpan">Send</button>
 										<img src="/frontend/img/loaderr.gif" style="width:100px;display:none" id="loading">
 										<span class="result"></span>
@@ -36,42 +38,41 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#simpan").click(function() {
-				var nama = $('input[name=nama]').val(),
+				var pekerjaan = $('input[name=pekerjaan]').val(),
+						institusi = $('input[name=institusi]').val(),
+						komunitas = $('input[name=komunitas]').val(),
 						email = $('input[name=email]').val(),
-						no_telp = $('input[name=no_telp]').val(),
-						kota = $('input[name=kota]').val(),
+						usia = $('input[name=usia]').val(),
+						about = $('textarea[name=about]').val();
 						process = true;
-				if (nama == "") {
-						$('input[name=nama]').css('border-color','#ed5564');
+				if (pekerjaan == "") {
+						$('input[name=pekerjaan]').css('border-color','#ed5564');
 						process = false;
 				}
 
-				if (email == "") {
-						$('input[name=email]').css('border-color','#ed5564');
+				if (usia == "") {
+						$('input[name=usia]').css('border-color','#ed5564');
 						process = false;
 				}
 
-				if (no_telp == "") {
-						$('input[name=no_telp]').css('border-color','#ed5564');
-						process = false;
-				}
-
-				if (kota == "") {
-						$('input[name=kota]').css('border-color','#ed5564');
+				if (about == "") {
+						$('textarea[name=about]').css('border-color','#ed5564');
 						process = false;
 				}
 
 				if (process) {
 					var data = {
-						nama : nama,
+						pekerjaan : pekerjaan,
+						institusi : institusi,
+						komunitas : komunitas,
 						email : email,
-						telepon : no_telp,
-						kota : kota
+						usia : usia,
+						about : about,
 					}
 					$("#simpan").click(function(){
 						$.ajax({
 							type: 'POST',
-							url: 'http://comrade-api.azurewebsites.net/user/premium',
+							url: 'http://comrade-api.azurewebsites.net/user/daftarsahabatodhadetail',
 							dataType: 'json',
 							data: data,
 							beforeSend: function () {
@@ -82,6 +83,7 @@
 								document.getElementById('loading').style.display = 'none';
 								document.getElementById('simpan').style.display = 'block';
 								$('#contacts input').val('');
+								$('#contacts textarea').val('');
 								document.getElementById('message_success').style.display = 'block';
 							},
 							error: function (xhr, ajaxOptions, thrownError) {
