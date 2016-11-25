@@ -105,6 +105,7 @@ this.simpanso = function(req, res, next) {
 this.deleteso = function(req, res, next) {
     db.acquire(function(err,con){
       con.query('DELETE FROM user WHERE id_user='+req.params.id,function(err,result){
+        con.release();
         if (err)
            return next(err);
 
