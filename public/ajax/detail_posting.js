@@ -23,6 +23,26 @@ $.ajax({
                 "<h5>"+data.judul+"</h5>"+
                 "<p>"+data.isi+" <a href="+data.sumber+" target=_blank>More</a></p>"+
                 "<span class='line'></span>"+
+                "<ul class='list-unstyled list-inline bottom'>"+
+                  "<li class='tags'>"+
+                    "<h3>"+
+                      "<i class='fa fa-tags'></i>"+
+                      "<a href='#'>#comrades</a>"+
+                      "<a href='#'>#aplikasi</a>"+
+                      "<a href='#'>#hiv</a>"+
+                      "<a href='#'>#aids</a>"+
+                      "<a href='#'>#hiv/aids</a>"+
+                      "<a href='#'>#odha</a>"+
+                      "<a href='#'>#informasi</a>"+
+                      "<a href='#'>#konsultasi</a>"+
+                      "<a href='#'>#support</a>"+
+                      "<a href='#'>#dukungan</a>"+
+                      "<a href='#'>#komunitas</a>"+
+                      "<a href='#'>#reminder</a>"+
+                      "<a href='#'>#obat</a>"+
+                    "</h3>"+
+                  "</li>"+
+                "</ul>"+
             "</div>";
       $('#detail').append(a);
     });
