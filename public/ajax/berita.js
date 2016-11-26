@@ -28,7 +28,7 @@ $.ajax({
                 "<article>"+
                   "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='"+foto+"' alt='' style='width:360px;height:221px'>"+
+                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:360px;height:221px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+

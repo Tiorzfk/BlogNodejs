@@ -27,7 +27,7 @@ $.ajax({
                 "<article>"+
                   "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='"+foto+"' alt='' style='width:360px;height:221px'>"+
+                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:360px;height:221px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+
@@ -83,7 +83,7 @@ $.ajax({
                 "<article>"+
                   "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='"+foto+"' alt='' style='width:360px;height:221px'>"+
+                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:360px;height:221px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+
@@ -138,7 +138,7 @@ $.ajax({
                 "<article>"+
                   "<a href='event/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='https://comrade-app.azurewebsites.net/uploads/img/event/"+data.foto+"' alt='' style='width:360px;height:221px'>"+
+                      "<img src='https://comrade-app.azurewebsites.net/uploads/img/event/"+data.foto+"' alt='"+data.nama+"' style='width:360px;height:221px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+
