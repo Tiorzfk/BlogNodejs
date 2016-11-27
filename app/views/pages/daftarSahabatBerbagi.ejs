@@ -94,7 +94,7 @@
 						usia : usia,
 						about : about,
 					}
-					$("#simpan").click(function(){
+
 						$.ajax({
 							type: 'POST',
 							url: 'http://comrade-api.azurewebsites.net/user/daftarsahabatodhadetail',
@@ -116,7 +116,6 @@
 							}
 						});
 
-					});
 				}
 		});
 	});

@@ -68,6 +68,15 @@ this.listtweets = function(req, res, next) {
             });
           });
 };
+this.listtweetsen = function(req, res, next) {
+
+                    res.render('pages/admin_aplikasi/tweet/indexEn', {
+                        title: 'Data Tweets English',
+                        email: req.user ? req.user.email : '',
+                        jenis: req.user ? req.user.jenis_admin : ''
+                    });
+
+};
 this.deletetweets = function(req, res, next) {
         db.acquire(function(err,con){
             con.query('DELETE FROM tweet_support WHERE id="'+req.params.id+'"',function(err,berita){

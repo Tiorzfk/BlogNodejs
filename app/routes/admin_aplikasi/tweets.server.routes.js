@@ -26,6 +26,8 @@ module.exports = {
 
     app.route('/admin-aplikasi/tweets').all(isAuthenticated).get(tweet.listtweets);
 
+    app.route('/admin-aplikasi/tweets/en').all(isAuthenticated).get(tweet.listtweetsen);
+
     app.route('/admin-aplikasi/tweet/delete/:id').all(isAuthenticated).get(tweet.deletetweets);
 
     app.route('/admin-aplikasi/tweets/selesai').all(isAuthenticated).get(tweet.listtweetsselesai);
