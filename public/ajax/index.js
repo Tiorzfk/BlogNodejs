@@ -23,12 +23,12 @@ $.ajax({
       if(cek == 'http'){
         foto = data.foto;
       }
-      var a = "<div class='col-sm-4'>"+
+      var a = "<div class='col-sm-3' style='height: 500px'>"+
                 "<article>"+
                   "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:360px;height:221px'>"+
-                        "<div class='overlay'>"+
+                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:305px;height:161px'>"+
+                       "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+
                     "</div>"+
@@ -53,7 +53,7 @@ $.ajax({
                 "</article>"+
               "</div>";
         $('#artikel').append(a);
-        if(i==2)
+        if(i==8)
         return false;
     });
   },
@@ -79,11 +79,13 @@ $.ajax({
       if(cek == 'http'){
         foto = data.foto;
       }
-      var a = "<div class='col-sm-4'>"+
+      // var arrayisi = data.judul.split(' ');//striptags(data.deskripsi).split(' ');
+      // var slicejudul = arrayisi.slice(0,9);
+      var a = "<div class='col-sm-3' style='height: 500px'>"+
                 "<article>"+
                   "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:360px;height:221px'>"+
+                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:305px;height:161px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+
@@ -96,11 +98,11 @@ $.ajax({
                       "<p>"+data.deskripsi+".</p>"+
                       "<span class='line'></span>"+
                       "<ul class='list-unstyled list-inline bottom'>"+
-                        "<li><h2><a href='blog-post.html#comments-list'><i class='fa fa-comment'></i>17 comments</a></h2></li>"+
+                        "<li><h2><a href='blog-post.html#comments-list'></h2></li>"+
                         "<li class='pull-right'>"+
                           "<ul class='list-unstyled list-inline share-like'>"+
-                            "<li><a href='#'><i class='fa fa-share-alt'></i></a></li>"
-                            "<li><a class='tooltips like' href='#'><i class='fa fa-hear'></i><span>12</span></a></li>"+
+                            "<li><a href='#'></a></li>"
+                            "<li><a class='tooltips like' href='#'></a></li>"+
                           "</ul>"+
                         "</li>"+
                       "</ul>"+
@@ -109,7 +111,7 @@ $.ajax({
                 "</article>"+
               "</div>";
         $('#berita').append(a);
-        if(i==2)
+        if(i==8)
         return false;
     });
   },
@@ -130,7 +132,7 @@ $.ajax({
     document.getElementById('loadingevent').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
       var url = data.tgl_posting.substring(0,4)+"/"+slug(data.nama)+"/"+data.id_event;
-      var text = $(data.deskripsi).text()
+      var text = $(data.deskripsi).text();
       var arrayisi = text.split(' ');//striptags(data.deskripsi).split(' ');
       var sliceisi = arrayisi.slice(0,17);
       var cek = data.foto.substr(0, 3);
@@ -138,7 +140,7 @@ $.ajax({
                 "<article>"+
                   "<a href='event/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='https://comrade-app.azurewebsites.net/uploads/img/event/"+data.foto+"' alt='"+data.nama+"' style='width:360px;height:221px'>"+
+                      "<img src='https://comrade-app.azurewebsites.net/uploads/img/event/"+data.foto+"' alt='"+data.nama+"' style='width:305px;height:161px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+
@@ -148,7 +150,6 @@ $.ajax({
                     "<div class='text'>"+
                       "<p class='time'>"+data.tgl_event+"</p>"+
                       "<h5><a href='event/"+url+"'>"+data.nama+"</a></h5>"+
-                      "<p>"+sliceisi.join(' ')+".</p>"+
                       "<span class='line'></span>"+
                       "<ul class='list-unstyled list-inline bottom'>"+
                         "<li><h2><a href='blog-post.html#comments-list'><i class='fa fa-comment'></i>17 comments</a></h2></li>"+

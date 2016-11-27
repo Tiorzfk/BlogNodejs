@@ -24,7 +24,7 @@ $.ajax({
       if(cek == 'http'){
         foto = data.foto;
       }
-      var a = "<div class='col-sm-4'>"+
+      var a = "<div class='col-sm-4' style='height: 610px'>"+
                 "<article>"+
                   "<a href='post/"+url+"'> "+
                     "<div class='image'>"+

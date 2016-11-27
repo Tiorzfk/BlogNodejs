@@ -38,8 +38,6 @@ $.ajax({
                       "<a href='#'>#support</a>"+
                       "<a href='#'>#dukungan</a>"+
                       "<a href='#'>#komunitas</a>"+
-                      "<a href='#'>#reminder</a>"+
-                      "<a href='#'>#obat</a>"+
                     "</h3>"+
                   "</li>"+
                 "</ul>"+
