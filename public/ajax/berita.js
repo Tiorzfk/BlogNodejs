@@ -24,11 +24,11 @@ $.ajax({
       if(cek == 'http'){
         foto = data.foto;
       }
-      var a = "<div class='col-sm-4' style='height: 610px'>"+
+      var a = "<div class='col-sm-4' style='height: 580px'>"+
                 "<article>"+
                   "<a href='post/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:360px;height:221px'>"+
+                      "<img src='"+foto+"' alt='"+data.judul+"' style='width:290px;height:186px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+

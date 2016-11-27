@@ -148,7 +148,7 @@ $.ajax({
                   "</a>"+
                   "<div class='content'>"+
                     "<div class='text'>"+
-                      "<p class='time'>"+data.tgl_event+"</p>"+
+                      "<p class='time'>"+data.tgl_posting+"</p>"+
                       "<h5><a href='event/"+url+"'>"+data.nama+"</a></h5>"+
                       "<span class='line'></span>"+
                       "<ul class='list-unstyled list-inline bottom'>"+

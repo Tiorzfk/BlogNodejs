@@ -25,7 +25,7 @@ $.ajax({
                 "<article>"+
                   "<a href='event/"+url+"'> "+
                     "<div class='image'>"+
-                      "<img src='https://comrade-app.azurewebsites.net/uploads/img/event/"+data.foto+"' alt='"+data.nama+"' style='width:360px;height:221px'>"+
+                      "<img src='https://comrade-app.azurewebsites.net/uploads/img/event/"+data.foto+"' alt='"+data.nama+"' style='width:290px;height:186px'>"+
                         "<div class='overlay'>"+
                           "<i class='fa fa-eye'></i>"+
                         "</div>"+
