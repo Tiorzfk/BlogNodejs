@@ -11,7 +11,7 @@ this.VerifikasiTweet = function(req, res, next) {
           status : 'selesai'
         }
         db.acquire(function(err,con){
-            con.query('UPDATE tweet_support SET ? WHERE id="'+req.body.id+'"',data,function(err,data){
+            con.query('UPDATE tweet_support SET ? WHERE id_string="'+req.body.id+'"',data,function(err,data){
               con.release();
                 if (err){
                     req.flash('error', err.errors);
@@ -32,7 +32,7 @@ this.UnVerifikasiTweet = function(req, res, next) {
           status : 'vertifikasi'
         }
         db.acquire(function(err,con){
-            con.query('UPDATE tweet_support SET ? WHERE id="'+req.params.id+'"',data,function(err,data){
+            con.query('UPDATE tweet_support SET ? WHERE id_string="'+req.params.id+'"',data,function(err,data){
               con.release();
                 if (err){
                     req.flash('error', err.errors);
@@ -50,7 +50,7 @@ this.UnVerifikasiTweet = function(req, res, next) {
 };
 this.listtweets = function(req, res, next) {
         db.acquire(function(err,con){
-            con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="vertifikasi" LIMIT 100',function(err,berita){
+            con.query('SELECT id_string,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="vertifikasi" LIMIT 200',function(err,berita){
               con.release();
                 if (err) {
                     req.flash('error', err.errors);
@@ -79,7 +79,7 @@ this.listtweetsen = function(req, res, next) {
 };
 this.deletetweets = function(req, res, next) {
         db.acquire(function(err,con){
-            con.query('DELETE FROM tweet_support WHERE id="'+req.params.id+'"',function(err,berita){
+            con.query('DELETE FROM tweet_support WHERE id_string="'+req.params.id+'"',function(err,berita){
               con.release();
                 if (err) {
                     req.flash('error', err.errors);
@@ -93,7 +93,7 @@ this.deletetweets = function(req, res, next) {
 };
 this.listtweetsselesai = function(req, res, next) {
         db.acquire(function(err,con){
-            con.query('SELECT id,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="selesai" LIMIT 100',function(err,berita){
+            con.query('SELECT id_string,status,screen_name,text,klasifikasi FROM tweet_support WHERE status="selesai" LIMIT 200',function(err,berita){
               con.release();
                 if (err) {
                     req.flash('error', err.errors);
