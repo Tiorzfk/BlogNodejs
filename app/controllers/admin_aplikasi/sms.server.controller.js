@@ -56,9 +56,7 @@ this.kirim = function(req, res, next) {
   res.render('pages/admin_aplikasi/sms/kirim', {
       title: 'Halaman Admin Aplikasi',
       email: req.user ? req.user.email : '',
-      jenis: req.user ? req.user.jenis_admin : '',
-      messages_errors: req.flash('error'),
-      messages_success: req.flash('success')
+      jenis: req.user ? req.user.jenis_admin : ''
   });
 
 };

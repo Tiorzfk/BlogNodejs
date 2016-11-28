@@ -69,7 +69,27 @@
                 { "data": "text" },
                 { "data": "created_at" },
                 { "render": function (data, type, full, meta){
-                               return '<input type="hidden" name="id" value="'+full._id+'"><select id="klasifikasi" class="form-control"><option value="positif">Positif</option><option value="positif">Negatif</option><option value="positif">Netral</option></select>';
+                               var a = '<input type="hidden" name="id" value="'+full._id+'">'+
+                               '<select id="klasifikasi" class="form-control">';
+
+                                  if(full.klasifikasi == 'netral') {
+                                    a += '<option value="netral" selected>Netral</option>';
+                                  }else{
+                                    a += '<option value="netral">Netral</option>';
+                                  }
+                                  if(full.klasifikasi == 'positif') {
+                                    a += '<option value="positif" selected>Positif</option>';
+                                  }else{
+                                    a += '<option value="positif">Positif</option>';
+                                  }
+                                  if(full.klasifikasi == 'negatif') {
+                                    a += '<option value="negatif" selected>Negatif</option>';
+                                  }else{
+                                    a += '<option value="negatif">Negatif</option>';
+                                  }
+                                a += '</select>';
+
+                                return a;
                            } },
                 { "render": function (data, type, full, meta){
                                return '<button type="button" id="kirim" class="btn btn-primary"><i class="fa fa-send"></i> Konfirmasi</button>'+
