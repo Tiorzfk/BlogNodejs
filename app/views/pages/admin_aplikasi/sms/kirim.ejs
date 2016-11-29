@@ -49,13 +49,12 @@
 
 				if (process) {
 					var data = {
-						pesan : message,
-            nomor : '+6281355703115'
+						pesan : message
 					}
 
 						$.ajax({
 							type: 'POST',
-							url: 'http://comrade-api.azurewebsites.net/kirimsms',
+							url: 'http://comrade-api.azurewebsites.net/kirimsms/premium',
 							dataType: 'json',
 							data: data,
 							beforeSend: function () {
