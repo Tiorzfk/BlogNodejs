@@ -9,6 +9,7 @@ var slug = function(str) {
 
 $("#morebtn").click(function() {
   var i = 8;
+  localStorage.setItem('lastname','Smith');
   $.ajax({
     type: 'GET',
     url: 'http://comrade-api.azurewebsites.net/posting/kategori/2/page/'+i,
