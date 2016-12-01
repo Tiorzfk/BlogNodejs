@@ -66,7 +66,7 @@ $("#morebtn").click(function() {
 
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/posting/kategori/2/page/0',
+  url: 'http://comrade-api.azurewebsites.net/posting/kategori/2',
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingartikel').style.display = 'block';
