@@ -94,7 +94,8 @@ this.simpanso = function(req, res, next) {
            return next(err);
 
         var data2 = {
-          id_user : result.insertId
+          id_user : result.insertId,
+          status_aktivasi : '0'
         }
         con.query('INSERT INTO sahabat_odha SET ? ',data2,function(err,result2){
           var message = "User Berhasil Dibuat.";
