@@ -6,6 +6,7 @@ var db = require('../../../config/db');
 var bcrypt = require('bcryptjs');
 var EmailTemplates = require('swig-email-templates');
 var transport = require('../../../config/mail').transport;
+var AES = require('../AES');
 
 function Todo() {
 
@@ -83,7 +84,7 @@ this.addso = function(req, res, next) {
 this.simpanso = function(req, res, next) {
     var data = {
       nama : req.body.nama,
-      email : req.body.email,
+      email : AES.encrypt(req.body.email,'comrade@codelabs'),
       password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null),
       jenis_user: 'Sahabat Odha'
     }
