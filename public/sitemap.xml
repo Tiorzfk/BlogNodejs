@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
@@ -160,14 +161,17 @@
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
+  <url>
     <loc>http://comrade-app.azurewebsites.net/post/2016/new-promise-for-immunotherapy-as-hiv-treatment/681</loc>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
+  <url>
     <loc>http://comrade-app.azurewebsites.net/post/2016/new-therapeutic-vaccine-approach-holds-promise-for-hiv-remission/662</loc>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
+  <url>
     <loc>http://comrade-app.azurewebsites.net/post/2016/antibody-supresses-hiv-in-infected-individuals/661</loc>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
