@@ -7,3 +7,4 @@ User-agent: Googlebot-Image
 Allow: /
 User-agent: Googlebot-Mobile
 Allow: /
+Sitemap : http://comrade-app.azurewebsites.net/sitemap.xml
