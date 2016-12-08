@@ -67,6 +67,7 @@ this.new = function(req, res, next) {
                 tgl_mulai: tgl_mulai+' '+req.body.waktu_mulai,
                 tgl_berakhir: tgl_berakhir+' '+req.body.waktu_berakhir,
                 latitude: result[0].latitude,
+                tipe: req.body.tipe,
                 longitude: result[0].longitude,
                 kontak_person: req.body.kontak_person
             }
