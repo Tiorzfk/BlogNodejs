@@ -4,7 +4,13 @@ var striptags = require('striptags'),
     db = require('../../../config/db'),
     gmAPI = require('../../../config/maps').gmAPI,
     geocoderProvider = 'google',
-    httpAdapter = 'https';
+    httpAdapter = 'https',
+    Pusher = require('pusher'),
+    pusher = new Pusher({
+      appId: '259913',
+      key: '1bba48d795f7e899c4d0',
+      secret: '0826f796c436807884b2'
+    });
 
 const fs = require('fs');
 
@@ -28,6 +34,17 @@ this.VerifikasiEvent = function(req, res, next) {
                 db.query('SELECT * FROM event WHERE id_event=?',req.params.id,function(err,data){
                     data.forEach(function(data) {
                         var message = 'Event '+data.nama+' Berhasil di Verifikasi';
+                        var arrayisi = striptags(data.deskripsi).split(' ');
+                        var notifbody = arrayisi.slice(0,7);
+                        pusher.notify(['posting'], {
+                          fcm: {
+                              notification: {
+                                  'title': data.nama,
+                                  'body': notifbody.join(' '),
+                                  'icon':  'comrade.png'
+                              }
+                          }
+                        });
                         req.flash('success', message);
                         return res.redirect('/admin-aplikasi/event');
                     });
