@@ -37,7 +37,8 @@ this.renderIndex = function(req, res, next) {
   res.render('pages/admin_komunitas/index', {
       title: 'Halaman Admin Komunitas',
       email: req.user ? req.user.email : '',
-      jenis: req.user ? req.user.jenis_admin : ''
+      jenis: req.user ? req.user.jenis_admin : '',
+      komunitas: req.user ? req.user.komunitas : ''
   });
 
 };
@@ -54,6 +55,7 @@ this.renderNew = function(req, res, next) {
                     messages_success: req.flash('success'),
                     email: req.user ? req.user.email : '',
                     jenis: req.user ? req.user.jenis_admin : '',
+                    komunitas: req.user ? req.user.komunitas : '',
                     kategori: kategori
                 });
             });
@@ -149,7 +151,8 @@ this.renderEdit = function(req, res, next) {
                             messages_errors: req.flash('error'),
                             messages_success: req.flash('success'),
                             email: req.user ? req.user.email : '',
-                            jenis: req.user ? req.user.jenis_admin : ''
+                            jenis: req.user ? req.user.jenis_admin : '',
+                            komunitas: req.user ? req.user.komunitas : ''
                         });
                     });
                 }
@@ -244,9 +247,8 @@ this.delete = function(req, res, next) {
 };
 
 this.list = function(req, res, next) {
-
     db.acquire(function(err,con){
-            con.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori ORDER BY tgl_posting ASC',function(err,articles){
+            con.query('SELECT * FROM posting LEFT JOIN kategori on kategori.id_kategori=posting.id_kategori WHERE posting.id_admin='+req.user.id_admin+' ORDER BY tgl_posting ASC',function(err,articles){
               con.release();
                 if (err) {
                     return next(err);
@@ -257,7 +259,8 @@ this.list = function(req, res, next) {
                         striptags: striptags,
                         messages_success: req.flash('success'),
                         email: req.user ? req.user.email : '',
-                        jenis: req.user ? req.user.jenis_admin : ''
+                        jenis: req.user ? req.user.jenis_admin : '',
+                        komunitas: req.user ? req.user.komunitas : ''
                     });
                 }
             });
@@ -277,7 +280,8 @@ this.detail = function(req, res, next) {
                             artikel: data,
                             striptags: striptags,
                             email: req.user ? req.user.email : '',
-                            jenis: req.user ? req.user.jenis_admin : ''
+                            jenis: req.user ? req.user.jenis_admin : '',
+                            komunitas: req.user ? req.user.komunitas : ''
                         });
                     });
                 }

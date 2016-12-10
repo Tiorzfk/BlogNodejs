@@ -29,6 +29,7 @@ this.renderNew = function(req, res, next) {
                     messages_success: req.flash('success'),
                     email: req.user ? req.user.email : '',
                     jenis: req.user ? req.user.jenis_admin : '',
+                    komunitas: req.user ? req.user.komunitas : '',
                     kategori: kategori,
                 });
             });
@@ -114,7 +115,8 @@ this.renderEdit = function(req, res, next) {
                                 messages_errors: req.flash('error'),
                                 messages_success: req.flash('success'),
                                 email: req.user ? req.user.email : '',
-                                jenis: req.user ? req.user.jenis_admin : ''
+                                jenis: req.user ? req.user.jenis_admin : '',
+                                komunitas: req.user ? req.user.komunitas : ''
                             });
                         });
                     });
@@ -228,7 +230,8 @@ this.list = function(req, res, next) {
                         messages_errors: req.flash('error'),
                         messages_success: req.flash('success'),
                         email: req.user ? req.user.email : '',
-                        jenis: req.user ? req.user.jenis_admin : ''
+                        jenis: req.user ? req.user.jenis_admin : '',
+                        komunitas: req.user ? req.user.komunitas : ''
                     });
                 }
             });
@@ -242,12 +245,15 @@ this.mylist = function(req, res, next) {
                 if (err) {
                     return next(err);
                 } else {
-                    res.render('pages/admin_komunitas/event/mylist', {
+                    res.render('pages/admin_komunitas/event/index', {
                         title: 'Data Event',
                         event: event,
-                        messages: req.flash('success'),
+                        geocoder: geocoder,
+                        messages_errors: req.flash('error'),
+                        messages_success: req.flash('success'),
                         email: req.user ? req.user.email : '',
-                        jenis: req.user ? req.user.jenis_admin : ''
+                        jenis: req.user ? req.user.jenis_admin : '',
+                        komunitas: req.user ? req.user.komunitas : ''
                     });
                 }
             });
@@ -269,7 +275,8 @@ this.detail = function(req, res, next) {
                                 results: result,
                                 gmAPI: gmAPI,
                                 email: req.user ? req.user.email : '',
-                                jenis: req.user ? req.user.jenis_admin : ''
+                                jenis: req.user ? req.user.jenis_admin : '',
+                                komunitas: req.user ? req.user.komunitas : ''
                             });
                         });
                     });

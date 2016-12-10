@@ -22,7 +22,7 @@ module.exports = {
   configure: function(app) {
     app.route('/admin-komunitas/event/new').all(isAuthenticated).get(event.renderNew).post(event.new);
 
-    app.route('/admin-komunitas/event').all(isAuthenticated).get(event.list);
+    app.route('/admin-komunitas/event').all(isAuthenticated).get(event.mylist);
 
     app.route('/admin-komunitas/event/detail/:id').all(isAuthenticated).get(event.detail);
 
