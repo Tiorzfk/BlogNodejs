@@ -9,7 +9,7 @@ var config = require('./config'),
 
     //koneksi
     connection = require('./db');
-    connection_sms = require('./dbsms');
+    //connection_sms = require('./dbsms');
     //routing
     index = require('../app/routes/index.server.routes.js');
     userPremium = require('../app/routes/user_premium.server.routes.js');
@@ -28,7 +28,7 @@ var config = require('./config'),
     pemeriksaan = require('../app/routes/admin_aplikasi/pemeriksaan.server.routes.js');
     obat = require('../app/routes/admin_aplikasi/obat.server.routes.js');
     user = require('../app/routes/admin_aplikasi/user.server.routes.js');
-    kirim_sms = require('../app/routes/admin_aplikasi/sms.server.routes.js');
+    //kirim_sms = require('../app/routes/admin_aplikasi/sms.server.routes.js');
 
 module.exports = function() {
     var app = express();
@@ -72,8 +72,8 @@ module.exports = function() {
     index_aplikasi.configure(app);
     user.configure(app);
     //koneksi sms
-    connection_sms.init();
-    kirim_sms.configure(app);
+    // connection_sms.init();
+    // kirim_sms.configure(app);
 
     return app;
 };
