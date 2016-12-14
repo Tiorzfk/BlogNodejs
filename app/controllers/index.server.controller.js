@@ -10,7 +10,7 @@ var db = require('../../config/db'),
 
 function Todo() {
 
-/*this.testsms = function(req, res, next){
+/*this.testsms = function(req,res, next){
     clockwork.sendSms({ To: '628982044805', Content: 'Test!', From: 'Tio'}, function(error, resp) {
         if (error) {
             console.log('Something went wrong', error);
