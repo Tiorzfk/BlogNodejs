@@ -58,8 +58,8 @@ $("#morebtn").click(function() {
           $('#artikel').append(a);
       });
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      console.log(xhr.thrownError);
+    error: function (jqXHR, ajaxOptions, thrownError) {
+      console.log(jqXHR.thrownError.ajaxOptions);
     }
   });
 });
@@ -111,8 +111,10 @@ $.ajax({
               "</div>";
         $('#artikel').append(a);
     });
-  },
-  error: function (xhr, ajaxOptions, thrownError) {
-    console.log(xhr.thrownError);
+  },timeout: 16000,
+  error: function (jqXHR, textStatus, thrownError) {
+    if(textStatus==="timeout") {
+      document.getElementById('cobalagi').style.display = 'block';
+    }
   }
 });

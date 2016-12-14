@@ -192,6 +192,26 @@ a:focus {
 	transition: all .25s ease;
 }
 
+.cobalagi {
+	display: block;
+	margin: auto;
+	margin-bottom: 100px;
+	width: 240px;
+	height: 40px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	font: 14px/3em 'Fjalla One', sans-serif;
+	color: #f48024;
+	text-align: center;
+	text-transform: uppercase;
+	-webkit-transition: all .25s ease;
+	-moz-transition: all .25s ease;
+	-o-transition: all .25s ease;
+	transition: all .25s ease;
+}
+
 .big-button:hover {
 	background: #50c1e9;
 	color: #fff;

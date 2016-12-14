@@ -55,8 +55,10 @@ $.ajax({
               "</div>";
         $('#berita').append(a);
     });
-  },
-  error: function (xhr, ajaxOptions, thrownError) {
-    console.log(xhr);
+  },timeout: 16000,
+  error: function (jqXHR, textStatus, thrownError) {
+    if(textStatus==="timeout") {
+      document.getElementById('cobalagi').style.display = 'block';
+    }
   }
 });

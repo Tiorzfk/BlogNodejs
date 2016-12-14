@@ -2,7 +2,7 @@ var url = window.location.pathname;
 var id = url.substring(url.lastIndexOf('/') + 1);
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/posting/'+id,
+  url: 'http://comrade-api.azurewebsites.net/posing/'+id,
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingartikel').style.display = 'block';
@@ -44,8 +44,10 @@ $.ajax({
             "</div>";
       $('#detail').append(a);
     });
-  },
-  error: function (xhr, ajaxOptions, thrownError) {
-    console.log(xhr);
+  },timeout: 16000,
+  error: function (jqXHR, textStatus, thrownError) {
+    if(textStatus==="timeout") {
+      document.getElementById('cobalagi').style.display = 'block';
+    }
   }
 });
