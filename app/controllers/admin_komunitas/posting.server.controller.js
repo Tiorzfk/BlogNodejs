@@ -85,8 +85,14 @@ this.new = function(req, res, next) {
         var message = null;
 
         //var now = moment(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-        var now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        var now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
+        $slug = (req.body.judul).replace(/[^a-z0-9-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        var final =  $slug.toLowerCase();
+
+        var date = new Date();
+        var url = 'http://comrade-app.azurewebsites.net/'+date.getFullYear()+'/'+final+'/';
+        //console.log(url);
         //membuat isi untuk deskripsi
         var arrayisi = striptags(req.body.isi).split(' ');
         var sliceisi = arrayisi.slice(0,17);
@@ -96,6 +102,7 @@ this.new = function(req, res, next) {
         var data = {
             id_admin: req.user.id_admin,
             judul: req.body.judul,
+            slug : url,
             isi: req.body.isi,
             deskripsi: sliceisi.join(' '),
             foto: req.file.filename,

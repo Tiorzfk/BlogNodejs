@@ -25,30 +25,30 @@ this.VerifikasiPosting = function(req, res, next) {
                             if(req.params.kategori === "Artikel"){
                                 var arrayisi = striptags(data.deskripsi).split(' ');
                                 var notifbody = arrayisi.slice(0,5);
-                                pusher.notify(['posting'], {
-                                  fcm: {
-                                      notification: {
-                                          'title': data.judul,
-                                          'body': notifbody.join(' '),
-                                          'icon':  'comrade.png'
-                                      }
-                                  }
-                                });
+                                // pusher.notify(['posting'], {
+                                //   fcm: {
+                                //       notification: {
+                                //           'title': data.judul,
+                                //           'body': notifbody.join(' '),
+                                //           'icon':  'comrade.png'
+                                //       }
+                                //   }
+                                // });
                                 var message = 'Artikel dengan judul '+data.judul+' Berhasil di Verifikasi';
                                 req.flash('success', message);
                                 return res.redirect('/admin-aplikasi/artikel');
                             }else{
                                 var arrayisi = striptags(data.deskripsi).split(' ');
                                 var notifbody = arrayisi.slice(0,5);
-                                pusher.notify(['posting'], {
-                                  fcm: {
-                                      notification: {
-                                          'title': data.judul,
-                                          'body': notifbody.join(' '),
-                                          'icon':  'comrade.png'
-                                      }
-                                  }
-                                });
+                                // pusher.notify(['posting'], {
+                                //   fcm: {
+                                //       notification: {
+                                //           'title': data.judul,
+                                //           'body': notifbody.join(' '),
+                                //           'icon':  'comrade.png'
+                                //       }
+                                //   }
+                                // });
 
                                 var message = 'Berita dengan judul '+data.judul+' Berhasil di Verifikasi';
                                 req.flash('success', message);
