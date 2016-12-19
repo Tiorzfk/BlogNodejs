@@ -56,9 +56,11 @@ $.ajax({
         if(i==8)
         return false;
     });
-  },
-  error: function (xhr, ajaxOptions, thrownError) {
-    console.log(xhr);
+  },timeout: 16000,
+  error: function (jqXHR, textStatus, thrownError) {
+    if(textStatus==="timeout") {
+      document.getElementById('cobalagiArtikel').style.display = 'block';
+    }
   }
 });
 
@@ -114,9 +116,11 @@ $.ajax({
         if(i==8)
         return false;
     });
-  },
-  error: function (xhr, ajaxOptions, thrownError) {
-    console.log(xhr);
+  },timeout: 16000,
+  error: function (jqXHR, textStatus, thrownError) {
+    if(textStatus==="timeout") {
+      document.getElementById('cobalagiBerita').style.display = 'block';
+    }
   }
 });
 
@@ -168,5 +172,10 @@ $.ajax({
         if(i==2)
         return false;
     });
+  },timeout: 16000,
+  error: function (jqXHR, textStatus, thrownError) {
+    if(textStatus==="timeout") {
+      document.getElementById('cobalagiEvent').style.display = 'block';
+    }
   }
 });
