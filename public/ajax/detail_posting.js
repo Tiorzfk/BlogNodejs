@@ -2,7 +2,7 @@ var url = window.location.pathname;
 var id = url.substring(url.lastIndexOf('/') + 1);
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/posing/'+id,
+  url: 'http://comrade-api.azurewebsites.net/posting/'+id,
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingartikel').style.display = 'block';
