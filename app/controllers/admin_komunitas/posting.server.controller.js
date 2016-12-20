@@ -84,7 +84,7 @@ this.new = function(req, res, next) {
         }
         var message = null;
 
-        //var now = moment(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+        //var now  = moment(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
         var now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
         $slug = (req.body.judul).replace(/[^a-z0-9-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
