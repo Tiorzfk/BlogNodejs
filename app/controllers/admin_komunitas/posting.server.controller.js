@@ -91,7 +91,7 @@ this.new = function(req, res, next) {
         var final =  $slug.toLowerCase();
 
         var date = new Date();
-        var url = 'http://comrade-app.azurewebsites.net/'+date.getFullYear()+'/'+final+'/';
+        var url = 'http://comrade-app.azurewebsites.net/'+date.getFullYear()+'/'+final;
         //console.log(url);
         //membuat isi untuk deskripsi
         var arrayisi = striptags(req.body.isi).split(' ');

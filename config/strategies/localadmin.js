@@ -9,7 +9,7 @@ module.exports = function() {
 	function(email, password, done) {
 		DB.getConnection(function(err,koneksi){
 			koneksi.query('SELECT * FROM admin where email = ? ',[email],
-				function(err,admin){   
+				function(err,admin){
         	    	if (err) {
 						return done(err);
 					}
@@ -19,10 +19,10 @@ module.exports = function() {
 					if (!( admin[0].password == password)) {
 						return done(null, false, {message: 'Invalid password'});
 					}
-					
-					return done(null, admin[0]);     
+
+					return done(null, admin[0]);
         	});
         	koneksi.release();
-        }); 
+        });
 	}));
 };
