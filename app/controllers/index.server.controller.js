@@ -67,9 +67,9 @@ this.detailposting = function(req, res, next) {
 this.detailevent = function(req, res, next) {
     var id = req.params.id;
      db.acquire(function(err,con){
-       con.release();
-        con.query('SELECT * FROM banner',function(error, banner){
+        //con.query('SELECT * FROM banner',function(error, banner){
             con.query('SELECT event.nama,tgl_posting,tgl_mulai,tgl_berakhir,foto,deskripsi,latitude,longitude,admin.nama as pengirim FROM event INNER JOIN admin ON admin.id_admin=event.id_admin WHERE id_event='+id,function(err, events){
+              con.release();
                 if (err) {
                     return next(err);
                 } else {
@@ -91,7 +91,7 @@ this.detailevent = function(req, res, next) {
                         res.redirect('/GAGAGAGA');
                     }
                 }
-            });
+            //});
         });
     });
 };
