@@ -80,7 +80,6 @@ this.detailevent = function(req, res, next) {
                                     title: 'Detail Posting',
                                     events: data,
                                     moment: moment,
-                                    banner: banner,
                                     gmAPI: gmAPI,
                                     results: result,
                                     email: req.user ? req.user.email : ''
