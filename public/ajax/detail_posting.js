@@ -16,6 +16,11 @@ $.ajax({
       if(cek == 'http'){
         foto = data.foto;
       }
+    		var list = document.getElementsByTagName('a');
+    		Share.init(list, {
+    			title: data.judul,
+    			url: window.location.href
+    		});
       var a =
         "<img class='head' src='"+foto+"' alt='"+data.judul+"' style='width:749.5px;height:400px'>"+
           "<div class='content'>"+
