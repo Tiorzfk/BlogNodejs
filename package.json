@@ -43,6 +43,7 @@
     "sinch-messaging": "0.0.1",
     "sinch-sms": "0.0.8",
     "slug": "^0.9.1",
+    "social-share": "^0.1.0",
     "striptags": "^2.1.1",
     "swig-email-templates": "^2.0.0"
   }
