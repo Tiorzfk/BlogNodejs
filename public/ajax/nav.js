@@ -33,7 +33,7 @@ $.ajax({
                 "<p class='time'>"+data.tgl_mulai+"</p>"+
               "</li>";
         $('#eventnav').append(a);
-        if(i==5)
+        if(i==5) 
         return false;
     });
   },
