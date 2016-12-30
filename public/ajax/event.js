@@ -23,7 +23,7 @@ $.ajax({
       var sliceisi = arrayisi.slice(0,17);
       var a = "<div class='col-sm-4'>"+
                 "<article>"+
-                  "<a href='event/"+url+"'> "+
+                  "<a> "+
                     "<div class='image'>"+
                       "<img src='https://comrade-app.azurewebsites.net/uploads/img/event/"+data.foto+"' alt='"+data.nama+"' style='width:290px;height:186px'>"+
                         "<div class='overlay'>"+
@@ -34,7 +34,7 @@ $.ajax({
                   "<div class='content'>"+
                     "<div class='text'>"+
                       "<p class='time'>"+data.tgl_event+"</p>"+
-                      "<h5><a href='event/"+url+"'>"+data.nama+"</a></h5>"+
+                      "<h5><a>"+data.nama+"</a></h5>"+
                       "<p>"+sliceisi.join(' ')+".</p>"+
                       "<span class='line'></span>"+
                       "<ul class='list-unstyled list-inline bottom'>"+
