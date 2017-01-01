@@ -29,7 +29,7 @@ $.ajax({
     jQuery.each(data.result, function(i, data) {
       var url = data.tgl_posting.substring(0,4)+"/"+slug(data.nama)+"/"+data.id_event;
       var a = "<li>"+
-                "<p><a>"+data.nama+".</a></p>"+
+                "<p><a >"+data.nama+".</a></p>"+
                 "<p class='time'>"+data.tgl_mulai+"</p>"+
               "</li>";
         $('#eventnav').append(a);
