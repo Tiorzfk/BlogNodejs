@@ -1,0 +1,248 @@
+ <!-- Toastr style -->
+<link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">Monthly</span>
+                            <h5>Artikel</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"></h1>
+                            <small>Total Artikel</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">Monthly</span>
+                            <h5>Event</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"></h1>
+                            <small>Total Event</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Today</span>
+                            <h5>Odha</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"></h1>
+                            <small>New user Odha</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Today</span>
+                            <h5>Sahabat Odha</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins"></h1>
+                            <small>New user Odha</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Berita list (Terbaru)</h5>
+                            <div class="ibox-tools">
+                                <a href="#/berita"><font color="blue">Selengkapnya</font></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="table table-hover no-margins">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Judul</th>
+                                        <th>Pengirim</th>
+                                        <th>Kategori</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="berita">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Artikel list (Terbaru)</h5>
+                            <div class="ibox-tools">
+                                <a href="#/artikel"><font color="blue">Selengkapnya</font></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="table table-hover no-margins">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Judul</th>
+                                        <th>Pengirim</th>
+                                        <th>Kategori</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="artikel">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Event list (Terbaru)</h5>
+                            <div class="ibox-tools">
+                                <a href="/admin-aplikasi/#/event"><font color="blue">Selengkapnya</font></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="table table-hover no-margins">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Event</th>
+                                        <th>Pengirim</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="event">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+<!-- Toastr script -->
+<script src="/backend/js/plugins/toastr/toastr.min.js"></script>
+<script>
+$(document).ready(function(){
+    $.ajax({
+        type: 'GET',
+        url: 'http://comrade-api.azurewebsites.net/admapp/berita',
+        dataType: 'json',
+        beforeSend: function () {
+                $('#berita').text('Please wait ...');
+        },
+        success: function (data) {
+            $('#berita').text('');
+            jQuery.each(data.result, function(i, data) {
+                var cek = '';
+                var cek2 = '';
+                if(data.status === "0"){
+                  cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
+                  cek2 = '<td><a href="/admin-aplikasi/verifikasi_posting/'+data.kategori+'/'+data.id_posting+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
+                } else {
+                  cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
+                  cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
+                }
+                var a =
+                    '<tr>'+
+                    cek+
+                    '<td><i class="fa fa-book"></i> '+data.judul+'</td>'+
+                    '<td><i class="fa fa-user-md"></i> '+data.pengirim+'</td>'+
+                    '<td><i class="fa fa-book"></i> '+data.kategori+'</td>'+
+                    cek2+
+                    '</tr>';
+                $('#berita').append(a);
+                if(i==3)
+                    return false;
+            });
+        },timeout: 16000,
+        error: function (jqXHR, textStatus, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://comrade-api.azurewebsites.net/admapp/artikel',
+        dataType: 'json',
+        beforeSend: function () {
+                $('#artikel').text('Please wait ...');
+        },
+        success: function (data) {
+            $('#artikel').text('');
+            jQuery.each(data.result, function(i, data) {
+                var cek = '';
+                var cek2 = '';
+                if(data.status === "0"){
+                  cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
+                  cek2 = '<td><a href="/admin-aplikasi/verifikasi_posting/'+data.kategori+'/'+data.id_posting+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
+                } else {
+                  cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
+                  cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
+                }
+                var a =
+                    '<tr>'+
+                    cek+
+                    '<td><i class="fa fa-book"></i> '+data.judul+'</td>'+
+                    '<td><i class="fa fa-user-md"></i> '+data.pengirim+'</td>'+
+                    '<td><i class="fa fa-book"></i> '+data.kategori+'</td>'+
+                    cek2+
+                    '</tr>';
+                $('#artikel').append(a);
+                if(i==3)
+                    return false;
+            });
+        },timeout: 16000,
+        error: function (jqXHR, textStatus, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://comrade-api.azurewebsites.net/admapp/event',
+        dataType: 'json',
+        beforeSend: function () {
+                $('#event').text('Please wait ...');
+        },
+        success: function (data) {
+            $('#event').text('');
+            jQuery.each(data.result, function(i, data) {
+                var cek = '';
+                var cek2 = '';
+                if(data.status === "0"){
+                    cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
+                    cek2 = '<td><a href="/admin-aplikasi/verifikasi_event/'+data.id_event+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
+                } else {
+                    cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
+                    cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
+                }
+
+                var a =
+                    '<tr>'+
+                    cek+
+                    '<td><i class="fa fa-picture-o"></i> '+data.nama+'</td>'+
+                    '<td><i class="fa fa-clock-o"></i> '+data.tgl_event%+'</td>'+
+                    '<td class="text-navy"><i class="fa fa-user-md"></i> '+data.pengirim+'</td>'+
+                    cek2+
+                    '</tr>';
+                $('#event').append(a);
+                if(i==3)
+                    return false;
+            });
+        },timeout: 16000,
+        error: function (jqXHR, textStatus, thrownError) {
+            console.log(thrownError);
+        }
+    });
+});
+</script>

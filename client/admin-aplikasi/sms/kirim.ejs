@@ -1,0 +1,76 @@
+<% include ../partials/headeradmin %>
+<% include ../partials/menuadmin %>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                       <h5>Halaman Kirim SMS Member <small>Menampilkan Form untuk mengirim sms member. </small></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal">
+                            <div class="form-group"><label class="col-sm-1 col-sm-offset-3 control-label">Message</label>
+                                <div class="col-sm-6"><textarea name="msg" class="form-control" style="width:440px;height:300px"></textarea></div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <button class="btn btn-white" type="reset">Reset</button>
+                                    <button class="btn btn-primary" type="button" id="simpan">Kirim</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-xs">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                        <h4 class="modal-title"><i class="glyphicon glyphicon-ok"></i><br>Success Sent Message.</h4>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% include ../partials/footeradmin %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#simpan").click(function() {
+				var message = $('textarea[name=msg]').val();
+						process = true;
+
+				if (message == "") {
+						$('textarea[name=msg]').css('border-color','#ed5564');
+						process = false;
+				}
+
+				if (process) {
+					var data = {
+						pesan : message
+					}
+
+						$.ajax({
+							type: 'POST',
+							url: 'http://comrade-api.azurewebsites.net/kirimsms/premium',
+							dataType: 'json',
+							data: data,
+							beforeSend: function () {
+                    $('#simpan').text('loading...');
+							},
+							success: function (data) {
+								$('#simpan').text('Kirim')
+								$('textarea[name=msg]').val('');
+								$('#myModal').modal('show');
+							},
+							error: function (xhr, ajaxOptions, thrownError) {
+								console.log(thrownError);
+							}
+						});
+
+				}
+		});
+	});
+</script>

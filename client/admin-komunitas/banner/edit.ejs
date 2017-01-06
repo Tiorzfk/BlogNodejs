@@ -1,0 +1,70 @@
+<% include ../partials/headeradmin %>
+<% include ../partials/menuadmin %>
+ <!-- Toastr style -->
+<link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!-- FileUpload -->
+<link rel="stylesheet" type="text/css" href="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                       <h5>Halaman Form Tambah Banner <small>Menampilkan Form untuk menambahkan banner. </small></h5>                                 
+                    </div>
+                    <div class="ibox-content">
+                        <% messages_errors.forEach(function(data) { %>
+                            <div class="alert alert-danger alert-dismissable">
+                              <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                  <% for(var i in data) { %>
+                                    <li><%= data[i]["message"] %></li>
+                                  <% } %>
+                            </div>
+                        <% }); %>
+                        <form action="" method="post" class="form-horizontal" enctype="multipart/form-data" id="form">
+                            <div class="form-group"><label class="col-sm-2 control-label">Nama Banner</label>
+                                <div class="col-sm-9"><input type="text" name="nama_banner" class="form-control" value="<%=data.nama_banner%>"></div>
+                                <input type="hidden" name="id" value="<%= id %>">
+                                <input type="hidden" name="banner_old" value="<%=data.banner_img%>">
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Banner</label>
+                                <div class="col-sm-9">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="/uploads/banner/<%=data.banner_img%>">
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                        </div><font color="#CC5965">*Required, only jpg,png, and gif files allowed.</font>
+                                        <input type="file" name="banner_img">                         
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-white" type="submit">Cancel</button>
+                                    <button class="btn btn-primary" type="submit">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% include ../partials/footeradmin %>
+<!-- FileUpload -->
+<script type="text/javascript" src="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<!-- Toastr script -->
+<script src="/backend/js/plugins/toastr/toastr.min.js"></script>
+<!-- Jquery Validate -->
+<script src="/backend/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#form").validate({
+            rules: {
+                nama_banner: {
+                    required: true
+                }
+            }
+        });
+    }); 
+</script>

@@ -1,0 +1,46 @@
+<% include ../../partials/header %>	
+	</header>
+	<main id="contacts">
+		<div class="container">
+			<div class="wrapper">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<section class="main">
+							<div class="content-block">
+								<div class="text">
+    							<% for(var i in messages) { %>
+    								<div class="alert alert-danger alert-dismissable">
+                                		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                		<li><%= messages[i] %></li>
+                            		</div>
+                            	<% } %>
+									<h5>Register</h5>
+									<form action="/register" class="forms" method="post">
+										<div class="row">
+											<div class="col-md-12 col-sm-12">
+												<p><input type="email" name="email" placeholder="Email"></p>
+											</div>
+											<div class="col-md-12 col-sm-12">
+												<p><input type="password" name="password" placeholder="Password"></p>
+											</div>										
+											<div class="col-md-3 col-sm-12">
+												<p><input type="radio" name="level" value="Sahabat Odha" style="width:15px">Sahabat Odha</p>
+											</div>
+											<div class="col-md-3 col-sm-12">
+												<p><input type="radio" name="level" value="Odha" style="width:15px">Odha</p>
+											</div>
+											
+										</div>
+										<button type="submit" class="mini-button">send</button> or <a href="/login">Login</a>
+										<span class="result"></span>
+									</form>
+								</div> <!-- text -->
+							</div> <!-- content -->
+						</section>
+					</div>
+				</div> <!-- row -->
+			</div> <!-- wrapper -->
+		</div> <!-- container -->
+		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
+	</main>
+<% include ../../partials/footer %>

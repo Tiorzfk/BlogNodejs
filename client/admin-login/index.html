@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage | Page</title>
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="../assets/css/animate.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+<style media="screen">
+    .loader,
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+.loader {
+  color: #ffffff;
+  font-size: 10px;
+  margin: 80px auto;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+.loader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 3.5em;
+}
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+</style>
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name"><img src="../../assets/img/logo.png" style="width:150px;height:160px"></h1>
+
+            </div><br>
+            <font color="#DFEFFF">
+            <h3>Login Admin Form</h3>
+            <br>
+             <form class="m-t" role="form" style="display: block" id="frm">
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Username" style="color:#000">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Password" style="color:#000">
+                </div>
+                <button type="button" id="send" class="btn btn-primary block full-width m-b">Login</button>
+            </form>
+            <div class="loader" style="display: none;margin-top: 50px"></div>
+            <h3 id="wait" style="margin-top:-20px;display: none">Please Wait ...</h3>
+        </div>
+    </div>
+    <script src="../../assets/js/jquery-2.1.1.js"></script>
+    <script type="text/javascript">
+    	$(document).ready(function() {
+        var host = "http://"+window.location.host;
+        if(sessionStorage.getItem('id')){
+          if(sessionStorage.getItem('jenis_admin') == "admin komunitas") {
+            window.location.href = host+"/admin-komunitas";
+          }else{        
+            window.location.href = host+"/admin-aplikasi";
+          }
+        }
+    		$("#send").click(function() {
+    			var email = $('input[name=email]').val(),
+              password = $('input[name=password]').val(),
+    				  process = true;
+    				if (email == "") {
+    						$('input[name=email]').css('border-color','#ff3c41');;
+    						process = false;
+    				}
+
+    				if (password == "") {
+    						$('input[name=password]').css('border-color','#ff3c41');
+    						process = false;
+    				}
+
+    				if (process) {
+              document.getElementById('frm').style.display = 'none';
+    					var data = {
+    						email : email,
+    						password : password
+    					}
+
+    						$.ajax({
+    							type: 'POST',
+    							url: 'http://comrade-api.azurewebsites.net/admin/auth',
+    							dataType: 'json',
+    							data: data,
+    							beforeSend: function () {
+                    $('.loader').css('display','block');
+                    $('#wait').css('display','block');
+    							},
+    							success: function (data) {
+                    if(data.status == 400){
+                      document.getElementById('frm').style.display = 'block';
+                      $('.loader').css('display','none');
+                      $('#wait').css('display','none');
+                      $('#frm input').val('');
+                    }else{
+                      $('#wait').text('Done.');
+                      sessionStorage.setItem('id', data.result.id_admin);
+                      sessionStorage.setItem('nama', data.result.nama);
+                      sessionStorage.setItem('email', data.result.email);
+                      sessionStorage.setItem('komunitas', data.result.komunitas);
+                      sessionStorage.setItem('jenis_admin', data.result.jenis_admin);
+                      
+                      if(data.result.jenis_admin == "admin komunitas") {
+                        setTimeout(function(){
+                          window.location.href = host+"/admin-komunitas";
+                        },2000);
+                      }else{
+                        setTimeout(function(){
+                          window.location.href = host+"/admin-aplikasi";
+                        },2000);
+                      }
+                    }
+    							},
+    							error: function (xhr, ajaxOptions, thrownError) {
+    								console.log(thrownError);
+    							}
+    						});
+
+    				}
+    		});
+    	});
+    </script>
+    <script src="../assets/js/bootstrap.min.js"></script>

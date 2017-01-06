@@ -1,0 +1,201 @@
+<link href="/backend/css/plugins/summernote/summernote.css" rel="stylesheet">
+<link href="/backend/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+<!-- clock Picker -->
+<link href="/backend/css/jquery-clockpicker.min.css" rel="stylesheet">
+<!-- FileUpload -->
+<link rel="stylesheet" type="text/css" href="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+<!-- Date Picker -->
+<link href="/backend/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<!-- autocomplite address maps css -->
+<link rel="stylesheet" type="text/css" href="/backend/css/addressmaps.css">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                       <h5>Halaman Form Tambah Event <small>Menampilkan Form untuk menambahkan event. </small></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal" id="frm">
+                            <div class="form-group"><label class="col-sm-2 control-label">Tipe Event</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control m-b" name="tipe" id="tipe">
+                                        <option value="private">Private</option>
+                                        <option value="public">Public</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Nama</label>
+                                <div class="col-sm-9"><input type="text" name="nama" class="form-control" placeholder="Nama Event"></div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Nama Tempat</label>
+                                <div class="col-sm-9"><input type="text" name="tempat" class="form-control" placeholder="Nama Tempat"></div>
+                            </div>
+                            <div class="form-group" id="data_1">
+                              <label class="col-sm-2 control-label">Tanggal Mulai</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_mulai" class="form-control" value="">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">Tanggal Berakhir</label>
+                                  <div class="col-sm-3">
+                                      <div class="input-group date">
+                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="tgl_berakhir" class="form-control" value="">
+                                      </div>
+                                  </div>
+                            </div>
+                            <div class="form-group" id="data_1">
+                              <label class="col-sm-2 control-label">Waktu Mulai</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group clockpicker" data-autoclose="true">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_mulai" class="form-control" value="09:30">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">Waktu Berakhir</label>
+                                  <div class="col-sm-3">
+                                      <div class="input-group clockpicker" data-autoclose="true">
+                                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_berakhir" class="form-control" value="09:30">
+                                      </div>
+                                  </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Deskripsi</label>
+                                <div class="col-sm-9">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-content no-padding">
+                                            <textarea name="isi" class="summernote"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Foto</label>
+                                <div class="col-sm-9">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="" alt="" />
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                        </div>*Required, only jpg,png, and gif files allowed.
+                                        <input type="file" name="foto" id="files">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Lokasi Event</label>
+                                <div class="col-sm-9">
+                                    <input name="posisi" id="pac-input" class="controls" type="text" placeholder="Masukan Alamat Lengkap Lokasi Event">
+                                    <div class="google-map" id="map"></div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Kontak Person</label>
+                                <div class="col-sm-9"><input type="text" name="kontak_person" class="form-control" placeholder="Kontak Person"></div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-white" type="reset">Reset</button>
+                                    <button class="btn btn-primary" type="submit" id="save">Save</button>
+                                </div>
+                            </div>
+                            <div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-xs">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                        <h4 class="modal-title"><i class="glyphicon glyphicon-ok"></i><br>Successfully add Event.</h4>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- FileUpload -->
+<script type="text/javascript" src="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<!-- Data picker -->
+<script src="/backend/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<!-- Clock picker -->
+<script type="text/javascript" src="/backend/js/jquery-clockpicker.min.js"></script>
+<!-- Autocomplite address from maps -->
+<script type="text/javascript" src="/backend/js/addressmaps.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDjE5MTfUt5RYaEdA_I_PVvaQJlkro5e80&signed_in=true&libraries=places&callback=initAutocomplete"async defer></script>
+<script src="/backend/js/plugins/summernote/summernote.min.js"></script>
+
+<script>
+    $('.clockpicker').clockpicker();
+    $(document).ready(function(){
+        $('.summernote').summernote({
+            height : '300px'
+        });
+    });
+    $('#data_1 .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+        format: 'dd/mm/yyyy'
+    });
+</script>
+
+<script type="text/javascript">
+    	$(document).ready(function() {
+
+    		$("#save").click(function() {
+                        var tipe = $('#tipe').find(":selected").val(),
+                            nama = $('input[name=nama]').val(),
+                            tempat = $('input[name=tempat]').val(),
+                            tgl_mulai = $('input[name=tgl_mulai]').val(),
+                            tgl_berakhir = $('input[name=tgl_berakhir]').val(),
+                            waktu_mulai = $('input[name=waktu_mulai]').val(),
+                            waktu_berakhir = $('input[name=waktu_berakhir]').val(),
+                            isi = $('.summernote').code(),
+                            posisi = $('input[name=posisi]').val(),
+                            kontak_person = $('input[name=kontak_person]').val(),
+                            id_admin = sessionStorage.getItem('id'),
+                            foto = $( '#files' )[0].files[0];
+
+                        var fd = new FormData();
+                        fd.append("id_admin", id_admin);
+                        fd.append("tipe", tipe);
+                        fd.append("nama", nama);
+                        fd.append("tempat", tempat);
+                        fd.append("isi", isi);
+                        fd.append("foto", foto);
+                        fd.append("tgl_mulai", tgl_mulai);
+                        fd.append("tgl_berakhir", tgl_berakhir);
+                        fd.append("waktu_mulai", waktu_mulai);
+                        fd.append("waktu_berakhir", waktu_berakhir);
+                        fd.append("posisi", posisi);
+                        fd.append("kontak_person", kontak_person);
+
+    				    $.ajax({
+    					    type: 'POST',
+    					    url: 'http://comrade-api.azurewebsites.net/event',
+    					    processData: false,
+                            contentType: false,
+    						data: fd,
+    						beforeSend: function () {
+                                $('#save').prop('disabled', true);
+    						},
+    						success: function (data) {
+                                if(data.status == 400){
+                                    $('#save').prop('disabled', false);
+                                }else{
+                                    $('#save').prop('disabled', false);
+                                    $('#frm input').val('');
+                                    $('.summernote').code(' ');
+                                    $('body').scrollTop(0);
+
+                                    $('#myModal').modal('show');
+                                }
+    						},
+    						error: function (xhr, ajaxOptions, thrownError) {
+    							console.log(thrownError);
+    						}
+    					});
+    		});
+    	});
+    </script>

@@ -1,0 +1,74 @@
+<% include ../partials/headeradmin %>
+<% include ../partials/menuadmin %>
+<!-- autocomplite address maps css -->
+<%
+var params = {
+  center: results[0].formattedAddress,
+  zoom: 15,
+  size: '500x400',
+  maptype: 'roadmap',
+  markers: [
+    {
+      location: results[0].formattedAddress,
+      label   : 'E',
+      color   : 'green',
+      shadow  : true
+    },
+  ],
+  style: [
+    {
+      feature: 'road',
+      element: 'all',
+      rules: {
+        hue: '0x00ff00'
+      }
+    }
+  ],
+  path: [
+    {
+      color: '0x0000ff',
+      weight: '5',
+      points: [
+        '41.139817,-77.454439',
+        '41.138621,-77.451596'
+      ]
+    }
+  ]
+};
+%>
+<link rel="stylesheet" type="text/css" href="/backend/css/addressmaps.css">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                       <h5>Halaman Detail Event <small>Menampilkan detail Event. </small></h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ibox-title">
+                                <h5>Lokasi Event</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <p class="title">Alamat : </p><%- results[0].formattedAddress %><p><br>
+                                <img src="<%- gmAPI.staticMap(params) %>">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="ibox-title">
+                                <h5>Event <%=event.nama%></h5><small><%=event.tgl_posting%></small>
+                            </div>
+                            <div class="ibox-content">
+                                <p class="title"><strong>Foto : </strong></p><center><img src="/uploads/img/event/<%=event.foto%>" style="width:400px;height:150px"></center><p><br>
+                                <p class="title"><strong>Pengirim : </strong><%= event.pengirim %></p><br>
+                                <p class="title"><strong>Nama Event : </strong></p><%= event.nama %><p><br>
+                                <p class="title"><strong>Tanggal Mulai : </strong></p><%= event.tgl_mulai %><p><br>
+                                <p class="title"><strong>Tanggal Berakhir : </strong></p><%= event.tgl_berakhir %><p><br>
+                                <p class="title"><strong>Deskripsi : </strong></p><%- event.deskripsi %><p><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% include ../partials/footeradmin %>

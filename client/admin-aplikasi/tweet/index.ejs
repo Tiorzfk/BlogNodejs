@@ -1,0 +1,107 @@
+<% include ../partials/headeradmin %>
+<% include ../partials/menuadmin %>
+<!-- Data Tables -->
+<link href="/backend/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/backend/css/plugins/dataTables/dataTables.responsive.css" rel="stylesheet">
+<link href="/backend/css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
+ <!-- Toastr style -->
+<link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                       <h5>Halaman Tampil Tweets <small>Menampilkan Semua Tweets. </small></h5>
+                    </div>
+                    <div class="ibox-content">
+                      <a href="/admin-aplikasi/tweets" class="btn btn-info btn-sm">Vertifikasi</a>
+                      <a href="/admin-aplikasi/tweets/selesai" class="btn btn-warning btn-sm">Selesai</a>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                                <tr>
+                                    <th width="10%">Status</th>
+                                    <th width="25%">Screen Name</th>
+                                    <th>Text</th>
+                                    <th width="15%">Klasifikasi</th>
+                                    <th width="15%">Option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <% berita.forEach(function(data) { %>
+                                <tr>
+                                    <% if(data.status == 'baru') { %>
+                                      <td><small class="btn btn-danger btn-xs" disabled><%= data.status %></small></td>
+                                    <% }else{ %>
+                                      <td><small class="btn btn-success btn-xs" disabled><%= data.status %></small></td>
+                                    <% } %>
+                                    <td><%= data.screen_name %></td>
+                                    <td><%= data.text %></td>
+                                    <td><%= data.klasifikasi%></td>
+                                    <td><center><a href="/admin-aplikasi/tweet/delete/<%=data.id%>" class="btn btn-info btn-xs" onClick="return confirm('Apakah anda yakin ingin menghapus tweet <%=data.screen_name%> ?')">Delete</a>
+                                      <% if(data.status == 'vertifikasi'){ %>
+                                        <a data-toggle="modal" data-target="#myModal<%=data.id%>" class="btn btn-info btn-xs">Verifikasi</a>
+                                      <% }else{ %>
+                                        <a href="/admin-aplikasi/unverifikasi_tweet/<%=data.id%>" class="btn btn-danger btn-xs" onClick="return confirm('Apakah anda yakin ?')">Un-Verifikasi</a>
+                                      <% } %>
+                                    </center></td>
+                                </tr>
+                                <div class="modal inmodal fade" id="myModal<%=data.id%>" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                <h4 class="modal-title"><%= data.screen_name %></h4>
+                                            </div>
+                                            <form method="post" action="/admin-aplikasi/verifikasi_tweet" class="form-horizontal">
+                                            <div class="modal-body">
+                                                <p><%= data.text %></p>
+                                                <p>
+                                                    Klasifikasi :
+                                                    <select class="form-control" name="klasifikasi">
+                                                      <option value="positif">positif</option>
+                                                      <option value="negatif">negatif</option>
+                                                    </select>
+                                                    <input type="hidden" name="id" value="<%=data.id%>">
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Verifikasi</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% include ../partials/footeradmin %>
+<!-- Data Tables -->
+<script src="/backend/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="/backend/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="/backend/js/plugins/dataTables/dataTables.responsive.js"></script>
+<script src="/backend/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+<script src="/backend/js/plugins/toastr/toastr.min.js"></script>
+<% for(var i in messages_success) { %>
+    <script type="text/javascript">
+        toastr.success('<%= messages_success[i] %>');
+    </script>
+<% } %>
+<% for(var i in messages_errors) { %>
+    <script type="text/javascript">
+        toastr.error('<%= messages_errors[i] %>');
+    </script>
+<% } %>
+<script>
+    $(document).ready(function() {
+        $('.dataTables-example').dataTable({
+            responsive: true,
+        });
+    });
+</script>

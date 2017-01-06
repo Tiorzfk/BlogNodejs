@@ -1,0 +1,124 @@
+<% include ../partials/headeradmin %>
+<% include ../partials/menuadmin %>
+<link href="/backend/css/plugins/summernote/summernote.css" rel="stylesheet">
+<link href="/backend/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+<link href="/backend/css/jquery-clockpicker.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+ <!-- Toastr style -->
+<link href="/backend/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!-- Date Picker -->
+<link href="/backend/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<!-- autocomplite address maps css -->
+<link rel="stylesheet" type="text/css" href="/backend/css/addressmaps.css">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                       <h5>Halaman Form Edit Lokasi Pemeriksaan Obat <small>Menampilkan Form untuk mengedit Lokasi pemeriksaan dan obat. </small></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <% messages_errors.forEach(function(data) { %>
+                            <div class="alert alert-danger alert-dismissable">
+                              <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                    <li><%= data %></li>
+                            </div>
+                        <% }); %>
+                        <form action="" method="post" class="form-horizontal" enctype="multipart/form-data" id="form">
+                            <div class="form-group"><label class="col-sm-2 control-label">Nama</label>
+                                <div class="col-sm-9"><input type="text" name="nama" class="form-control" placeholder="Nama Lokasi" value="<%=data.nama%>"></div>
+                            </div>
+                            <div class="form-group" id="data_1">
+                              <label class="col-sm-2 control-label">Buka dari</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group clockpicker" data-autoclose="true">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_mulai" class="form-control" value="<%=waktu_mulai%>">
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-sm-offset-1 control-label">sampai</label>
+                                  <div class="col-sm-3">
+                                      <div class="input-group clockpicker" data-autoclose="true">
+                                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" name="waktu_berakhir" class="form-control" value="<%=waktu_berakhir%>">
+                                      </div>
+                                  </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Deskripsi</label>
+                                <div class="col-sm-9">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-content no-padding">
+                                            <textarea name="deskripsi" class="summernote"><%=data.deskripsi%></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Foto</label>
+                                <div class="col-sm-9">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="/uploads/img/pic_lokasi/<%=data.foto%>">
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+                                        </div>*Required, only jpg,png, and gif files allowed.
+                                        <input type="hidden" name="img_old" value="<%=data.foto%>">
+                                        <input type="file" name="foto">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Lokasi</label>
+                                <div class="col-sm-9">
+                                    <input name="posisi" id="pac-input" class="controls" type="text" placeholder="Masukan Alamat Lengkap Lokasi" value="<%- results[0].formattedAddress %>">
+                                    <div class="google-map" id="map"></div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-white" type="reset">Reset</button>
+                                    <button class="btn btn-primary" type="submit" id="save">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% include ../partials/footeradmin %>
+<!-- Autocomplite address from maps -->
+<script type="text/javascript" src="/backend/js/addressmaps.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDjE5MTfUt5RYaEdA_I_PVvaQJlkro5e80&signed_in=true&libraries=places&callback=initAutocomplete"async defer></script>
+<!-- Toastr script -->
+<script src="/backend/js/plugins/toastr/toastr.min.js"></script>
+<!-- Button disabled when click -->
+<script type="text/javascript" src="/backend/js/buttondisabled.js"></script>
+<!-- Jquery Validate -->
+<script src="/backend/js/plugins/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/backend/js/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<script type="text/javascript" src="/backend/js/jquery-clockpicker.min.js"></script>
+<script src="/backend/js/plugins/summernote/summernote.min.js"></script>
+<% for(var i in messages_success) { %>
+    <script type="text/javascript">
+        toastr.success('<%= messages_success[i] %>');
+    </script>
+<% } %>
+<script>
+    $('.clockpicker').clockpicker()
+    $(document).ready(function(){
+      $('.summernote').summernote({
+              height : '300px'
+          });
+        $("#form").validate({
+            rules: {
+                nama: {
+                    required: true
+                },
+                foto: {
+                    extension: "jpg|png|gif|jpeg"
+                },
+                posisi: {
+                    required: true,
+                    minlength: 20
+                }
+            }
+        });
+    });
+</script>
