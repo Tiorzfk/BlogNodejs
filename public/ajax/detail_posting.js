@@ -8,6 +8,7 @@ $.ajax({
         document.getElementById('loadingartikel').style.display = 'block';
   },
   success: function (data) {
+    var a = document.getElementsByTagName("meta")['title']['content'] = data.result[0].judul;
     document.getElementsByTagName("title")[0].innerHTML = data.result[0].judul+' - Comrades Applications';
     document.getElementById('loadingartikel').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
