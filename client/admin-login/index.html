@@ -105,9 +105,9 @@
         var host = "http://"+window.location.host;
         if(sessionStorage.getItem('id')){
           if(sessionStorage.getItem('jenis_admin') == "admin komunitas") {
-            window.location.href = host+"/admin-komunitas";
+            window.location.href = host+"/client-admin-komunitas";
           }else{        
-            window.location.href = host+"/admin-aplikasi";
+            window.location.href = host+"/client-admin-aplikasi";
           }
         }
     		$("#send").click(function() {

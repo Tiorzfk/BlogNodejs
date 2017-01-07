@@ -2,7 +2,7 @@
 (function($) {
   var host = "http://"+window.location.host;
   if(!sessionStorage.getItem('id')){
-    window.location.href = host+"/admin/login";
+    window.location.href = host+"/admin-login";
   }
 
   var email=sessionStorage.getItem("email"),
