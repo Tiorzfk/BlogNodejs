@@ -3,6 +3,7 @@ var db = require('../../config/db'),
     gmAPI = require('../../config/maps').gmAPI, //menghasilkan google maps dalam bentuk png
     slug = require("slug"),
     moment = require("moment"),
+    http = require('http'),
     geocoder = require('../../config/geocoder').geocoder;
     //nexmo = require('easynexmo');
 
@@ -57,9 +58,31 @@ this.about = function(req, res, next) {
 };
 
 this.detailposting = function(req, res, next) {
-    res.render('pages/detail_posting', {
-        title: 'Detail Posting',
-        email: req.user ? req.user.email : ''
+    http.get({
+        hostname: 'comrade-api.azurewebsites.net',
+        method: 'GET',
+        path: '/posting/'+req.params.id,
+        agent: false  // create a new agent just for this one request
+    }, (response) => {
+        // Continuously update stream with data
+        var body = '';
+        response.on('data', function(d) {
+            body += d;
+        });
+        response.on('end', function() {
+            var parsed = JSON.parse(body);
+            var cek = parsed.result[0].foto.substr(0, 4);
+            var foto = "https://comrade-app.azurewebsites.net/uploads/img/"+parsed.result[0].foto+"";
+            if(cek == 'http'){
+                foto = parsed.result[0].foto;
+            }
+            res.render('pages/detail_posting', {
+                title: 'Detail Posting',
+                data: parsed.result[0],
+                foto: foto,
+                email: req.user ? req.user.email : ''
+            });
+        });
     });
 
 };

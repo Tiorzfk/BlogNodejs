@@ -6,11 +6,11 @@
 	<meta name="keywords" content="comrades,aplikasi,application,hiv,aids,hiv/aids,PLWH,information,odha,konsultasi,support,dukungan,komunitas,informasi,peduli,sahabat,arv,reminder,obat,tweet">	
 	<title>Comrades Applications - Information about HIV/AIDS, Help People Living with HIV</title>
 	
-	<meta property="og:title"              content="Bill Gates Investasi Rp 1,89 Miliar untuk Implan Pencegah HIV" />
-	<meta property="og:type"               content="website" />
-	<meta property="og:description"        content="Liputan6.com, Jakarta - Pada 2013 diperkirakan 24,7 juta orang di Subsahara Afrika hidup mengidap HIV. Angka tersebut" />
-	<meta property="og:url"                content="http://comrade-app.azurewebsites.net/post/2017/bill-gates-investasi-rp-1-89-miliar-untuk-implan-pencegah-hiv/1211" />
-	<meta property="og:image"              content="http://cdn1-a.production.liputan6.static6.com/medias/1452707/big/052564600_1483342764-Implan_Pencegah_HIV_-_Intarcia_Therapeutic.jpg" />
+	<meta property="og:title"              content="<%=data.judul%>" />
+	<meta property="og:type"               content="article" />
+	<meta property="og:description"        content="<%=data.deskripsi%>" />
+	<meta property="og:url"                content="<%=data.slug%>" />
+	<meta property="og:image"              content="<%=foto%>" />
 
 	<link rel="icon" type="image/x-icon" href="/backend/img/icon.png"/>
 	<link rel="stylesheet" type="text/css" href="/frontend/css/bootstrap.min.css">
@@ -71,9 +71,34 @@
 					<div class="col-md-8">
 						<script type="text/javascript" src="/frontend/js/share.js"></script>
 						<a data-service="facebook" id="sharefb">facebook</a>
-						<article id="detail">
-								<div id="loadingartikel" style="display:none"><img src="/frontend/img/loader.gif" style="display: block;margin: auto;"/></div>
-								<div class="row" style="margin-top:-250px;display:none" id="cobalagi"><a href="" class="cobalagi">Coba Lagi</a></div>
+						<article>
+						<img class='head' src="<%=foto%>" alt="<%=data.judul%>" style='width:749.5px;height:400px'>
+          				<div class='content'>
+            				<div class='text'>
+								<p class='time'><%=data.tgl_posting%></p>
+                				<h5><%=data.judul%></h5>
+                				<p><%-data.isi%><a href="<%=data.sumber%>" target=_blank>More</a></p>
+                				<span class='line'></span>
+								 <ul class='list-unstyled list-inline bottom'>
+								 <li class='tags'>
+									<h3>
+									<i class='fa fa-tags'></i>
+									<a href='#'>#comrades</a>
+									<a href='#'>#aplikasi</a>
+									<a href='#'>#hiv</a>
+									<a href='#'>#aids</a>
+									<a href='#'>#hiv/aids</a>
+									<a href='#'>#odha</a>
+									<a href='#'>#informasi</a>
+									<a href='#'>#konsultasi</a>
+									<a href='#'>#support</a>
+									<a href='#'>#dukungan</a>
+									<a href='#'>#komunitas</a>
+									</h3>
+								 </li>
+								 </ul>
+							</div>
+            			</div>
 						</article>
 					</div>
 					<% include ../partials/nav %>
@@ -82,5 +107,11 @@
 		</div> <!-- container -->
 		<a class="scrolltop" href="#"><i class="fa fa-arrow-up"></i></a>
 	</main>
+	<script>
+		var list = document.getElementsByTagName('a');
+		Share.init(list, {
+    		title: "<%=data.judul%>",
+    		url: window.location.href
+    	});
+	</script>
 <% include ../partials/footer %>
-<script type="text/javascript" src="/ajax/detail_posting.js"></script>
