@@ -8,10 +8,10 @@ $.ajax({
         document.getElementById('loadingartikel').style.display = 'block';
   },
   success: function (data) {
-    document.getElementsByTagName("meta")[3]["content"] = data.result[0].judul;
-    document.getElementsByTagName("meta")[5]["content"] = data.result[0].deskripsi;
-    document.getElementsByTagName("meta")[6]["content"] = data.result[0].slug;
-    document.getElementsByTagName("meta")[7]["content"] = data.result[0].foto;
+    // document.getElementsByTagName("meta")[3]["content"] = data.result[0].judul;
+    // document.getElementsByTagName("meta")[5]["content"] = data.result[0].deskripsi;
+    // document.getElementsByTagName("meta")[6]["content"] = data.result[0].slug;
+    // document.getElementsByTagName("meta")[7]["content"] = data.result[0].foto;
     document.getElementsByTagName("title")[0].innerHTML = data.result[0].judul+' - Comrades Applications';
     document.getElementById('loadingartikel').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
