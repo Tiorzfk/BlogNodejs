@@ -10,7 +10,7 @@ var slug = function(str) {
 //berita
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/posting/kategori/1',
+  url: 'http://comrade-api.azurewebsites.net/postingMongo/kategori/Berita',
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingberita').style.display = 'block';
@@ -18,7 +18,7 @@ $.ajax({
   success: function (data) {
     document.getElementById('loadingberita').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
-      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data.id_posting;
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data._id;
       var cek = data.foto.substr(0, 4);
       var foto = "https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"";
       if(cek == 'http'){

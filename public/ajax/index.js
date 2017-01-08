@@ -9,7 +9,7 @@ var slug = function(str) {
 
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/posting/kategori/2/page/0',
+  url: 'http://comrade-api.azurewebsites.net/postingMongo5/kategori/Artikel',
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingartikel').style.display = 'block';
@@ -17,7 +17,7 @@ $.ajax({
   success: function (data) {
     document.getElementById('loadingartikel').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
-      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data.id_posting;
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data._id;
       var cek = data.foto.substr(0, 4);
       var foto = "https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"";
       if(cek == 'http'){
@@ -53,7 +53,7 @@ $.ajax({
                 "</article>"+
               "</div>";
         $('#artikel').append(a);
-        if(i==8)
+        if(i==7)
         return false;
     });
   },timeout: 16000,
@@ -67,7 +67,7 @@ $.ajax({
 //berita
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/posting/kategori/1/page/0',
+  url: 'http://comrade-api.azurewebsites.net/postingMongo5/kategori/Berita',
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingberita').style.display = 'block';
@@ -75,7 +75,7 @@ $.ajax({
   success: function (data) {
     document.getElementById('loadingberita').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
-      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data.id_posting;
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data._id;
       var cek = data.foto.substr(0, 4);
       var foto = "https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"";
       if(cek == 'http'){
@@ -113,7 +113,7 @@ $.ajax({
                 "</article>"+
               "</div>";
         $('#berita').append(a);
-        if(i==8)
+        if(i==7)
         return false;
     });
   },timeout: 16000,
@@ -127,7 +127,7 @@ $.ajax({
 //event
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/event/public/page/0',
+  url: 'http://comrade-api.azurewebsites.net/eventMongo/public',
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingevent').style.display = 'block';

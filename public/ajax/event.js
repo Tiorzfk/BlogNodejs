@@ -9,7 +9,7 @@ var slug = function(str) {
 //event
 $.ajax({
   type: 'GET',
-  url: 'http://comrade-api.azurewebsites.net/event/public/page/0',
+  url: 'http://comrade-api.azurewebsites.net/eventMongo/public',
   dataType: 'json',
   beforeSend: function () {
         document.getElementById('loadingevent').style.display = 'block';
@@ -17,7 +17,7 @@ $.ajax({
   success: function (data) {
     document.getElementById('loadingevent').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
-      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.nama)+"/"+data.id_event;
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.nama)+"/"+data._id;
       var text = $(data.deskripsi).text()
       var arrayisi = text.split(' ');//striptags(data.deskripsi).split(' ');
       var sliceisi = arrayisi.slice(0,17);
