@@ -147,7 +147,7 @@ $(document).ready(function(){
                 var cek2 = '';
                 if(data.status === "0"){
                   cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
-                  cek2 = '<td><a href="/admin-aplikasi/verifikasi_posting/'+data.kategori+'/'+data.id_posting+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
+                  cek2 = '<td><a href="/admin-aplikasi/verifikasi_posting/'+data.kategori+'/'+data._id+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
                 } else {
                   cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
                   cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
@@ -184,7 +184,7 @@ $(document).ready(function(){
                 var cek2 = '';
                 if(data.status === "0"){
                   cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
-                  cek2 = '<td><a href="/admin-aplikasi/verifikasi_posting/'+data.kategori+'/'+data.id_posting+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
+                  cek2 = '<td><a href="/admin-aplikasi/verifikasi_posting/'+data.kategori+'/'+data._id+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
                 } else {
                   cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
                   cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';

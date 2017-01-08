@@ -81,7 +81,7 @@ $.ajax({
       if(cek == 'http'){
         foto = data.foto;
       }
-      // var arrayisi = data.judul.split(' ');//striptags(data.deskripsi).split(' ');
+      // var arrayisi= data.judul.split(' ');//striptags(data.deskripsi).split(' ');
       // var slicejudul = arrayisi.slice(0,9);
       var a = "<div class='col-sm-3' style='height: 500px'>"+
                 "<article>"+
@@ -135,7 +135,7 @@ $.ajax({
   success: function (data) {
     document.getElementById('loadingevent').style.display = 'none';
     jQuery.each(data.result, function(i, data) {
-      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.nama)+"/"+data.id_event;
+      var url = data.tgl_posting.substring(0,4)+"/"+slug(data.nama)+"/"+data._id;
       var text = $(data.deskripsi).text();
       var arrayisi = text.split(' ');//striptags(data.deskripsi).split(' ');
       var sliceisi = arrayisi.slice(0,17);
