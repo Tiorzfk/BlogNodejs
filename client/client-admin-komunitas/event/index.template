@@ -28,6 +28,17 @@
                 </div>
             </div>
         </div>
+        <div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-xs">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><i class="glyphicon glyphicon-refresh"></i><br>Please Wait...</h4>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 <!-- Data Tables -->
 <script src="/backend/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="/backend/js/plugins/dataTables/dataTables.bootstrap.js"></script>
@@ -39,7 +50,7 @@
         $('.dataTables-example').dataTable({
             responsive: true,
             ajax: {
-              url: "http://comrade-api.azurewebsites.net/event",
+              url: "http://comrade-api.azurewebsites.net/admapp/event",
               type: "GET",
               dataSrc: "result"
             },
@@ -56,17 +67,35 @@
                 { "data": "tgl_berakhir" },
                 { "data": "tgl_posting" },
                 { "render": function (data, type, full, meta){
-                               return '<td><center><a href="#/event/detail/'+full.id_event+'"'+ 
-                               'class="btn btn-info btn-xs">Detail</a><a href="#/event/edit/'+full.id_event+'" class="btn btn-info btn-xs">Edit</a>'+
-                               '<a class="btn btn-info btn-xs" id="del"'+
-                                'onclick="deletePosting('+full.id_event+');">Delete</a></center></td>';
+                               return '<input type="hidden" name="id" value='+full._id+'>'+ 
+                               '<td><center><a href="#/event/detail/'+full._id+'"'+ 
+                               'class="btn btn-info btn-xs">Detail</a><a href="#/event/edit/'+full._id+'" class="btn btn-info btn-xs">Edit</a>'+
+                               '<a class="btn btn-info btn-xs" id="del">Delete</a></center></td>';
                            } }
             ],
              order: [[ 4, "desc" ]]
         });
 
-        $(".dataTables-example").on('click','#kirim', function() {
-                    
+        $(".dataTables-example").on('click','#del', function() {
+           var id = $('input[name=id]').val();
+            $.ajax({
+                type: 'POST',
+                url: 'http://comrade-api.azurewebsites.net/deleteevent/'+id,
+                data:{id:id},
+                beforeSend: function () {
+                    $('#myModal').modal('show');
+                },
+                success: function (data) {
+                    if(data.status == 400){
+                        $('#myModal').modal('close');
+                    }else{
+                    location.reload();
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+                }
+            });	         
 
         });
 

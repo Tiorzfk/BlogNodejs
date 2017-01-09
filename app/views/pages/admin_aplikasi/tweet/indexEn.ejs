@@ -56,7 +56,7 @@
 <script src="https://cdn.datatables.net/plug-ins/1.10.12/api/fnReloadAjax.js"></script>
 <script>
 
-    $(document).ready(function() {
+    (document).ready(function() {
         $('.dataTables-example').dataTable({
             responsive: true,
             ajax: {
@@ -120,7 +120,7 @@
 								document.getElementById('loading').style.display = 'none';
 								document.getElementById('kirim').style.display = 'block';
 								$('#myModal').modal('show');
-                $('.dataTables-example').DataTable().ajax.reload();
+                                ('.dataTables-example').DataTable().ajax.reload();
 							},
 							error: function (xhr, ajaxOptions, thrownError) {
 								console.log(thrownError);

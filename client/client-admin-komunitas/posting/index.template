@@ -14,8 +14,9 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                                 <tr>
-                                    <th width="30%">Judul</th>
+                                    <th width="27%">Judul</th>
                                     <th>Isi</th>
+                                    <th width="10%">Tgl Posting</th>
                                     <th width="8%">Kategori</th>
                                     <th width="10%">Status</th>
                                     <th width="15%">Option</th>
@@ -30,8 +31,7 @@
                             <div class="modal-dialog modal-xs">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                        <h4 class="modal-title"><i class="glyphicon glyphicon-ok"></i><br>Successfully delete posting.</h4>
+                                        <h4 class="modal-title"><i class="glyphicon glyphicon-refresh"></i><br>Please Wait...</h4>
                                     </div>
                                     </form>
                                 </div>
@@ -47,41 +47,18 @@
 <script src="/backend/js/plugins/dataTables/dataTables.responsive.js"></script>
 <script src="/backend/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 <script>
-    function deletePosting($id) {
-        $.ajax({
-    		type: 'DELETE',
-    		url: 'http://comrade-api.azurewebsites.net/posting',
-            data:{id:$id},
-            dataType: 'json',
-            contentType:'application/json',
-    		beforeSend: function () {
-                $('#del').prop('disabled', true);
-    		},
-    		success: function (data) {
-                console.log(data);
-                if(data.status == 400){
-                   $('#del').prop('disabled', true);
-                }else{
-                   $('#del').prop('disabled', false);
-                   location.reload();
-                }
-    		},
-    		error: function (xhr, ajaxOptions, thrownError) {
-    			console.log(thrownError);
-    		}
-    	});
-    }
     $(document).ready(function() {
         $('.dataTables-example').dataTable({
             responsive: true,
             ajax: {
-              url: "http://comrade-api.azurewebsites.net/posting/kategori/1",
+              url: "http://comrade-api.azurewebsites.net/admapp/postingAll",
               type: "GET",
               dataSrc: "result"
             },
             columns: [
                 { "data": "judul" },
                 { "data": "deskripsi" },
+                { "data": "tgl_posting" },
                 { "data": "kategori" },
                 { "data": function (full) {
                             if(full.status==="0"){
@@ -91,18 +68,35 @@
                              }
                 } },
                 { "render": function (data, type, full, meta){
-                               return '<td><center><a href="#/posting/detail/'+full.id_posting+'"'+ 
-                               'class="btn btn-info btn-xs">Detail</a><a href="#/posting/edit/'+full.id_posting+'" class="btn btn-info btn-xs">Edit</a>'+
-                               '<a class="btn btn-info btn-xs" id="del"'+
-                                'onclick="deletePosting('+full.id_posting+');">Delete</a></center></td>';
+                               return '<input type="hidden" name="id" value="'+full._id+'">'+
+                               '<td><center><a href="#/posting/detail/'+full._id+'"'+ 
+                               'class="btn btn-info btn-xs">Detail</a><a href="#/posting/edit/'+full._id+'" class="btn btn-info btn-xs">Edit</a>'+
+                               '<button type="button" class="btn btn-info btn-xs" id="del">Delete</button></center></td>';
                            } }
             ],
              order: [[ 2, "desc" ]]
         });
 
-    $(".dataTables-example").on('click','#kirim', function() {
-				  
-
+    $(".dataTables-example").on('click','#del', function() {
+        var id = $('input[name=id]').val();
+		$.ajax({
+    		type: 'POST',
+    		url: 'http://comrade-api.azurewebsites.net/deleteposting',
+            data:{id:id},
+    		beforeSend: function () {
+                $('#myModal').modal('show');
+    		},
+    		success: function (data) {
+                if(data.status == 400){
+                    $('#myModal').modal('close');
+                }else{
+                   location.reload();
+                }
+    		},
+    		error: function (xhr, ajaxOptions, thrownError) {
+    			console.log(thrownError);
+    		}
+    	});		  
     });
 
 });

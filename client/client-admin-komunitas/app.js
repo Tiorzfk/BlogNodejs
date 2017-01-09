@@ -110,7 +110,7 @@
       var id = this.params['id'];
       if (!id) { return this.notFound(); }
       $.ajax({
-          url: 'http://comrade-api.azurewebsites.net/detailevent/'+id,
+          url: 'http://comrade-api.azurewebsites.net/event/'+id,
           dataType: 'json',
           success: function(items) {
             $.each(items.result, function(i, item) {
@@ -132,7 +132,7 @@
       var id = this.params['id'];
       if (!id) { return this.notFound(); }
       $.ajax({
-          url: 'http://comrade-api.azurewebsites.net/detailevent/'+id,
+          url: 'http://comrade-api.azurewebsites.net/event/'+id,
           dataType: 'json',
           success: function(items) {
             $.each(items.result, function(i, item) {
