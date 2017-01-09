@@ -158,7 +158,7 @@
 
     $('#logout').click(function() {  
       sessionStorage.clear();
-      window.location.href = '/admin/login';
+      window.location.href = '/admin-login';
     });
  
   });

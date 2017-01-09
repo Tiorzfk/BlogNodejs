@@ -117,7 +117,7 @@
                                     <tr>
                                         <th>Status</th>
                                         <th>Nama</th>
-                                        <th>Tanggal Event</th>
+                                        <th>Tanggal Posting</th>
                                         <th>Pengirim</th>
                                         <th></th>
                                     </tr>
@@ -128,6 +128,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-xs">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><i class="glyphicon glyphicon-refresh"></i><br>Please Wait...</h4>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 
 <!-- Toastr script -->
 <script src="/backend/js/plugins/toastr/toastr.min.js"></script>
@@ -147,7 +158,7 @@ $(document).ready(function(){
                 var cek2 = '';
                 if(data.status === "0"){
                   cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
-                  cek2 = '<td><a href="/admin-aplikasi/verifikasi_posting/'+data.kategori+'/'+data._id+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
+                  cek2 = '<td><input type="hidden" name="id" value='+data._id+'><a id="verifikasi_berita" class="btn btn-info btn-xs">Verifikasi</a></td>';
                 } else {
                   cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
                   cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
@@ -231,7 +242,7 @@ $(document).ready(function(){
                     '<tr>'+
                     cek+
                     '<td><i class="fa fa-picture-o"></i> '+data.nama+'</td>'+
-                    '<td><i class="fa fa-clock-o"></i> '+data.tgl_event%+'</td>'+
+                    '<td><i class="fa fa-clock-o"></i> '+data.tgl_posting+'</td>'+
                     '<td class="text-navy"><i class="fa fa-user-md"></i> '+data.pengirim+'</td>'+
                     cek2+
                     '</tr>';
@@ -243,6 +254,28 @@ $(document).ready(function(){
         error: function (jqXHR, textStatus, thrownError) {
             console.log(thrownError);
         }
+    });
+
+}).on('click', '#verifikasi_berita', function() {
+    var ida = $('input[name=id]').val();
+    console.log(ida);
+     $.ajax({
+    	type: 'POST',
+    	url: 'http://comrade-api.azurewebsites.net/verifikasi_posting',
+    	data: {id:ida},
+    	beforeSend: function () {
+            $('#myModal').modal('show');
+    	},
+    	success: function (data) {
+            if(data.status == 400){
+               $('#myModal').modal('close');
+            }else{
+               location.reload();
+            }
+    	},
+    	error: function (xhr, ajaxOptions, thrownError) {
+    	    console.log(thrownError);
+    	}
     });
 });
 </script>
