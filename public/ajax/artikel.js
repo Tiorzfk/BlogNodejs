@@ -76,7 +76,7 @@ $.ajax({
     jQuery.each(data.result, function(i, data) {
       var url = data.tgl_posting.substring(0,4)+"/"+slug(data.judul)+"/"+data._id;
       var cek = data.foto.substr(0, 4);
-      var foto = "https://comrade-app.azurewebsites.net/uploads/img/"+data.foto+"";
+      var foto = "https://comrade-api.azurewebsites.net/pic_posting/"+data.foto+"";
       if(cek == 'http'){
         foto = data.foto;
       }

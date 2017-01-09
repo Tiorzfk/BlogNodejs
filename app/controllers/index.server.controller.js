@@ -72,7 +72,7 @@ this.detailposting = function(req, res, next) {
         response.on('end', function() {
             var parsed = JSON.parse(body);
             var cek = parsed.result[0].foto.substr(0, 4);
-            var foto = "https://comrade-app.azurewebsites.net/uploads/img/"+parsed.result[0].foto+"";
+            var foto = "https://comrade-api.azurewebsites.net/pic_posting/"+parsed.result[0].foto+"";
             if(cek == 'http'){
                 foto = parsed.result[0].foto;
             }

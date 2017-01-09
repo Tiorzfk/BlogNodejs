@@ -19,7 +19,7 @@
                                     <th width="25%">Judul</th>
                                     <th>Deskripsi</th>
                                     <th width="15%">Tanggal Posting</th>
-                                    <th width="15%">Option</th>
+                                    <th width="20%">Option</th>
                                 </tr>
                             </thead>
                             <tbody id="artikel">
@@ -36,7 +36,7 @@
 <script src="/backend/js/plugins/dataTables/dataTables.responsive.js"></script>
 <script src="/backend/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 <script>
-    $(document).ready(function(){
+$(document).ready(function(){
     $('.dataTables-example').dataTable({
         responsive: true,
         ajax: {
@@ -56,19 +56,25 @@
             { "data": "deskripsi" },
             { "data": "tgl_posting" },
             { "render": function (data, type, full, meta){
-                        return '<td><center><a href="#/event/detail/'+full.id_posting+'"'+ 
-                               'class="btn btn-info btn-xs">Detail</a>'+
-                               '<a class="btn btn-info btn-xs" id="del"'+
-                                'onclick="deletePosting('+full.id_posting+');">Delete</a></center></td>';
+                        var cek2 = '';
+                        if(full.status === "0"){
+                            cek2 = '<input type="text" id="oding" name="id" value='+full._id+'><button id="verifikasi_berita" class="btn btn-info btn-xs">Verifikasi</button></td>';
+                        } else {
+                            cek2 = '<a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
+                        }
+                        return '<td><center><a href="#/event/detail/'+full._id+'" class="btn btn-info btn-xs">Detail</a>'+
+                               '<a class="btn btn-info btn-xs" id="del">Delete</a>'+
+                                cek2;
             } }
-            ],
-             order: [[ 4, "desc" ]]
-        });
+        ],
+        order: [[ 4, "desc" ]]
+    });
 
-        $(".dataTables-example").on('click','#kirim', function() {
-                    
+    $(".dataTables-example").on('click','#verifikasi_berita', function() {
+        var ida = $('#oding').val();
+        alert(ida);
+        
 
-        });
     });
 });
 </script>
