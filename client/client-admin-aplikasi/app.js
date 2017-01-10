@@ -25,13 +25,38 @@
                .appendTo(context.$element());
       // });
     });
-     
+
+    this.get('#/kirim-sms/', function(context) {
+        $('#breadcrumb').text('Kirim SMS');
+        $('#namepage').text('Kirim SMS');
+        var str=location.href.toLowerCase();
+        context.app.swap('');
+        context.render('sms/kirim.template')
+               .appendTo(context.$element());
+    });
+
     this.get('#/artikel/', function(context) {
         $('#breadcrumb').text('Manage Artikel');
         $('#namepage').text('Manage Artikel');
         var str=location.href.toLowerCase();
         context.app.swap('');
         context.render('artikel/index.template')
+               .appendTo(context.$element());
+    });
+    this.get('#/berita/', function(context) {
+        $('#breadcrumb').text('Manage Berita');
+        $('#namepage').text('Manage Berita');
+        var str=location.href.toLowerCase();
+        context.app.swap('');
+        context.render('berita/index.template')
+               .appendTo(context.$element());
+    });
+    this.get('#/event/', function(context) {
+        $('#breadcrumb').text('Manage Event');
+        $('#namepage').text('Manage Event');
+        var str=location.href.toLowerCase();
+        context.app.swap('');
+        context.render('event/index.template')
                .appendTo(context.$element());
     });
 

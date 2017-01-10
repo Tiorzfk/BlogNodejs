@@ -1,6 +1,3 @@
-<% include ../partials/headeradmin %>
-<% include ../partials/menuadmin %>
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
@@ -35,8 +32,7 @@
                 </div>
             </div>
         </div>
-<% include ../partials/footeradmin %>
-<script type="text/javascript">
+<script>
 	$(document).ready(function() {
 		$("#simpan").click(function() {
 				var message = $('textarea[name=msg]').val();
@@ -45,12 +41,12 @@
 				if (message == "") {
 						$('textarea[name=msg]').css('border-color','#ed5564');
 						process = false;
-				}
+				};
 
 				if (process) {
 					var data = {
 						pesan : message
-					}
+					};
 
 						$.ajax({
 							type: 'POST',
@@ -61,7 +57,7 @@
                     $('#simpan').text('loading...');
 							},
 							success: function (data) {
-								$('#simpan').text('Kirim')
+								$('#simpan').text('Kirim');
 								$('textarea[name=msg]').val('');
 								$('#myModal').modal('show');
 							},
