@@ -154,9 +154,9 @@ $(document).ready(function(){
             jQuery.each(data.result, function(i, data) {
                 var cek = '';
                 var cek2 = '';
-                if(data.status === "0"){
+                if(data.status === "1"){
                   cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
-                  cek2 = '<td><a id="verifikasi_berita" onClick="test("'+data._id+'")" class="btn btn-info btn-xs">Verifikasi</a></td>';
+                  cek2 = '<td><button id="'+data._id+'" class="btn btn-info btn-xs">Verifikasi</button></td>';
                 } else {
                   cek = '<td><small class="btn btn-success btn-xs" disabled>Verified</small></td>';
                   cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
@@ -254,8 +254,25 @@ $(document).ready(function(){
         }
     });
 
+}).on('click','button',function(){
+    var ida = $(this).attr('id');
+    $.ajax({
+        type: 'POST',
+        url: 'http://comrade-api.azurewebsites.net/verifikasi_posting',
+        data: {id:ida},
+        beforeSend: function () {
+             $('#myModal').modal('show');
+        },
+        success: function (data) {
+             if(data.status == 400){
+                $('#myModal').modal('close');
+             }else{
+                location.reload();
+             }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+             console.log(thrownError);
+    	}
+    });
 });
-function test(id) {
-    console.log(id);
-};
 </script>
