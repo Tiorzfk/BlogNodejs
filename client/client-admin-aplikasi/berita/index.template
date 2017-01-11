@@ -67,7 +67,7 @@ $(document).ready(function(){
             { "render": function (data, type, full, meta){
                         var cek2 = '';
                         if(full.status === "0"){
-                            cek2 = '<input type="hidden" id="oding" name="id" value='+full._id+'><button id="verify_berita" class="btn btn-info btn-xs">Verifikasi</button></td>';
+                            cek2 = '<button id="verify_berita" class="btn btn-info btn-xs">Verifikasi</button></td>';
                         } else {
                             cek2 = '<a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
                         }

@@ -29,6 +29,17 @@
                 </div>
             </div>
         </div>
+        <div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-xs">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><i class="glyphicon glyphicon-refresh"></i><br>Please Wait...</h4>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 <!-- Data Tables -->
 <script src="/backend/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="/backend/js/plugins/dataTables/dataTables.bootstrap.js"></script>
@@ -36,11 +47,8 @@
 <script src="/backend/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 <script>
     $(document).ready(function(){
-    $(".dataTables-example").on('click','#verifikasi_berita', function() {
-        var ida = $('#oding').val();
-        alert(ida);
-    });
-    $('.dataTables-example').dataTable({
+    
+    var table = $('.dataTables-example').DataTable({
         responsive: true,
         ajax: {
             url: "http://comrade-api.azurewebsites.net/admapp/event",
@@ -61,8 +69,8 @@
             { "data": "tgl_posting" },
             { "render": function (data, type, full, meta){
                         var cek2 = '';
-                        if(full.status === "0"){
-                            cek2 = '<input type="text" id="oding" name="id" value='+full._id+'><button id="verifikasi_event" class="btn btn-info btn-xs">Verifikasi</button></td>';
+                        if(full.status === "1"){
+                            cek2 = '<button id="verifikasi_event" class="btn btn-info btn-xs">Verifikasi</button></td>';
                         } else {
                             cek2 = '<a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
                         }
@@ -71,7 +79,30 @@
                                 cek2;
             } }
         ],
+        rowId: '_id',
         order: [[ 4, "desc" ]]
+    });
+
+    $(".dataTables-example").on('click','#verifikasi_event', function() {
+        var data = table.row($(this).parents('tr')).data();
+  		$.ajax({
+            type: 'POST',
+            url: 'http://comrade-api.azurewebsites.net/verifikasi_event',
+            data: {id:data._id},
+            beforeSend: function () {
+                $('#myModal').modal('show');
+            },
+            success: function (data) {
+                if(data.status == 400){
+                    $('#myModal').modal('close');
+                }else{
+                    location.reload();
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError);
+    	    }
+        });
     });
 
    
