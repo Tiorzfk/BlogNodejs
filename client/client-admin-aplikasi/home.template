@@ -154,7 +154,7 @@ $(document).ready(function(){
             jQuery.each(data.result, function(i, data) {
                 var cek = '';
                 var cek2 = '';
-                if(data.status === "1"){
+                if(data.status === "0"){
                   cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
                   cek2 = '<td><button id="'+data._id+'" class="btn btn-info btn-xs">Verifikasi</button></td>';
                 } else {
