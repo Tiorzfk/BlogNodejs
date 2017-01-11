@@ -140,8 +140,6 @@
                         </div>
                     </div>
                 
-<!-- Toastr script -->
-<script src="/backend/js/plugins/toastr/toastr.min.js"></script>
 <script>
 $(document).ready(function(){
     $.ajax({
@@ -158,9 +156,9 @@ $(document).ready(function(){
                 var cek2 = '';
                 if(data.status === "0"){
                   cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
-                  cek2 = '<td><input type="hidden" name="id" value='+data._id+'><a id="verifikasi_berita" class="btn btn-info btn-xs">Verifikasi</a></td>';
+                  cek2 = '<td><a id="verifikasi_berita" onClick="test("'+data._id+'")" class="btn btn-info btn-xs">Verifikasi</a></td>';
                 } else {
-                  cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
+                  cek = '<td><small class="btn btn-success btn-xs" disabled>Verified</small></td>';
                   cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
                 }
                 var a =
@@ -197,7 +195,7 @@ $(document).ready(function(){
                   cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
                   cek2 = '<td><input type="hidden" name="id" value='+data._id+'><a id="verifikasi_berita" class="btn btn-info btn-xs">Verifikasi</a></td>';
                 } else {
-                  cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
+                  cek = '<td><small class="btn btn-success btn-xs" disabled>Verified</small></td>';
                   cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
                 }
                 var a =
@@ -234,7 +232,7 @@ $(document).ready(function(){
                     cek = '<td><small class="btn btn-danger btn-xs" disabled>Pending...</small></td>';
                     cek2 = '<td><a href="/admin-aplikasi/verifikasi_event/'+data.id_event+'" class="btn btn-info btn-xs">Verifikasi</a></td>';
                 } else {
-                    cek = '<td><small class="btn btn-success btn-xs" disabled>Verificated</small></td>';
+                    cek = '<td><small class="btn btn-success btn-xs" disabled>Verified</small></td>';
                     cek2 = '<td><a href="#" class="btn btn-info btn-xs" disabled>Verifikasi</a></td>';
                 }
 
@@ -256,26 +254,8 @@ $(document).ready(function(){
         }
     });
 
-}).on('click', '#verifikasi_berita', function() {
-    var ida = $('input[name=id]').val();
-    console.log(ida);
-     $.ajax({
-    	type: 'POST',
-    	url: 'http://comrade-api.azurewebsites.net/verifikasi_posting',
-    	data: {id:ida},
-    	beforeSend: function () {
-            $('#myModal').modal('show');
-    	},
-    	success: function (data) {
-            if(data.status == 400){
-               $('#myModal').modal('close');
-            }else{
-               location.reload();
-            }
-    	},
-    	error: function (xhr, ajaxOptions, thrownError) {
-    	    console.log(thrownError);
-    	}
-    });
 });
+function test(id) {
+    console.log(id);
+};
 </script>

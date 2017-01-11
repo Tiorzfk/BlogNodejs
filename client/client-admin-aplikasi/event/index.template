@@ -35,8 +35,8 @@
 <script src="/backend/js/plugins/dataTables/dataTables.responsive.js"></script>
 <script src="/backend/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 <script>
-        $(document).ready(function(){
-     $(".dataTables-example").on('click','#verifikasi_berita', function() {
+    $(document).ready(function(){
+    $(".dataTables-example").on('click','#verifikasi_berita', function() {
         var ida = $('#oding').val();
         alert(ida);
     });
@@ -52,7 +52,7 @@
                     if(full.status==="0"){
                         return '<td><center><small class="btn btn-danger btn-xs" disabled>Pending...</small></center></td>';
                     } else {
-                        return '<td><center><small class="btn btn-success btn-xs" disabled>Published</small></center></td>';
+                        return '<td><center><small class="btn btn-success btn-xs" disabled>Verified</small></center></td>';
                     }
             } },
             { "data": "nama" },

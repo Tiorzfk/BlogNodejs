@@ -43,6 +43,17 @@
                 </div>
             </div>
         </div>
+        <div class="modal inmodal fade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-xs">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><i class="glyphicon glyphicon-refresh"></i><br>Please Wait...</h4>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 <!-- Data Tables -->
 <script src="/backend/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="/backend/js/plugins/dataTables/dataTables.bootstrap.js"></script>
@@ -51,7 +62,7 @@
 <script>
 
     $(document).ready(function() {
-        $('.dataTables-example').dataTable({
+        var table = $('.dataTables-example').DataTable({
             responsive: true,
             ajax: {
               url: "http://tweetsupport.azurewebsites.net/api/konfirmasi",
@@ -86,15 +97,15 @@
                                 return a;
                            } },
                 { "render": function (data, type, full, meta){
-                               return '<button type="button" id="kirim" class="btn btn-primary"><i class="fa fa-send"></i> Konfirmasi</button>'+
-                                      '<img src="/backend/img/loading_dots.gif" id="loading" style="width:30px;display:none">';
+                               return '<button type="button" id="kirim" class="btn btn-primary"><i class="fa fa-send"></i> Konfirmasi</button>';
                            } }
             ],
+             rowId: '_id',
              order: [[ 2, "desc" ]]
         });
 
     $(".dataTables-example").on('click','#kirim', function() {
-				  var id = $('input[name=id]').val(),
+				   var dataid = table.row($(this).parents('tr')).data(),
 						klasifikasi =  $( "#klasifikasi" ).val();
 
 					var data = {
@@ -103,18 +114,16 @@
 
 						$.ajax({
 							type: 'POST',
-							url: 'http://tweetsupport.azurewebsites.net/api/tweetsupport/'+id,
+							url: 'http://tweetsupport.azurewebsites.net/api/tweetsupport/'+dataid._id,
 							dataType: 'json',
 							data: data,
 							beforeSend: function () {
-										document.getElementById('loading').style.display = 'block';
-										document.getElementById('kirim').style.display = 'none';
+										$('#myModal2').modal('show');
 							},
 							success: function (data) {
-								document.getElementById('loading').style.display = 'none';
-								document.getElementById('kirim').style.display = 'block';
-								$('#myModal').modal('show');
-                $('.dataTables-example').DataTable().ajax.reload();
+                                console.log(data);
+								location.reload();
+                                $('#myModal').modal('show');
 							},
 							error: function (xhr, ajaxOptions, thrownError) {
 								console.log(thrownError);
